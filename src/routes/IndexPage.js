@@ -1,17 +1,35 @@
 import React from 'react';
 import { connect } from 'dva';
+import {Layout,Row,Col } from 'antd';
 import styles from './IndexPage.css';
+
+const {Header,Content,Footer} = Layout;
+
+
+
 
 function IndexPage() {
   return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-        <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-      </ul>
-    </div>
+    <Layout id={styles.warper} >
+      <Layout>
+        <div className={styles.topbar}>
+          <Row type='flex' justify='center'>
+            <Col  style={{width:'1170px'}}>
+             <span className={styles.date}>2017年8月15日  星期二  丁酉年闰六月廿四</span>
+            </Col>
+          </Row>
+        </div>
+        <div className={styles.logo}>
+          <Row type='flex' justify='center'>
+            <Col style={{width:'1170px'}}>
+             <img src={require('../assets/images/logo.png')} />
+            </Col>
+          </Row>
+        </div>
+      </Layout>
+      <Content>Content</Content>
+      <Footer>Footer</Footer>
+    </Layout>
   );
 }
 
