@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'dva/router';
 import styles from './Mytab.less';
 
 
@@ -6,6 +7,7 @@ class Mytab extends React.Component{
 
     constructor(props) {
       super(props);
+
       this.state = {
           transform:'translate3d(0px, 0px, 0px)'
 
@@ -40,7 +42,7 @@ class Mytab extends React.Component{
               {
                   this.props.children.map((ii) =>(
 
-                     <Panel key={ii.key}  onHungry={this.onHungry}  index={ii.key} tab={ii.props.tab}/>
+                     <Panel key={ii.key}  onHungry={this.onHungry} path={ii.props.path} index={ii.key} tab={ii.props.tab}/>
 
                      )
                   )
@@ -69,7 +71,6 @@ class Panel extends React.Component{
 
     constructor(props) {
       super(props);
-      console.log(props);
       this.state = {};
   }
 
@@ -82,7 +83,7 @@ class Panel extends React.Component{
 
     return(
 
-        <li><a href="javascript:;" onClick={this.handleClick} >{this.props.tab}</a></li>
+        <li> <Link onClick={this.handleClick} to={this.props.path}>{this.props.tab}</Link> </li>
 
     );
 

@@ -1,14 +1,26 @@
 import React from 'react';
-import { Router, Route } from 'dva/router';
+import { Router, Route,Redirect } from 'dva/router';
 import IndexPage from './routes/IndexPage';
 
 import Login from "./routes/Login.js";
 
+import Home from "./routes/Home.js";
+
+import Service from "./routes/Service.js";
+
+import Persion from "./routes/Persion.js";
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-      <Route path="/" component={IndexPage} />
+      <Route component={IndexPage}>
+        <Redirect from="/" to="/home"/>
+        <Route path="/home" component={Home} />
+        <Route path="/service" component={Service} />
+        <Route path="/persion" component={Persion} />
+      </Route>
       <Route path="/login" component={Login} />
+
     </Router>
   );
 }
