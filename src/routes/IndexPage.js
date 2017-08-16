@@ -48,19 +48,12 @@ function IndexPage() {
       <Content style={{backgroundColor:'#fff'}}>
           <div className={styles.tabs}>
              <div className={styles.tabwarp}>
-              <Mytab >
-                <Panel tab="首页"/>
-                <Panel tab="服务中心"/>
-                <Panel tab="个人中心"/>
+              <Mytab width='90'>
+                <Panel key="1" tab="首页"/>
+                <Panel key="2" tab="服务中心"/>
+                <Panel key="3" tab="个人中心"/>
               </Mytab>
              </div>
-          </div>
-          <div>
-            <Tabs defaultActiveKey="1" className={styles.mytabs}>
-               <TabPane tab="Tab 1" key="1" >Content of Tab Pane 1</TabPane>
-               <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-               <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
-            </Tabs>
           </div>
       </Content>
       <Footer>Footer</Footer>

@@ -1,4 +1,6 @@
 
+@ease-in-out:cubic-bezier(0.645,0.045,0.355,1);
+
 .mytabs{
   width: 100%;
   ul{
@@ -13,6 +15,7 @@
     height: 2px;
     background-color: #1575b1;
     z-index: 1;
+    transition: transform .3s @ease-in-out, width .3s @ease-in-out;
   }
 
     li{

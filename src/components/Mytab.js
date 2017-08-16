@@ -6,12 +6,27 @@ class Mytab extends React.Component{
 
     constructor(props) {
       super(props);
-      console.log(props);
-      this.state = {};
+      this.state = {
+          transform:'translate3d(0px, 0px, 0px)'
+
+      };
+
   }
 
+    onHungry= (index) =>{
+
+          console.log(this.props.width)
+          let offset = ((index-1) * this.props.width)+'px';
+
+          this.setState({
+
+              transform:'translate3d('+offset+', 0px, 0px)'
+
+          });
 
 
+
+  }
 
 
     render(){
@@ -21,13 +36,13 @@ class Mytab extends React.Component{
         <div className={styles.mytabs}>
 
           <ul>
-            <li className={styles.zitemActive} style={{display:'block',transform:'translate3d(0px, 0px, 0px)',width:'90px'}}></li>
+            <li className={styles.zitemActive}  style={{display:'block',transform:this.state.transform,width:'90px'}}></li>
               {
-                  this.props.children.map((ii,index) =>(
+                  this.props.children.map((ii) =>(
 
-                     <Panel key={index} tab={ii.props.tab}/>
+                     <Panel key={ii.key}  onHungry={this.onHungry}  index={ii.key} tab={ii.props.tab}/>
 
-      )
+                     )
                   )
 
 
@@ -48,17 +63,34 @@ class Mytab extends React.Component{
 
 
 }
-function Panel(props){
 
 
-  return (
+class Panel extends React.Component{
 
-      <li><a>{props.tab}</a></li>
+    constructor(props) {
+      super(props);
+      console.log(props);
+      this.state = {};
+  }
 
-  );
+  handleClick= ()=> {
+    this.props.onHungry(this.props.index)
+}
+
+  render(){
+
+
+    return(
+
+        <li><a href="javascript:;" onClick={this.handleClick} >{this.props.tab}</a></li>
+
+    );
+
+  }
 
 
 }
+
 
 
 Mytab.Panel = Panel;
