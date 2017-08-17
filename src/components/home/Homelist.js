@@ -39,13 +39,7 @@ activeMenu=(id)=>{
      </Col>
    );
 
-   let content = null;
-
-   if(this.state.activemenu == 1){
-
-     content =  <TeacherItem />;
-
-   }
+  
 
      return (
 
