@@ -5,6 +5,13 @@ import './index.css';
 const app = dva();
 
 
+
+
+app.model(require("./models/ModMytab"));
+
+
+
+
 // 2. Plugins
 // app.use({});
 

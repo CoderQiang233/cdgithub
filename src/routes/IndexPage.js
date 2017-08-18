@@ -16,8 +16,6 @@ class IndexPage extends React.Component{
 
     constructor(props) {
       super(props);
-      console.log(props)
-
     }
 
   render(){
@@ -58,7 +56,7 @@ class IndexPage extends React.Component{
         <Content style={{backgroundColor:'#fff'}}>
             <div className={styles.tabs}>
                <div className={styles.tabwarp}>
-                <Mytab width='90'>
+                <Mytab >
                   <Panel key="1" tab="首页" path="/home" />
                   <Panel key="2" tab="服务中心" path="/service" />
                   <Panel key="3" tab="个人中心" path="/persion" />
