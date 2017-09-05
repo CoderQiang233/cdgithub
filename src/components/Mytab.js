@@ -7,7 +7,7 @@ import styles from './Mytab.less';
 class Mytab extends React.Component{
 
     constructor(props) {
-      console.log(props)
+      
       super(props);
 
   }
