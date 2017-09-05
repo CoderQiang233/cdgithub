@@ -1,0 +1,108 @@
+
+.container {
+    width: 1170px;
+    margin: auto;
+}
+.breadcrumbBox{
+    padding: 10px 0px;
+}
+.leftMenuBox{
+    width: 100%;
+    .center{
+        width: 100%;
+        height: 300px;
+        background-image: url(../assets/images/person/txbj.jpg);
+        background-size: cover;
+        padding-top: 35px;
+
+        .title{
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            letter-spacing: 2px;
+
+            .blod{
+                font-weight: bold;
+            }
+        }
+        .etitle{
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-style:italic;
+
+            .blod{
+                font-weight: bold;
+                margin-right: 5px
+            }
+        }
+        .headImg{
+            width: 100%;
+            text-align: center;
+            padding: 30px 0px 10px;
+
+            img{
+                width: 100px;
+                height: 100px;
+                border-radius: 50%
+            }
+        }
+        .userName{
+            color: white;
+            font-size: 18px;
+            text-align: center
+        }
+    }
+    .leftMenu{
+        width: 100%;
+        padding: 0px 15px;
+        border: 1px solid #C9CACA;
+        background-color: #E5F3FE;
+
+        li{
+            position: relative;
+            a{
+                display: block;
+                text-align: center;
+                padding: 10px;
+                font-size: 18px;
+                color: #333;
+                border-bottom: 1px solid #C9CACA;
+            }
+            &:last-child{
+              a{
+                  border-bottom: none;
+              }
+            }
+
+            &:hover{
+                a{
+                    color: #2097DC;
+                }
+            }
+
+            &[class='active']{
+                a{
+                    color: #2097DC;
+                }
+
+                &:before{
+                    content: '';
+                    display: block;
+                    width: 3px;
+                    height: 30px;
+                    background-color: #1591DB;
+                    position: absolute;
+                    left: -15px;
+                    top: 50%;
+                    margin-top: -15px;
+                    border-radius: 3px;
+
+                }
+
+            }
+        }
+    }
+}

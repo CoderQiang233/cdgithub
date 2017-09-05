@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+<<<<<<< HEAD
 import styles from './Service.less';
 import { Input } from 'antd';
 import { Row, Col } from 'antd';
@@ -165,6 +166,16 @@ class Service extends React.Component{
 
   }
 
+=======
+import styles from './Service.css';
+
+function Service() {
+  return (
+    <div className={styles.normal}>
+      <a href="#/home">首页</a>
+    </div>
+  );
+>>>>>>> 4aa0373e9bfe348cdf49908c101bf6e3033c4f82
 }
 
 
