@@ -12,6 +12,11 @@ app.model(require("./models/ModMytab"));
 
 
 
+app.model(require("./models/persion"));
+
+
+
+
 // 2. Plugins
 // app.use({});
 
