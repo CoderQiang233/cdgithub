@@ -105,7 +105,7 @@ const AllThing=({total,
   
   
 
-  // 定义分页对象
+  //    定义分页对象
   const pagination = {
     total,
     current,
