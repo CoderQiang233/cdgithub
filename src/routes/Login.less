@@ -1,0 +1,43 @@
+
+.wrap {
+    background-color: #1575B1;
+    height: 100%;
+
+
+    :global(.ant-row-flex){
+        height: 100%
+    }
+    .loginBox{
+        min-height: 700px;
+        background-color: #1575B1;
+        .logo{
+            text-align:center;
+        }
+        .loginForm,.infoBox{
+            background-color: white;
+            height: 400px;
+            border-radius: 15px;
+            padding: 15px;
+        }
+        .loginForm{
+            .title{
+                color:#1575B1;
+                text-align: center;
+                padding: 20px 0px;
+                font-weight: bold
+            }
+            .chooseLogin{
+                display: block;              
+                width: 80px;
+                text-align: center;
+                height: 30px;
+                line-height: 30px;
+                &.active{
+                    background-color: #1575B1;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
