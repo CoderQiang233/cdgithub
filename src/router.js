@@ -10,6 +10,10 @@ import Service from "./routes/Service.js";
 
 import Persion from "./routes/Persion.js";
 
+import App from "./routes/App.js";
+
+import ApprovalMatters from "./routes/ApprovalMatters.js";
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -18,9 +22,10 @@ function RouterConfig({ history }) {
         <Route path="/home" component={Home} />
         <Route path="/service" component={Service} />
         <Route path="/persion" component={Persion} />
+        <Route path="/ApprovalMatters" component={ApprovalMatters} />
       </Route>
       <Route path="/login" component={Login} />
-
+      
     </Router>
   );
 }
