@@ -5,6 +5,15 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
 class SLoginForm extends React.Component {
+
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -21,7 +30,7 @@ class SLoginForm extends React.Component {
           {getFieldDecorator('userName', {
             rules: [{ required: true, message: '请输入用户名!' }],
           })(
-            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名（请输入本人网络工号）!" />
+            <Input  prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名（请输入本人学生证号）" />
           )}
         </FormItem>
         <FormItem>
@@ -32,17 +41,19 @@ class SLoginForm extends React.Component {
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot" href="">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+          <div style={{overflow:'hidden'}}>
+          <a className="login-form-forgot" href="">忘记密码？</a>
+          </div>
+          <div style={{textAlign:'center'}}>
+          <Button type="primary" htmlType="submit" className="login-form-button submitBtn">
+            登录
           </Button>
+          </div>
+          
         </FormItem>
+        <div>
+          <span className={styles.tips}>登录提示：</span>在校学生登录，账号为自己的学生证号，密码与教务管理系统或研究生管理系统的密码相同。
+        </div>
       </Form>
     );
   }

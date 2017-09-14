@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import {Layout,Row,Col,Tabs } from 'antd';
+import {Layout,Row,Col,Tabs,Icon } from 'antd';
+import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './IndexPage.css';
 import Mytab from '../components/Mytab';
 import Home from './Home';
@@ -61,6 +62,9 @@ class IndexPage extends React.Component{
                   <Panel key="2" tab="服务中心" path="/service" />
                   <Panel key="3" tab="个人中心" path="/persion" />
                 </Mytab>
+                <div className={styles.loginBox}>
+                  <Link to='/login'  className={styles.loginBtn}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />用户登录</Link>
+                </div>
                </div>
             </div>
             <div>

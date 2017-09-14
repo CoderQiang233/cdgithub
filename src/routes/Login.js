@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import styles from './Login.less';
 import SLoginForm from '../components/login/SLoginForm';
 import TLoginForm from '../components/login/TLoginForm';
+import InfoList from '../components/login/InfoList';
 
 class Login extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Login extends React.Component {
              </Col>
              <Col span={13}>
                <div className={styles.infoBox}>
-                 111111
+                <InfoList></InfoList>
                </div>
              </Col>
            </Row>

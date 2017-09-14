@@ -10,8 +10,7 @@ class MyThing extends React.Component{
   
   
   callback=(key)=>{
-    console.log(key);
-    console.log(this)
+    
     
     if(key==1){
       this.props.dispatch({
