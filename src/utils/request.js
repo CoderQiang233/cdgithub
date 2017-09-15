@@ -13,6 +13,7 @@ const fetch = (options) => {
     data,
     fetchType,
     url,
+    
   } = options
 
   const cloneData = lodash.cloneDeep(data)
@@ -54,6 +55,15 @@ const fetch = (options) => {
     data = null
   }
 
+  axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
+    
+        config.headers.Authorization = `Token 123456`;
+    
+    return config;
+}, function (err) {
+    return Promise.reject(err);
+});
+
   switch (method.toLowerCase()) {
     case 'get':
       return axios.get(url, {
@@ -87,7 +97,7 @@ export default function request (options) {
       }
     }
   }
-
+console.log(111111)
   return fetch(options).then((response) => {
     const { statusText, status } = response
     let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
