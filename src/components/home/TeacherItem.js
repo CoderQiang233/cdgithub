@@ -1,12 +1,13 @@
 import React from 'react';
 import {Row,div} from 'antd';
+import {  Link } from 'react-router';
 import styles from './TeacherItem.less';
 
 function TeacherItem() {
   return (
     <div className={styles.normal}>
-      <div >
-          <a href="javascript" >
+      <div>
+          <a href={"#/matter/TLeave"} >
             <img src={require('../../assets/images/jiaoshi/qjsxbl1.png')}/>
             <span>
                <strong>教职工</strong>

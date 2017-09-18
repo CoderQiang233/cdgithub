@@ -1,0 +1,103 @@
+.normal{
+    width: 1170px;
+    margin: auto;
+    padding-bottom: 30px;
+
+
+
+    :global(.ant-tabs-bar){
+        margin-bottom: 0px;
+    
+    :global(.ant-tabs-nav-container){
+        height: 45px !important;
+    }
+        :global(.ant-tabs-tab){
+            padding: 10px 16px 9px !important;
+            font-size: 16px;
+            margin-right: 10px !important;
+            background:#DCEEF7 !important;
+        }
+        :global(.ant-tabs-tab-active){
+            background:#128ED7 !important;
+            color: white !important;
+        }
+    }
+    
+    :global(.ant-tabs-content){
+        padding: 30px 40px;
+        border-left: 1px  solid #D9D9D9;
+        border-right: 1px  solid #D9D9D9;
+        border-bottom: 1px  solid #D9D9D9;
+        border-radius: 4px;
+    
+    }
+}
+.breadcrumbBox{
+    padding: 10px 0px;
+}
+
+
+
+.serviceBox{
+    .title{
+       text-align: center;
+       margin-bottom: 20px;
+    }
+    .serviceTable{
+        border-top: 1px solid #D1D1D1;
+        border-left: 1px solid #D1D1D1;
+        border-collapse: separate;
+        border-spacing: 0;
+      tr{
+          td{
+              border-right: 1px solid #D1D1D1;
+              border-bottom: 1px solid #D1D1D1;
+              padding:10px 20px;
+              font-size: 14px;
+
+              &.tdTitle{
+                text-align: center;
+                width: 15%;
+                background-color: #DAF0FF;
+                color: #333333;
+              }
+          }
+      }
+    }
+}
+
+.tableBox{
+    .title{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .table{
+        margin-top: 20px;
+        border-top: 1px solid #D1D1D1;
+        border-left: 1px solid #D1D1D1;
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        margin-bottom: 30px;
+      tr{
+          td{
+              border-right: 1px solid #D1D1D1;
+              border-bottom: 1px solid #D1D1D1;
+              padding:10px 20px;
+              font-size: 14px;
+
+              &.tdTitle{
+                text-align: center;
+                width: 15%;
+                background-color: #DAF0FF;
+                color: #333333;
+              }
+              :global(.ant-input){
+                  border-color: transparent;
+                  border-radius: 4px;
+                  font-size: 14px;
+              }
+          }
+      }
+    }
+}

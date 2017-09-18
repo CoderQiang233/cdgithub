@@ -17,7 +17,7 @@ const fetch = (options) => {
   } = options
 
   const cloneData = lodash.cloneDeep(data)
-
+  console.log(444444);
   try {
     let domin = ''
     if (url.match(/[a-zA-z]+:\/\/[^/]*/)) {
@@ -36,7 +36,8 @@ const fetch = (options) => {
     message.error(e.message)
     console.log(e.message)
   }
-
+  console.log(555555);
+  console.log(fetchType);
   if (fetchType === 'JSONP') {
     return new Promise((resolve, reject) => {
       jsonp(url, {
@@ -45,6 +46,7 @@ const fetch = (options) => {
         timeout: 4000,
       }, (error, result) => {
         if (error) {
+          console.log(1234567)
           reject(error)
         }
         resolve({ statusText: 'OK', status: 200, data: result })
@@ -54,7 +56,7 @@ const fetch = (options) => {
     url = `http://query.yahooapis.com/v1/public/yql?q=select * from json where url='${options.url}?${encodeURIComponent(qs.stringify(options.data))}'&format=json`
     data = null
   }
-
+  console.log(6666666);
   axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
     
         config.headers.Authorization = `Token 123456`;
@@ -63,7 +65,7 @@ const fetch = (options) => {
 }, function (err) {
     return Promise.reject(err);
 });
-
+console.log(method.toLowerCase());
   switch (method.toLowerCase()) {
     case 'get':
       return axios.get(url, {
@@ -74,6 +76,7 @@ const fetch = (options) => {
         data: cloneData,
       })
     case 'post':
+    console.log(88888)
       return axios.post(url, cloneData)
     case 'put':
       return axios.put(url, cloneData)
@@ -85,8 +88,11 @@ const fetch = (options) => {
 }
 
 export default function request (options) {
+  console.log(options.fetchType);
   if (options.url && options.url.indexOf('//') > -1) {
-    const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`
+    const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`;
+    console.log(window.location.origin);
+    console.log(origin)
     if (window.location.origin !== origin) {
       if (CORS && CORS.indexOf(origin) > -1) {
         options.fetchType = 'CORS'
@@ -97,8 +103,11 @@ export default function request (options) {
       }
     }
   }
-console.log(111111)
+  console.log(333333);
+  console.log(options.fetchType);
+ 
   return fetch(options).then((response) => {
+    
     const { statusText, status } = response
     let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
     if (data instanceof Array) {
@@ -113,6 +122,7 @@ console.log(111111)
       ...data,
     })
   }).catch((error) => {
+    
     const { response } = error
     let msg
     let statusCode
