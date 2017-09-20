@@ -14,7 +14,7 @@ module.exports = {
   APIV1,
   APIV2,
   api: {
-    userLogin: `http://wangqiang.tunnel.qydev.com/Public/cdzw`,
+    userLogin: `http://192.168.2.131/Public/cdzw/`,
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,

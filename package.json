@@ -16,6 +16,8 @@
     "babel-runtime": "^6.9.2",
     "classnames": "^2.2.5",
     "dva": "^1.2.1",
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1",
     "jsonp": "^0.2.1",
     "mockjs": "^1.0.1-beta3",
     "path-to-regexp": "^1.7.0",
