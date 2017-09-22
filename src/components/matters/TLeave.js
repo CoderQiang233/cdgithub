@@ -29,7 +29,7 @@ class TLeave extends React.Component{
   //   )
   // }
 
-  
+
 // 提交表单
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
@@ -325,6 +325,8 @@ CustomizedForm = Form.create({})(CustomizedForm);
 
 function mapStateToProps(matterTLeave) {
   return {matterTLeave};
+
+  
 }
 ;
 export default connect(mapStateToProps)(TLeave);

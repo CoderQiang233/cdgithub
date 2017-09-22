@@ -26,7 +26,6 @@ class MyQuestion extends React.Component{
     });
   
    console.log(this.props)
-   
  }
 
 

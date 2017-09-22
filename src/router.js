@@ -26,6 +26,7 @@ function RouterConfig({ history }) {
         <Route path="/persion" component={Persion} />
         <Route path="/ApprovalMatters" component={ApprovalMatters} />
         <Route path="/matter/:matter" component={Matter} />
+        <Route path="/approvalMatters" component={ApprovalMatters} />
       </Route>
       <Route path="/login" component={Login} />
       

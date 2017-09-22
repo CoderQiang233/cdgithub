@@ -1,24 +1,11 @@
-
+// request 是我们封装的一个网络请求库
 import request from '../utils/request';
-import config  from '../utils/config'
-
-const { api } = config
-const { persionAllThing,userAllQuertion } = api
+import qs from 'qs';
 
 export async function queryAllThing(params) {
-  return request({
-    url: persionAllThing,
-    method: 'get',
-    data: params,
-  })
-  // return request(`/api/persionAllThing?${qs.stringify(params)}`);
+  return request(`/api/persionAllThing?${qs.stringify(params)}`);
 }
 
 export async function queryUserAllQuertion(params) {
-  return request({
-    url: userAllQuertion,
-    method: 'get',
-    data: params,
-  })
-  // return request(`/api/queryUserAllQuertion?${qs.stringify(params)}`);
+  return request(`/api/queryUserAllQuertion?${qs.stringify(params)}`);
 }

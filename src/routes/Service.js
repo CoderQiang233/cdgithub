@@ -14,7 +14,7 @@ const arr=[
     {
         id:1,
         imgpath:require('../assets/images/service1.png'),
-        name:'人事处',
+        name:'人事部',
         bottom:'显示底部内容1'
   },
   {
@@ -70,8 +70,8 @@ const arr=[
       imgpath:require('../assets/images/service5.png'),
       name:'行政处',
       bottom:'显示底部内容10'
-  }
-  ,  {
+  },
+  {
       id:11,
       imgpath:require('../assets/images/service1.png'),
       name:'行政处',
@@ -82,6 +82,40 @@ const arr=[
       imgpath:require('../assets/images/service2.png'),
       name:'行政处',
       bottom:'显示底部内容12'
+  },
+  {
+      id:13,
+      imgpath:require('../assets/images/service2.png'),
+      name:'人事部',
+      bottom:'显示底部内容13'
+  }
+  ,
+  {
+      id:14,
+      imgpath:require('../assets/images/service2.png'),
+      name:'保卫处',
+      bottom:'显示底部内容14'
+  }
+  ,
+  {
+      id:15,
+      imgpath:require('../assets/images/service2.png'),
+      name:'行政处',
+      bottom:'显示底部内容15'
+  }
+  ,
+  {
+      id:16,
+      imgpath:require('../assets/images/service2.png'),
+      name:'人事部',
+      bottom:'显示底部内容16'
+  }
+  ,
+  {
+      id:17,
+      imgpath:require('../assets/images/service2.png'),
+      name:'保卫处',
+      bottom:'显示底部内容17'
   }
 ]
 class Service extends React.Component{
@@ -92,11 +126,11 @@ class Service extends React.Component{
 
       this.state={
         current: 1, //当前页
-        pageSize:5,//每页条数
-        total:arr.length,//数据总数
+        pageSize:6, //每页条数
+        total:arr.length, //数据总数
         selectedTags: [],
-        listArry:arr,
-        pagelist:[]
+        listArry:arr, //获取当前操作的总数据
+        pagelist:[], //获取当前操作的页的总数据
       }
 
 
@@ -137,7 +171,7 @@ loadData=(current,pageSize,datalist)=>{
 
 //标签
 
-  handleChange(tag, checked) {
+  handleChange(tag, checked)  {
     const { selectedTags } = this.state;
     const nextSelectedTags = checked ?
             [...selectedTags, tag] :
@@ -147,22 +181,38 @@ loadData=(current,pageSize,datalist)=>{
 
     let list=[];
 
-    for(let i=0;i<arr.length;i++){
-
-        if(this.in_array(arr[i].name,nextSelectedTags)){
-            list.push(arr[i]);
+    if(!nextSelectedTags.length) {
+        list=arr; 
+        console.log(list);
+    } else { 
+        for(let i=0;i<arr.length;i++) { 
+            if(this.in_array(arr[i].name,nextSelectedTags)) { 
+                list.push(arr[i]);
+            }
         }
-        
+        console.log(list);
     }
-
-    //初始化分页
-    
     this.setState({
         listArry:list
     });
-    console.log(list)
-    console.log(this.state.listArry)
     this.initPage(list);
+
+    // for(let i=0;i<arr.length;i++) {
+    //     if(this.in_array(arr[i].name,nextSelectedTags)){
+    //         list.push(arr[i]);
+    //     }
+    // }  
+    
+                    
+
+    // //初始化分页
+    
+    // this.setState({
+    //     listArry:list
+    // });
+    // console.log(list)
+    // // // console.log(this.state.listArry)
+    // this.initPage(list);
   }
 
   in_array=(search,array)=>{
@@ -177,12 +227,13 @@ loadData=(current,pageSize,datalist)=>{
 initPage=(datalist)=>{
 //    console.log(111)
 // console.log(this.state.listArry)
-let list= this.loadData(1,this.state.pageSize,datalist);
-this.setState({
-    current:1,
-    total:datalist.length?datalist.length:1,
-    pagelist:list
-})
+    let list= this.loadData(1,this.state.pageSize,datalist);
+// console.log(list);
+    this.setState({
+        current:1,
+        total:datalist.length?datalist.length:1,
+        pagelist:list
+    })
 }
   
   render(){

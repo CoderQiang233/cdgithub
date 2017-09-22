@@ -7,6 +7,7 @@ export default {
   state: {},
   reducers: {
     queryUserAllThingSuccess(state,action){
+     
       const MyAllTingProps={
           total: action.payload.total,
           current: action.payload.current,
@@ -55,9 +56,10 @@ export default {
   effects: {
     *queryUserAllThing({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryAllThing);
+      const { data } = yield call(personService.queryAllThing);
       
       if (data) {
+        console.log(data)
         yield put({
           type: 'queryUserAllThingSuccess',
           payload: {
@@ -70,7 +72,7 @@ export default {
     },
     *queryUserAllDoneThing({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryAllThing);
+      const { data } = yield call(personService.queryAllThing);
       
       if (data) {
         console.log(data)
@@ -86,7 +88,7 @@ export default {
     },
     *queryUserAllUnDoneThing({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryAllThing);
+      const { data } = yield call(personService.queryAllThing);
       
       if (data) {
         console.log(data)
@@ -102,7 +104,7 @@ export default {
     },
     *queryUserAllQuertion({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryUserAllQuertion);
+      const { data } = yield call(personService.queryUserAllQuertion);
       
       if (data) {
         console.log(data)

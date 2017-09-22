@@ -26,13 +26,13 @@ export default {
         current: 1
       }
     });
-    res.status(200).json({
+    res.json({
       success: true,
       data: data.data,
       page: data.page
     });
   },
-  'GET /api/userAllQuertion':(req, res)=> {
+  'GET /api/queryUserAllQuertion':(req, res)=> {
     const page = qs.parse(req.query);
 
     const data = mockjs.mock({

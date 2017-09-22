@@ -14,7 +14,7 @@ export default {
         activeService(state,action){
           return { ...state, ...action.payload };
         },
-        activePerson(state,action){
+        activePersion(state,action){
           return { ...state, ...action.payload };
         }
 
@@ -50,7 +50,7 @@ export default {
 
          if(location.pathname === '/persion'){
              dispatch({
-               type: 'activePerson',
+               type: 'activePersion',
                payload: {
                  index:3,
                  transform:'translate3d(180px, 0px, 0px)'
