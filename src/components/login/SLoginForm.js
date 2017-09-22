@@ -23,7 +23,7 @@ class SLoginForm extends React.Component {
 
 
         this.props.dispatch(
-          { type: 'login/login', payload: values }
+          { type: 'login/slogin', payload: values }
         )
       }
     });

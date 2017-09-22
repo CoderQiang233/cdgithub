@@ -1,11 +1,14 @@
 import React from 'react';
+import {connect} from 'dva';
 import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './Matters.less';
+import moment from 'moment';
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
+
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -20,7 +23,35 @@ class TLeave extends React.Component{
                                             
   }
 
+  // componentWillMount(){
+  //   this.props.dispatch(
+  //     { type: 'teacher/login', payload: values }
+  //   )
+  // }
+
   
+// 提交表单
+  onSubmit=(data)=>{
+      data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
+      data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
+      console.log(data);
+
+      this.props.dispatch(
+        { type: 'matterTLeave/uploadTable', payload: data }
+      )
+  }
+// 判断是否登录
+  isLogin=(key)=>{
+    if(key==2){
+      if(!this.props.matterTLeave.login.isLogin){
+        console.log(11);
+        hashHistory.push('/login')
+     }
+    }
+      
+  }
+
+
 
   render(){
 
@@ -43,7 +74,7 @@ class TLeave extends React.Component{
                 </Breadcrumb>
       </div>
       <div className={styles.matterContent}>
-      <Tabs defaultActiveKey="1" type='card'>
+      <Tabs defaultActiveKey="1" type='card' onTabClick={this.isLogin}>
           <TabPane tab={<span><Icon type="compass" />办事指南</span>} key="1">
             <div className={styles.serviceBox}>
               <h1 className={styles.title}>人事处阳光服务卡</h1>
@@ -86,7 +117,7 @@ class TLeave extends React.Component{
             </div>
           </TabPane>
           <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
-            <CustomizedForm history={this.props.history}/>
+            <CustomizedForm account={this.props.matterTLeave.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
           </TabPane>
       </Tabs>
       </div>
@@ -117,7 +148,24 @@ class CustomizedForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        console.log(values.leaveReason)
+        values.department=this.props.account.uDepartment;
+        values.uNum=this.props.account.uNum;
+        values.uName=this.props.account.uName;
+        let matterName='请假';
+        if(this.state.days==1){
+          matterName+='（7天以下）'
+        }
+        else if(this.state.days==2){
+          matterName+='（8-15天）'
+        }
+        else if(this.state.days==3){
+          matterName+='（15-30天）'
+        }
+        else if(this.state.days==4){
+          matterName+='（1个月以上）'
+        }
+        values.matterName=matterName;
+        this.props.onSubmit(values);
       }
     });
   }
@@ -148,9 +196,9 @@ class CustomizedForm extends React.Component {
       tableCol.push(<tr key='1'><td className={styles.tdTitle}>人事处意见</td><td colSpan="3"></td></tr>);
       tableCol.push(<tr key='2'><td className={styles.tdTitle}>分管校领导意见</td><td colSpan="3"></td></tr>);
     }
-
+    const account=this.props.account;
     return(
-
+   
 
 <div className={styles.tableBox}>
               <h1 className={styles.title}>
@@ -159,7 +207,7 @@ class CustomizedForm extends React.Component {
               <RadioGroup onChange={this.onChange} value={this.state.days}>
                 <Radio value={1}>7天以下</Radio>
                 <Radio value={2}>8-15天</Radio>
-                <Radio value={3}>6-30天</Radio>
+                <Radio value={3}>15-30天</Radio>
                 <Radio value={4}>1个月以上</Radio>
               </RadioGroup>
               <Form  onSubmit={this.handleSubmit}>
@@ -167,15 +215,28 @@ class CustomizedForm extends React.Component {
                    <tbody>
                      <tr>
                        <td className={styles.tdTitle}>部门</td>
-                       <td>保卫部</td>
+                       <td>
+                         {this.props.account.dName}
+                         {/* <FormItem>
+                          {getFieldDecorator('department', {initialValue:account.uDepartment})(
+                          <Input />
+                         )}
+                         </FormItem> */}
+                         </td>
                        <td className={styles.tdTitle}>姓名</td>
-                       <td>王强</td>
+                       <td>{this.props.account.uName}
+                       {/* <FormItem>
+                       {getFieldDecorator('uNum', {initialValue:account.uNum})(
+                        <Input />
+                         )}
+                       </FormItem> */}
+                       </td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假原因</td>
                        <td colSpan='3'>
                        <FormItem>
-                       {getFieldDecorator('leaveReason', {
+                       {getFieldDecorator('reason', {
                           rules: [{ required: true, message: '请输入请假原因' }],
                         })(
                           <TextArea placeholder="请输入请假原因" rows={3} />
@@ -262,4 +323,8 @@ class CustomizedForm extends React.Component {
 
 CustomizedForm = Form.create({})(CustomizedForm);
 
-export default TLeave;
+function mapStateToProps(matterTLeave) {
+  return {matterTLeave};
+}
+;
+export default connect(mapStateToProps)(TLeave);

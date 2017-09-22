@@ -1,139 +1,60 @@
-/* global window */
-import axios from 'axios'
-import qs from 'qs'
-import jsonp from 'jsonp'
-import lodash from 'lodash'
-import pathToRegexp from 'path-to-regexp'
-import { message } from 'antd'
-import { YQL, CORS } from './config'
+// require('es6-promise').polyfill();
+// require('isomorphic-fetch');
+import 'whatwg-fetch' 
+import 'es6-promise'
 
-const fetch = (options) => {
-  let {
-    method = 'get',
-    data,
-    fetchType,
-    url,
-    
-  } = options
 
-  const cloneData = lodash.cloneDeep(data)
-  console.log(444444);
-  try {
-    let domin = ''
-    if (url.match(/[a-zA-z]+:\/\/[^/]*/)) {
-      domin = url.match(/[a-zA-z]+:\/\/[^/]*/)[0]
-      url = url.slice(domin.length)
-    }
-    const match = pathToRegexp.parse(url)
-    url = pathToRegexp.compile(url)(data)
-    for (let item of match) {
-      if (item instanceof Object && item.name in cloneData) {
-        delete cloneData[item.name]
-      }
-    }
-    url = domin + url
-  } catch (e) {
-    message.error(e.message)
-    console.log(e.message)
-  }
-  console.log(555555);
-  console.log(fetchType);
-  if (fetchType === 'JSONP') {
-    return new Promise((resolve, reject) => {
-      jsonp(url, {
-        param: `${qs.stringify(data)}&callback`,
-        name: `jsonp_${new Date().getTime()}`,
-        timeout: 4000,
-      }, (error, result) => {
-        if (error) {
-          console.log(1234567)
-          reject(error)
-        }
-        resolve({ statusText: 'OK', status: 200, data: result })
-      })
-    })
-  } else if (fetchType === 'YQL') {
-    url = `http://query.yahooapis.com/v1/public/yql?q=select * from json where url='${options.url}?${encodeURIComponent(qs.stringify(options.data))}'&format=json`
-    data = null
-  }
-  console.log(6666666);
-  axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
-    
-        config.headers.Authorization = `Token 123456`;
-    
-    return config;
-}, function (err) {
-    return Promise.reject(err);
-});
-console.log(method.toLowerCase());
-  switch (method.toLowerCase()) {
-    case 'get':
-      return axios.get(url, {
-        params: cloneData,
-      })
-    case 'delete':
-      return axios.delete(url, {
-        data: cloneData,
-      })
-    case 'post':
-    console.log(88888)
-      return axios.post(url, cloneData)
-    case 'put':
-      return axios.put(url, cloneData)
-    case 'patch':
-      return axios.patch(url, cloneData)
-    default:
-      return axios(options)
-  }
-}
 
-export default function request (options) {
-  console.log(options.fetchType);
-  if (options.url && options.url.indexOf('//') > -1) {
-    const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`;
-    console.log(window.location.origin);
-    console.log(origin)
-    if (window.location.origin !== origin) {
-      if (CORS && CORS.indexOf(origin) > -1) {
-        options.fetchType = 'CORS'
-      } else if (YQL && YQL.indexOf(origin) > -1) {
-        options.fetchType = 'YQL'
-      } else {
-        options.fetchType = 'JSONP'
-      }
-    }
-  }
-  console.log(333333);
-  console.log(options.fetchType);
+export default function ajaxApi(url, option = {}) {
+  
+  let
+    params = {},
+    method = option.method || 'get',
+    data = option.data || {};
  
-  return fetch(options).then((response) => {
-    
-    const { statusText, status } = response
-    let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
-    if (data instanceof Array) {
-      data = {
-        list: data,
-      }
+  switch (method) {
+    case 'get':
+      url = url + (data ? '?' + formDataCode(data) : '');
+      break;
+    case 'post':
+      params.headers = {};
+      params.method='POST';
+    //   params.mode='no-cors';
+      params.body = formDataCode(data);
+      
+      params.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
+      
+      
+    default:
+  }
+  return fetch(url, params).then(callback).catch(errHandle);
+}
+//创建修改参数格式的方法，改成提交的Form Data格式
+function formDataCode(data) {
+  let str = '';
+  for (let i in data) {
+    if (data.hasOwnProperty(i)) {
+      str = str + i + "=" + data[i] + '&';
     }
-    return Promise.resolve({
-      success: true,
-      message: statusText,
-      statusCode: status,
-      ...data,
-    })
-  }).catch((error) => {
-    
-    const { response } = error
-    let msg
-    let statusCode
-    if (response && response instanceof Object) {
-      const { data, statusText } = response
-      statusCode = response.status
-      msg = data.message || statusText
-    } else {
-      statusCode = 600
-      msg = error.message || 'Network Error'
+  }
+  return str ? str.substring(0, str.length - 1) : '';
+}
+//创建fetch中then方法的回调
+function callback(res) {
+  return res.json().then(response => {
+    if (!response) {
+      throw "服务器返回参数错误"
+    } else if (response.errcode == 40001) {
+      throw "token失效，请刷新页面"
+    } else if (response.errcode == -1) {
+      return response
     }
-    return Promise.reject({ success: false, statusCode, message: msg })
+    return response;
   })
+}
+//创建容错方法
+function errHandle(res) {
+  if (res.errcode == -1) {
+    alert(res.errmsg)
+  }
 }

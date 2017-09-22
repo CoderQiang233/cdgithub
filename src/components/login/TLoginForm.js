@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './TLoginForm.less';
+import {connect} from 'dva';
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
@@ -17,6 +18,9 @@ class TLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.props.dispatch(
+          { type: 'login/tlogin', payload: values }
+        )
       }
     });
   }
@@ -25,14 +29,14 @@ class TLoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('uNum', {
             rules: [{ required: true, message: '请输入用户名!' }],
           })(
             <Input  prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名（请输入本人网络工号）" />
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('password', {
+          {getFieldDecorator('uPwd', {
             rules: [{ required: true, message: '请输入密码' }],
           })(
             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码（初始密码为身份证后六位）" />
@@ -59,4 +63,9 @@ class TLoginForm extends React.Component {
 
 const WrappedNormalLoginForm = Form.create()(TLoginForm);
 
-export default WrappedNormalLoginForm;
+
+function mapStateToProps(login) {
+  return {login};
+}
+
+export default connect(mapStateToProps)(WrappedNormalLoginForm);
