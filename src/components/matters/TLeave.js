@@ -63,7 +63,7 @@ class TLeave extends React.Component{
                 <Breadcrumb>
                     <Breadcrumb.Item href="">
                       <Icon type="home" />
-                      <Link to="/server">首页</Link>
+                      <Link to="/">首页</Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                       教职工办事

@@ -73,7 +73,7 @@ class Persion extends React.Component{
                     <div className={styles.headImg}>
                       <img src={require("../assets/images/person/tx.jpg")}/>
                     </div>  
-                    <div className={styles.userName}>UserName</div>
+                    <div className={styles.userName}>{this.props.persion.login.account.uName}</div>
                   </div>
                   <LeftMenuList LeftMenuClick={this.LeftMenuClick} leftMenuAcitve={this.state.leftMenuAcitve} menuList={menuList}></LeftMenuList>
                 </div>
@@ -180,7 +180,7 @@ class RightContent extends React.Component{
 
 
 
-function mapStateToProps({persion}) {
+function mapStateToProps(persion) {
   return {persion};
 }
 

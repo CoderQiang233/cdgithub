@@ -4,38 +4,32 @@ import * as personService from '../services/persion';
 
 export default {
   namespace: 'persion',
-  state: {},
+  state: {
+    MyAllDoneTingProps:{},
+    MyAllUnDoneTingProps:{}
+  },
   reducers: {
-    queryUserAllThingSuccess(state,action){
-     
-      const MyAllTingProps={
-          total: action.payload.total,
-          current: action.payload.current,
+    queryUserAllDoneThingSuccess(state,action){
+    //  console.log(action.payload.list)
+      const MyAllDoneTingProps={
+          // total: action.payload.total,
+          // current: action.payload.current,
           loading: false,
           dataSource:action.payload.list
       };
-      return {MyAllTingProps};
-    },
-    queryUserAllDoneThingSuccess(state,action){
-      const MyAllDoneTingProps={
-        total: action.payload.total,
-        current: action.payload.current,
-        loading: false,
-        dataSource:action.payload.list
-    };
-    return {MyAllDoneTingProps};
-     
+      return {...state,MyAllDoneTingProps};
     },
     queryUserAllUnDoneThingSuccess(state,action){
       const MyAllUnDoneTingProps={
-        total: action.payload.total,
-        current: action.payload.current,
+        // total: action.payload.total,
+        // current: action.payload.current,
         loading: false,
         dataSource:action.payload.list
     };
-    return {MyAllUnDoneTingProps};
-      
+    return {...state,MyAllUnDoneTingProps};
+     
     },
+   
     queryUserAllQuertionSuccess(state,action){
       const MyAllQuestion={
         total: action.payload.total,
@@ -54,60 +48,46 @@ export default {
     
   },
   effects: {
-    *queryUserAllThing({payload},{select, call, put }){     
-      // yield put({ type: 'showLoading' });
-      const { data } = yield call(personService.queryAllThing);
-      
-      if (data) {
-        console.log(data)
-        yield put({
-          type: 'queryUserAllThingSuccess',
-          payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current
-          }
-        });
-      }
-    },
     *queryUserAllDoneThing({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const { data } = yield call(personService.queryAllThing);
+      // console.log(payload)
+      const data  = yield call(personService.queryAllDoneThing,payload);
       
       if (data) {
-        console.log(data)
+       
         yield put({
           type: 'queryUserAllDoneThingSuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current
+            list: data,
+            // total: data.page.total,
+            // current: data.page.current
           }
         });
       }
     },
     *queryUserAllUnDoneThing({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const { data } = yield call(personService.queryAllThing);
+      const  data  = yield call(personService.queryAllUnDoneThing,payload);
       
       if (data) {
-        console.log(data)
+      
         yield put({
           type: 'queryUserAllUnDoneThingSuccess',
           payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current
+            list: data,
+            // total: data.page.total,
+            // current: data.page.current
           }
         });
       }
     },
+
     *queryUserAllQuertion({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
       const { data } = yield call(personService.queryUserAllQuertion);
       
       if (data) {
-        console.log(data)
+   
         yield put({
           type: 'queryUserAllQuertionSuccess',
           payload: {

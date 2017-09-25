@@ -3,6 +3,7 @@ import {Row,Col} from 'antd';
 import styles from './Homelist.less';
 import TeacherItem from './TeacherItem';
 import StudentItem from './StudentItem';
+import { Router, Route, Link, hashHistory } from 'react-router';
 
 class Homelist extends React.Component {
 
@@ -56,7 +57,10 @@ activeMenu=(id)=>{
           this.state.activemenu ==2 &&
          <StudentItem />
         }
-
+        {
+          this.state.activemenu ==3 &&
+          hashHistory.push('ApprovalMatters')
+        }
 
        </Row>
 

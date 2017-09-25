@@ -31,10 +31,8 @@ export async function tlogin (data) {
 
 export async function getUserInfo () {
   
-  let token = sessionStorage.getItem(storageTokenKey);
   let data={
-    service:'User_UserInfo.GetUserInfo',
-    token:token
+    service:'User_UserInfo.GetUserInfo'
   };
   return ajaxApi(userLogin,{method:"post",data})
 }

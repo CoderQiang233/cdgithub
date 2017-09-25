@@ -27,7 +27,8 @@ class TLoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <div className={styles.normal}>
+<Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator('uNum', {
             rules: [{ required: true, message: '请输入用户名!' }],
@@ -57,6 +58,8 @@ class TLoginForm extends React.Component {
           <span className={styles.tips}>登录提示：</span>账号为本人的网络工号，密码与科研管理平台为同一密码。
         </div>
       </Form>
+      </div>
+      
     );
   }
 }

@@ -126,7 +126,7 @@ class Service extends React.Component{
 
       this.state={
         current: 1, //当前页
-        pageSize:6, //每页条数
+        pageSize:12, //每页条数
         total:arr.length, //数据总数
         selectedTags: [],
         listArry:arr, //获取当前操作的总数据

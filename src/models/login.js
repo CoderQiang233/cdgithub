@@ -6,11 +6,7 @@ export default {
   namespace: 'login',
   state: {
     isLogin: false,
-    account:{
-      uName:null,
-      uNum:null,
-      uRole:null
-    },
+    account:{},
     
   },
   reducers: {
@@ -19,7 +15,7 @@ export default {
         let data=action.payload.data;
         console.log(data.account)       
         let account=data.account;
-        return {...state,account,isLogin: true}
+        return {...state,account:account,isLogin: true}
       
     },
     hasToken: function (state) {
@@ -29,22 +25,18 @@ export default {
       };
   },
   queryUserSuccess: function (state, {payload}) {
-     
+    
       let account=payload.account;
       return {
           ...state,
-          account
+          account:account
       };
   },
   userFail: function (state) {
       return {
           ...state,
           isLogin: false,
-          account: {
-            uName:null,
-            uNum:null,
-            uRole:null
-          }
+          account: {}
       };
   }
   },

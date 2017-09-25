@@ -12,6 +12,11 @@ app.model(require("./models/ModMytab"));
 
 
 
+app.model(require("./models/approvalMatters"));
+
+
+
+
 app.model(require("./models/teacher"));
 
 

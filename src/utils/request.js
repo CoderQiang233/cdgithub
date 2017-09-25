@@ -2,6 +2,7 @@
 // require('isomorphic-fetch');
 import 'whatwg-fetch' 
 import 'es6-promise'
+import {storageTokenKey} from '../utils/constant';
 
 
 
@@ -11,6 +12,8 @@ export default function ajaxApi(url, option = {}) {
     params = {},
     method = option.method || 'get',
     data = option.data || {};
+    let token = sessionStorage.getItem(storageTokenKey);
+    data['token']=token;
  
   switch (method) {
     case 'get':
@@ -22,7 +25,9 @@ export default function ajaxApi(url, option = {}) {
     //   params.mode='no-cors';
       params.body = formDataCode(data);
       
+
       params.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
+     
       
       
     default:

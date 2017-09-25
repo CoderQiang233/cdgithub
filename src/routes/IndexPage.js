@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import {Layout,Row,Col,Tabs,Icon } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
-import styles from './IndexPage.css';
+import styles from './IndexPage.less';
 import Mytab from '../components/Mytab';
 import Home from './Home';
 
@@ -39,7 +39,7 @@ class IndexPage extends React.Component{
 
     return (
       <Layout id={styles.warper} >
-        <Layout>
+        <div>
           <div className={styles.topbar}>
             <Row type='flex' justify='center'>
               <Col  style={{width:'1170px'}}>
@@ -68,7 +68,7 @@ class IndexPage extends React.Component{
               </Col>
             </Row>
           </div>
-        </Layout>
+        </div>
         <Content style={{backgroundColor:'#fff'}}>
             <div className={styles.tabs}>
                <div className={styles.tabwarp}>
@@ -92,12 +92,14 @@ class IndexPage extends React.Component{
                 </div>
                </div>
             </div>
-            <div>
+            <div className={styles.pageMain}>
                 {this.props.children}
 
             </div>
         </Content>
-        <Footer>Footer</Footer>
+        <Footer className={styles.footer}>
+
+        </Footer>
       </Layout>
     );
 
