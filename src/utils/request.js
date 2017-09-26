@@ -14,7 +14,7 @@ export default function ajaxApi(url, option = {}) {
     data = option.data || {};
     let token = sessionStorage.getItem(storageTokenKey);
     data['token']=token;
- 
+    
   switch (method) {
     case 'get':
       url = url + (data ? '?' + formDataCode(data) : '');

@@ -16,13 +16,6 @@ class TLeave extends React.Component{
     this.state={
       visible: false,
       confirmLoading: false,
-      department:'',
-      uName:'',
-      reason:'',
-      dateDays:'',
-      dateStart:'',
-      dateEnd:'',
-      opinion:[]
     }
   }
 
@@ -41,23 +34,6 @@ class TLeave extends React.Component{
   componentDidMount(){
     
   }
-  componentWillReceiveProps(nextProps) {
-    const tableDate=nextProps.matterTLeave.matterTLeave.tableData;
-    const opinion=nextProps.matterTLeave.matterTLeave.opinion;
-    console.log(333333333)
-    console.log(nextProps)
-    this.setState({
-      department:tableDate.department,
-      uName:tableDate.uName,
-      reason:tableDate.reason,
-      dateDays:tableDate.dateDays,
-      dateEnd:tableDate.dateEnd,
-      dateStart:tableDate.dateStart,
-      opinion:opinion
-    },function(){
-      this.forceUpdate()
-  })
- }
 
 
   showModal=()=>{
@@ -71,14 +47,13 @@ class TLeave extends React.Component{
       if (!err) {
         console.log('Received values of form: ', values);
         values['matterId']=this.props.matterId;
-        values['uNum']=this.props.matterTLeave.login.account.uNum;
+        values['uNum']=this.props.login.account.uNum;
         values['taskId']=this.props.taskId;
         this.props.dispatch({ type: 'matterTLeave/approvalMatter', payload: values })
       }
     });
 
     this.setState({
-      // ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
     });
     setTimeout(() => {
@@ -96,22 +71,23 @@ class TLeave extends React.Component{
   }
 
   render(){
+    const {matterTLeave}=this.props;
 
-    const {opinion}=this.state;
+    const {opinion,tableData}=matterTLeave;
     
        let opinionTr=[];
     
-       let cont=this.state.opinion.length;
+       let cont=opinion.length;
     
     
     for(let i=0;i<cont;i++){
         console.log(opinion[i])
         if(i==0){
-            opinionTr.push(<tr>
+            opinionTr.push(<tr key={i}>
                 <td className={styles.tdTitle}>单位意见</td>
                 <td colSpan='3'>
                     <div className={styles.opinion}>
-                    <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                    <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                      <Radio value={'同意'}>同意</Radio>
                      <Radio value={'不同意'}>不同意</Radio>
                      </RadioGroup>
@@ -121,11 +97,11 @@ class TLeave extends React.Component{
               </tr>)
         }
         else if(i==1){
-            opinionTr.push(<tr>
+            opinionTr.push(<tr key={i}>
                 <td className={styles.tdTitle}>人事处意见</td>
                 <td colSpan='3'>
                     <div className={styles.opinion}>
-                    <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                    <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                      <Radio value={'同意'}>同意</Radio>
                      <Radio value={'不同意'}>不同意</Radio>
                      </RadioGroup>
@@ -135,11 +111,11 @@ class TLeave extends React.Component{
               </tr>)
         }
         else if(i==2){
-            opinionTr.push(<tr>
+            opinionTr.push(<tr key={i}>
                 <td className={styles.tdTitle}>分管校领导意见</td>
                 <td colSpan='3'>
                     <div className={styles.opinion}>
-                    <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                    <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                      <Radio value={'同意'}>同意</Radio>
                      <Radio value={'不同意'}>不同意</Radio>
                      </RadioGroup>
@@ -162,23 +138,23 @@ class TLeave extends React.Component{
       <tbody>
                      <tr>
                        <td className={styles.tdTitle}>部门</td>
-                       <td>{this.state.department}</td> 
+                       <td>{tableData.department}</td> 
                        <td className={styles.tdTitle}>姓名</td>
-                       <td>{this.state.uName}</td>
+                       <td>{tableData.uName}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假原因</td>
-                       <td colSpan='3'>{this.state.reason}</td>
+                       <td colSpan='3'>{tableData.reason}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>起</td>
-                       <td>{this.state.dateStart}</td>
+                       <td>{tableData.dateStart}</td>
                        <td rowSpan='2' className={styles.tdTitle}>请假天数</td>
-                       <td rowSpan='2'>{this.state.dateDays}</td>
+                       <td rowSpan='2'>{tableData.dateDays}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>止</td>
-                       <td>{this.state.dateEnd}</td>
+                       <td>{tableData.dateEnd}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
@@ -232,8 +208,8 @@ class TLeave extends React.Component{
   }
 }
 
-function mapStateToProps(matterTLeave) {
-  return {matterTLeave};
+function mapStateToProps({matterTLeave,login}) {
+  return {matterTLeave,login};
 }
 const TLeaveForm = Form.create()(TLeave);
 export default connect(mapStateToProps)(TLeaveForm);

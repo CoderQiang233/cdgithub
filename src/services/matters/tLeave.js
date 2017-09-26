@@ -33,7 +33,6 @@ export async function getMatter (data) {
 export async function approvalMatter (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeaveOpinion';
-    console.log(data)
     return ajaxApi(userLogin,{method:"post",data})
 }
 

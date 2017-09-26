@@ -22,7 +22,7 @@ class ApprovalDone extends React.Component{
       let tableComponent;
   
       if(matter=='TLeave'){
-        tableComponent=<TLeave  matter={matter} matterId={id} status={status} taskId={taskId}  />
+        tableComponent=<TLeave  matter={matter} matterId={id} status={status} taskId={taskId} from={1}  />
       }
   
       return(

@@ -17,7 +17,6 @@ export default {
       
         let tableData=payload.data.info;
         let opinion=payload.data.opinion;
-        console.log(opinion)
         return {
           ...state,
           tableData:tableData,
@@ -32,9 +31,7 @@ export default {
        if (data) {
         if(data.code==1){
           message.success('提交成功.. :)',2,onclose=()=>{
-             console.log(3333333);
-            //  hashHistory.push('/')
-            console.log(hashHistory);
+            
             hashHistory.goBack();
           });
           // yield put(routerRedux.goBack());
@@ -58,7 +55,6 @@ export default {
       }
     },
     *approvalMatter({payload},{put,call,select}){
-      console.log(payload)
       const {data} = yield call(tLeaveService.approvalMatter,payload);
 
       if(data){

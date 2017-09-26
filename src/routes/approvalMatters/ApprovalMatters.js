@@ -18,57 +18,44 @@ class ApprovalMatters extends React.Component{
      }  
   }
   callback=(key)=> {
-    if(key==1){
-      let data={};
-      data['uName']=this.props.approvalMatters.login.account.uName;
-      this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
-    }else{
-      let data={};
-      data['uName']=this.props.approvalMatters.login.account.uName;
-      this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
-    }
+    // if(key==1){
+    //   let data={};
+    //   data['uName']=this.props.login.account.uName;
+    //   this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
+    // }else{
+    //   let data={};
+    //   data['uName']=this.props.login.account.uName;
+    //   this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
+    // }
   }
 
   componentWillMount(){
-    console.log(77777777777)
-    const isLogin=this.props.approvalMatters.login.isLogin;
+   
+    const isLogin=this.props.login.isLogin;
     if(!isLogin){
       hashHistory.push('/login')
-    }else{
-      let data={};
-      data['uName']=this.props.approvalMatters.login.account.uName;
-      this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
-      this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
     }
 
   }
-  // componentDidMount(){
-  //   console.log(6666666666)
-  //    console.log(this.props)
-  // }
-  componentWillReceiveProps(nextProps) {
-   
-    console.log(888888888)
-    let unArry=Array;
-    let doneArry=Array;
-    unArry=nextProps.approvalMatters.approvalMatters.unList;
-    doneArry=nextProps.approvalMatters.approvalMatters.DoneList;
-    console.log(unArry)
-     this.setState({
-      unList:unArry,
-      DoneList:doneArry
-     })
+  componentDidMount(){
+    let data={};
+    data['uName']=this.props.login.account.uName;
+    if(!data['uName']){
+      data['uName']=sessionStorage.getItem('uName')
+    }
+    this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
+    this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
   }
   
   render(){
 
-    let unComponent=<UnTable list={this.state.unList} />;
+    let unComponent=<UnTable list={this.props.approvalMatters.unList} />;
     if(this.props.children){
       if(this.props.children.type.WrappedComponent.name=="Approval"){
          unComponent=this.props.children;
       }
     }
-    let doneComponent=<DoneTable list={this.state.DoneList} arr={111}></DoneTable>;
+    let doneComponent=<DoneTable list={this.props.approvalMatters.DoneList} arr={111}></DoneTable>;
     if(this.props.children){
       if(this.props.children.type.WrappedComponent.name=="ApprovalDone"){
         doneComponent=this.props.children;
@@ -85,28 +72,9 @@ class ApprovalMatters extends React.Component{
             <Tabs defaultActiveKey="1"  type='card' onChange={this.callback}>
               <TabPane tab={<span><Icon type="edit" />待审批事项</span>} key="1">
               {unComponent}
-              {/* {
-                !this.props.children&&
-                <UnTable list={this.state.unList} />
-              }
-              {
-                this.props.children&&
-                this.props.children.type.WrappedComponent.name=="Approval"&&
-                this.props.children
-              } */}
-              {/* <UnTable list={[]} arr={111}></UnTable> */}
               </TabPane>
               <TabPane tab={<span><Icon type="edit" />已审批事项</span>} key="2">
               {doneComponent}
-              {/* {
-                !this.props.children&&
-                <DoneTable list={this.state.DoneList} arr={111}></DoneTable>
-              }
-              {
-                this.props.children&&
-                this.props.children.type.WrappedComponent.name=="ApprovalDone"&&
-                this.props.children
-              } */}
               
               </TabPane>
             </Tabs>
@@ -137,15 +105,7 @@ class UnTable extends React.Component{
      hashHistory.push({ pathname: '/approvalMatters/approval', state: data })
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(223)
-    console.log(nextProps.list);
-    this.setState({
-      list:nextProps.list
-    },function(){
-      this.forceUpdate()
-    })
-  }
+ 
 
   render(){
     
@@ -180,7 +140,7 @@ class UnTable extends React.Component{
 
     return(
       <div>
-        <Table columns={columns} dataSource={this.state.list} />
+        <Table columns={columns} dataSource={arr} />
       </div>
     )
   }
@@ -204,14 +164,8 @@ class DoneTable extends React.Component{
     }
     hashHistory.push({ pathname: '/approvalMatters/approvalDone', state: data })
  }
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.list);
-    this.setState({
-      list:nextProps.list
-    },function(){
-      this.forceUpdate()
-    })
-  }
+
+
   render(){
 
     const columns = [
@@ -244,7 +198,7 @@ class DoneTable extends React.Component{
     
     return(
       <div>
-        <Table columns={columns} dataSource={this.state.list} />
+        <Table columns={columns} dataSource={arr} />
       </div>
     )
   }
@@ -253,8 +207,8 @@ class DoneTable extends React.Component{
 
 }
 
-function mapStateToProps(approvalMatters) {
-  return {approvalMatters};
+function mapStateToProps({approvalMatters,login}) {
+  return {approvalMatters,login};
 }
 
 export default connect(mapStateToProps)(ApprovalMatters);

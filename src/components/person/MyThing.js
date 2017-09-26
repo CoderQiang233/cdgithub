@@ -20,7 +20,7 @@ class MyThing extends React.Component{
   }
   callback=(key)=>{
     console.log(key);
-    console.log(this)
+    
     
     // if(key==1){
     //   let data={};
@@ -40,25 +40,30 @@ class MyThing extends React.Component{
   }
 
   componentWillMount(){
-    const isLogin=this.props.persion.login.isLogin;
-    if(!isLogin){
-      hashHistory.push('/login')
-    }
+    
   }
 
   componentDidMount() {
-
-    console.log(this.props.persion.login.account.uName)
-    let data={};
-    data['uName']=this.props.persion.login.account.uName
-    this.props.dispatch({
-      type: 'persion/queryUserAllUnDoneThing',
-      payload: data,
-    });
-    this.props.dispatch({
-      type: 'persion/queryUserAllDoneThing',
-      payload: data,
-    });
+    const isLogin=this.props.login.isLogin;
+    if(!isLogin){
+      hashHistory.push('/login')
+    }else{
+      let data={};
+      data['uName']=this.props.login.account.uName;
+      if(!data['uName']){
+        data['uName']=sessionStorage.getItem('uName')
+      }
+      this.props.dispatch({
+        type: 'persion/queryUserAllUnDoneThing',
+        payload: data,
+      });
+      this.props.dispatch({
+        type: 'persion/queryUserAllDoneThing',
+        payload: data,
+      });
+    }
+    
+    
   
  }
 
@@ -75,12 +80,12 @@ class MyThing extends React.Component{
        <Tabs defaultActiveKey="1" onChange={this.callback}  className={styles.tabContent}>
        <TabPane  tab="办理中事项" key="1">
          <div className={styles.tabContent}>
-         <AllUnThing {...this.props.persion.persion.MyAllUnDoneTingProps}></AllUnThing>
+         <AllUnThing {...this.props.persion.MyAllUnDoneTingProps} loading={this.props.persion.loading}></AllUnThing>
          </div>
        </TabPane>
        <TabPane tab="办理完毕事项" key="2">
          <div className={styles.tabContent}>
-         <AllDoneThing {...this.props.persion.persion.MyAllDoneTingProps}></AllDoneThing>
+         <AllDoneThing {...this.props.persion.MyAllDoneTingProps} loading={this.props.persion.loading}></AllDoneThing>
          </div>
         </TabPane>
        {/* <TabPane tab="办理中事项" key="3">
@@ -101,23 +106,24 @@ class AllUnThing extends React.Component{
     this.state={
       imgPath:'',
       visible: false,
+      matterId:0,
+      matter:''
     }
   }
-  showModal = (imgPath) => {
-    console.log(APIV2+imgPath)
+  showModal = (matter,matterId,imgPath) => {
     this.setState({
       visible: true,
       imgPath:APIV2+imgPath,
+      matterId:matterId,
+      matter:matter
     });
   }
   handleOk = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   }
   handleCancel = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -144,7 +150,7 @@ class AllUnThing extends React.Component{
       title: '操作',
       dataIndex: 'operation',
       render:(text,record)=>(
-        <a onClick={this.showModal.bind(this,record['imgPath'])}>查看进度</a>
+        <a onClick={this.showModal.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['imgPath'])}>查看进度</a>
       )
     }];
 
@@ -163,37 +169,24 @@ class AllUnThing extends React.Component{
                 onCancel={this.handleCancel}
                 wrapClassName='myUnThingModal'
               >
-                <img src={this.state.imgPath} />
+              <Tabs defaultActiveKey="1" >
+                <TabPane tab="表单" key="1">
+                {
+                  this.state.matter=='TLeave'&&
+                  <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
+                }
+                </TabPane>
+                <TabPane tab="流程图" key="2">
+                  <img src={this.state.imgPath} />
+                </TabPane>
+              </Tabs>
+                
               </Modal>
-            </div>
+      </div>
     )
   }
 }
-// const AllUnThing=({
-//   loading,
-//   dataSource,})=>{
 
-    
-
-//     console.log(dataSource)
- 
-  
-  
-
-//   //    定义分页对象
-//   // const pagination = {
-//   //   total,
-//   //   current,
-//   //   pageSize: 10,
-//   //   onChange: ()=>{},
-//   // };
-    
-
-//     return(
-     
-      
-//     )
-// }
 class AllDoneThing extends React.Component{
 
   constructor(props){
@@ -267,37 +260,19 @@ class AllDoneThing extends React.Component{
               >
                 {
                   this.state.matter=='TLeave'&&
-                  <TLeave matter={this.state.matter} matterId={this.state.matterId}></TLeave>
+                  <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
                 }
               </Modal>
 </div>
     )
   }
 }
-// const AllDoneThing=({
-//   })=>{
-//     console.log(dataSource)
- 
-  
-  
-
-//   //    定义分页对象
-//   // const pagination = {
-//   //   total,
-//   //   current,
-//   //   pageSize: 10,
-//   //   onChange: ()=>{},
-//   // };
-    
-
-//     return(
-     
-//     )
-// }
 
 
-function mapStateToProps(persion) {
-  return {persion};
+
+function mapStateToProps({persion,login}) {
+  return {persion,login};
 }
 
 export default connect(mapStateToProps)(MyThing);
+

@@ -15,7 +15,7 @@ export default {
         let data=action.payload.data;
         console.log(data.account)       
         let account=data.account;
-        return {...state,account:account,isLogin: true}
+        return {...state,account,isLogin: true}
       
     },
     hasToken: function (state) {
@@ -29,7 +29,7 @@ export default {
       let account=payload.account;
       return {
           ...state,
-          account:account
+          account
       };
   },
   userFail: function (state) {
@@ -52,6 +52,9 @@ export default {
             // save the token to the local storage.
             let token=data.data.token;
             sessionStorage.setItem(storageTokenKey, token);
+            sessionStorage.setItem('uName', data.data.account.uName);
+            sessionStorage.setItem('uNum', data.data.account.uNum);
+            sessionStorage.setItem('uRole', data.data.account.uRole);
             yield put({
               type: 'loginSuccess',
               payload: {data: data.data}
@@ -78,6 +81,9 @@ export default {
             // save the token to the local storage.
             let token=data.data.token;
             sessionStorage.setItem(storageTokenKey, token);
+            sessionStorage.setItem('uName', data.data.account.uName);
+            sessionStorage.setItem('uNum', data.data.account.uNum);
+            sessionStorage.setItem('uRole', data.data.account.uRole);
             yield put({
               type: 'loginSuccess',
               payload: {data: data.data}

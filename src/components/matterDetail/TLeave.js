@@ -16,13 +16,7 @@ class TLeave extends React.Component{
     this.state={
       visible: false,
       confirmLoading: false,
-      department:'',
-      uName:'',
-      reason:'',
-      dateDays:'',
-      dateStart:'',
-      dateEnd:'',
-      opinion:[]
+      matterId:0
     }
   }
 
@@ -32,52 +26,58 @@ class TLeave extends React.Component{
 
 
   componentWillMount(){
-    let data={};
-    const id=this.props.matterId;
-    data['id']=id;
-    this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data })
-  }
-
-  
-  componentWillReceiveProps(nextProps) {
-    const tableDate=nextProps.matterTLeave.matterTLeave.tableData;
-    const opinion=nextProps.matterTLeave.matterTLeave.opinion;
-    // console.log(333333333)
-    console.log(opinion)
-    console.log('ggssdfef')
-    this.setState({
-      department:tableDate.department,
-      uName:tableDate.uName,
-      reason:tableDate.reason,
-      dateDays:tableDate.dateDays,
-      dateEnd:tableDate.dateEnd,
-      dateStart:tableDate.dateStart,
-      opinion:opinion
-    },function(){
-        this.forceUpdate()
-    })
- }
-
- componentDidMount(){
     
   }
 
+  
+ 
+
+ componentDidMount(){
+
+  
+  const id=this.props.matterId;
+  this.setState({
+    matterId:id
+  })
+
+  let data={};
+  data['id']=id;
+  this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data });
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.state.matterId!=nextProps.matterId){
+      this.setState({
+        matterId:nextProps.matterId
+      },function(){
+        let data={};
+        data['id']=nextProps.matterId;
+        this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data });
+      })
+      
+      
+    }
+  }
+
   render(){
-   const {opinion}=this.state;
+    const {matterTLeave}=this.props;
+    
+    const {opinion,tableData}=matterTLeave;
 
    let opinionTr=[];
 
-   let cont=this.state.opinion.length;
+   let cont=opinion.length;
 
 
 for(let i=0;i<cont;i++){
     console.log(opinion[i])
     if(i==0){
-        opinionTr.push(<tr>
+        opinionTr.push(<tr key={i}>
             <td className={styles.tdTitle}>单位意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                  <Radio value={'同意'}>同意</Radio>
                  <Radio value={'不同意'}>不同意</Radio>
                  </RadioGroup>
@@ -87,11 +87,11 @@ for(let i=0;i<cont;i++){
           </tr>)
     }
     else if(i==1){
-        opinionTr.push(<tr>
+        opinionTr.push(<tr key={i}>
             <td className={styles.tdTitle}>人事处意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                  <Radio value={'同意'}>同意</Radio>
                  <Radio value={'不同意'}>不同意</Radio>
                  </RadioGroup>
@@ -101,11 +101,11 @@ for(let i=0;i<cont;i++){
           </tr>)
     }
     else if(i==2){
-        opinionTr.push(<tr>
+        opinionTr.push(<tr key={i}>
             <td className={styles.tdTitle}>分管校领导意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled='true' defaultValue={opinion[i]['opinion']}>
+                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
                  <Radio value={'同意'}>同意</Radio>
                  <Radio value={'不同意'}>不同意</Radio>
                  </RadioGroup>
@@ -135,23 +135,23 @@ for(let i=0;i<cont;i++){
       <tbody>
                      <tr>
                        <td className={styles.tdTitle}>部门</td>
-                       <td>{this.state.department}</td> 
+                       <td>{tableData.department}</td> 
                        <td className={styles.tdTitle}>姓名</td>
-                       <td>{this.state.uName}</td>
+                       <td>{tableData.uName}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假原因</td>
-                       <td colSpan='3'>{this.state.reason}</td>
+                       <td colSpan='3'>{tableData.reason}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>起</td>
-                       <td>{this.state.dateStart}</td>
+                       <td>{tableData.dateStart}</td>
                        <td rowSpan='2' className={styles.tdTitle}>请假天数</td>
-                       <td rowSpan='2'>{this.state.dateDays}</td>
+                       <td rowSpan='2'>{tableData.dateDays}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>止</td>
-                       <td>{this.state.dateEnd}</td>
+                       <td>{tableData.dateEnd}</td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
@@ -160,25 +160,33 @@ for(let i=0;i<cont;i++){
                      {opinionTr}
                    </tbody>
               </table> 
-              <Row>
+              {
+                  this.props.from==1&&
+                  <Row>              
                     <Col span={6} offset={8}>
-                    <FormItem>
                     <Button type="primary">打印</Button>
-                    </FormItem>
                     </Col>
-                    {/* <Col span={3}>
-                    <FormItem>
+                    <Col span={3}>
                     <Button type="primary" onClick={this.cancel}>取消</Button>
-                    </FormItem>
-                    </Col> */}
+                    </Col>
                   </Row>
+              }
+              {
+                this.props.from==2&&
+                <Row type="flex" justify="center">              
+                    <Col span={2} >
+                    <Button type="primary">打印</Button>
+                    </Col>
+                </Row>
+              }
+              
     </div>
     )
   }
 }
 
-function mapStateToProps(matterTLeave) {
-  return {matterTLeave};
+function mapStateToProps({matterTLeave,login}) {
+  return {matterTLeave,login};
 }
 const TLeaveForm = Form.create()(TLeave);
 export default connect(mapStateToProps)(TLeaveForm);

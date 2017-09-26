@@ -17,7 +17,7 @@ class Matter extends React.Component{
   
   
   componentWillMount(){
-    //console.log(this.props.params.matter)
+    
   }
 
   render(){

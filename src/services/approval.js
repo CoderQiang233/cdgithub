@@ -12,13 +12,15 @@ const { userLogin } = api
 //获取待办事项
 export async function getUnMatters (data) {
     
-    
-    return ajaxApi(APIV2+'/task/getMyTasking',{method:"post",data})
-  }
+  data.service='Matter_GetThings.GetApprovingMatter';
+  return ajaxApi(userLogin,{method:"post",data})
+   // return ajaxApi(APIV2+'/task/getMyTasking',{method:"post",data})
+}
 
 
   export async function getDoneMatters (data) {
     
-    
-    return ajaxApi(APIV2+'/task/getMyTasked',{method:"post",data})
+    data.service='Matter_GetThings.GetApprovedMatter';
+    return ajaxApi(userLogin,{method:"post",data})
+    //return ajaxApi(APIV2+'/task/getMyTasked',{method:"post",data})
   }

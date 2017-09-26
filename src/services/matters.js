@@ -13,6 +13,5 @@ const { userLogin } = api
 export async function uploadTLeave (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeave';
-    console.log(data)
     return ajaxApi(userLogin,{method:"post",data})
   }

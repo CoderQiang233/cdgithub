@@ -112,7 +112,7 @@ class LeftMenuList extends React.Component{
  
   render(){
     
-    // console.log(this.props);
+    
     
     let newArry=[];
     this.props.menuList.map((item)=>

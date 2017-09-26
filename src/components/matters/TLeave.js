@@ -34,7 +34,6 @@ class TLeave extends React.Component{
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
       data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
-      console.log(data);
 
       this.props.dispatch(
         { type: 'matterTLeave/uploadTable', payload: data }
@@ -44,7 +43,6 @@ class TLeave extends React.Component{
   isLogin=(key)=>{
     if(key==2){
       if(!this.props.matterTLeave.login.isLogin){
-        console.log(11);
         hashHistory.push('/login')
      }
     }
