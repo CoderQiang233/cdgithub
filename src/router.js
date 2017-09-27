@@ -14,6 +14,8 @@ import Persion from "./routes/Persion.js";
 
 import ApprovalMatters from "./routes/ApprovalMatters.js";
 
+import Matter from "./routes/Matter.js";
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -23,6 +25,8 @@ function RouterConfig({ history }) {
         <Route path="/service" component={Service} />
         <Route path="/persion" component={Persion} />
         <Route path="/approvalMatters" component={ApprovalMatters} />
+        <Route path="/ApprovalMatters" component={ApprovalMatters} />
+        <Route path="/matter/:matter" component={Matter} />
       </Route>
       <Route path="/login" component={Login} />
       

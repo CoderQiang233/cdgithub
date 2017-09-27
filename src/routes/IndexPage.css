@@ -74,6 +74,7 @@
 .tabwarp{
   width: 1170px;
   margin: auto;
+  overflow: hidden
 }
 
 
@@ -85,4 +86,15 @@
 }
 .lg{
   background-color: #1575B1;
+}
+.loginBox{
+  float: right;
+  height: 47px;
+
+}
+.loginBtn{
+   color: #0C0C0D;
+   font-size: 18px;
+   line-height: 47px;
+   
 }
