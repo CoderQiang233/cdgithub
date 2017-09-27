@@ -10,7 +10,7 @@ import Service from "./routes/Service.js";
 
 import Persion from "./routes/Persion.js";
 
-import App from "./routes/App.js";
+
 
 import ApprovalMatters from "./routes/approvalMatters/ApprovalMatters.js";
 import Approval from "./routes/approvalMatters/Approval.js";
@@ -18,10 +18,24 @@ import ApprovalDone from "./routes/approvalMatters/ApprovalDone.js";
 
 import Matter from "./routes/Matter.js";
 
-function RouterConfig({ history }) {
+function RouterConfig({ history,app }) {
+
+  function requireAuth(nextState, replace, callback) {
+    console.log(11111)
+    // app._store.dispatch({
+    //     type: 'app/enterAuth',
+    //     payload: {},
+    //     onComplete: callback
+    // });
+}
+  
+
+
+
+
   return (
     <Router history={history}>
-      <Route component={IndexPage}>
+      <Route component={IndexPage} >
         <Redirect from="/" to="/home"/>
         <Route path="/home" component={Home} />
         <Route path="/service" component={Service} />

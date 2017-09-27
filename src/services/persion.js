@@ -23,3 +23,10 @@ export async function queryUserAllQuertion(params) {
   // })
   // return request(`/api/queryUserAllQuertion?${qs.stringify(params)}`);
 }
+
+
+export async function getFlowChartPath(data) {
+  data.service='Matter_GetThings.GetflowChartPath';
+  return ajaxApi(userLogin,{method:"post",data})
+  //return ajaxApi(APIV2+'/process/getHisProc_end',{method:"post",data})
+}

@@ -49,9 +49,9 @@ class MyThing extends React.Component{
       hashHistory.push('/login')
     }else{
       let data={};
-      data['uName']=this.props.login.account.uName;
-      if(!data['uName']){
-        data['uName']=sessionStorage.getItem('uName')
+      data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+      if(!this.props.login.account.uName){
+        data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
       }
       this.props.dispatch({
         type: 'persion/queryUserAllUnDoneThing',
@@ -80,7 +80,7 @@ class MyThing extends React.Component{
        <Tabs defaultActiveKey="1" onChange={this.callback}  className={styles.tabContent}>
        <TabPane  tab="办理中事项" key="1">
          <div className={styles.tabContent}>
-         <AllUnThing {...this.props.persion.MyAllUnDoneTingProps} loading={this.props.persion.loading}></AllUnThing>
+         <AllUnThing {...this.props.persion.MyAllUnDoneTingProps} loading={this.props.persion.loading} flowChartPath={this.props.persion.flowChartPath} dispatch={this.props.dispatch} ></AllUnThing>
          </div>
        </TabPane>
        <TabPane tab="办理完毕事项" key="2">
@@ -110,10 +110,16 @@ class AllUnThing extends React.Component{
       matter:''
     }
   }
-  showModal = (matter,matterId,imgPath) => {
+  showModal = (matter,matterId,id) => {
+    let data={};
+    data['id']=id;
+    this.props.dispatch({
+      type: 'persion/getFlowChartPath',
+      payload: data,
+    });
     this.setState({
       visible: true,
-      imgPath:APIV2+imgPath,
+      // imgPath:APIV2+imgPath,
       matterId:matterId,
       matter:matter
     });
@@ -150,7 +156,7 @@ class AllUnThing extends React.Component{
       title: '操作',
       dataIndex: 'operation',
       render:(text,record)=>(
-        <a onClick={this.showModal.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['imgPath'])}>查看进度</a>
+        <a onClick={this.showModal.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['id'])}>查看进度</a>
       )
     }];
 
@@ -177,7 +183,8 @@ class AllUnThing extends React.Component{
                 }
                 </TabPane>
                 <TabPane tab="流程图" key="2">
-                  <img src={this.state.imgPath} />
+                  {/* <img src={this.state.imgPath} /> */}
+                  <img src={this.props.flowChartPath} />
                 </TabPane>
               </Tabs>
                 

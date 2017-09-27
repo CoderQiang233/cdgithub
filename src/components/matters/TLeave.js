@@ -8,6 +8,7 @@ const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const RangePicker = DatePicker.RangePicker;
 
 
 const dateFormat = 'YYYY-MM-DD';
@@ -34,7 +35,7 @@ class TLeave extends React.Component{
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
       data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
-
+      console.log(data)
       this.props.dispatch(
         { type: 'matterTLeave/uploadTable', payload: data }
       )
@@ -130,15 +131,23 @@ class CustomizedForm extends React.Component {
             super(props)
     
             this.state={
-              days:1
+              days:1,
             }      
                                             
   }
-  onChange = (e) => {
+
+  
+
+
+  onDayChange = (e) => {
     console.log('radio checked', e.target.value);
     this.setState({
       days: e.target.value,
     });
+  }
+  onDateChange=(dates, dateStrings)=> {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
   }
 
   handleSubmit = (e) => {
@@ -149,6 +158,8 @@ class CustomizedForm extends React.Component {
         values.department=this.props.account.uDepartment;
         values.uNum=this.props.account.uNum;
         values.uName=this.props.account.uName;
+        values.dateStart=values.dateRange[0];
+        values.dateEnd=values.dateRange[1];
         let matterName='请假';
         if(this.state.days==1){
           matterName+='（7天以下）'
@@ -173,6 +184,8 @@ class CustomizedForm extends React.Component {
   }
 
   render(){
+
+    const { startValue, endValue, endOpen } = this.state;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -202,7 +215,7 @@ class CustomizedForm extends React.Component {
               <h1 className={styles.title}>
                 教职工请假条
               </h1>
-              <RadioGroup onChange={this.onChange} value={this.state.days}>
+              <RadioGroup onChange={this.onDayChange} value={this.state.days}>
                 <Radio value={1}>7天以下</Radio>
                 <Radio value={2}>8-15天</Radio>
                 <Radio value={3}>15-30天</Radio>
@@ -215,19 +228,9 @@ class CustomizedForm extends React.Component {
                        <td className={styles.tdTitle}>部门</td>
                        <td>
                          {this.props.account.dName}
-                         {/* <FormItem>
-                          {getFieldDecorator('department', {initialValue:account.uDepartment})(
-                          <Input />
-                         )}
-                         </FormItem> */}
                          </td>
                        <td className={styles.tdTitle}>姓名</td>
                        <td>{this.props.account.uName}
-                       {/* <FormItem>
-                       {getFieldDecorator('uNum', {initialValue:account.uNum})(
-                        <Input />
-                         )}
-                       </FormItem> */}
                        </td>
                      </tr>
                      <tr>
@@ -244,18 +247,21 @@ class CustomizedForm extends React.Component {
                         </td>
                      </tr>
                      <tr>
-                       <td className={styles.tdTitle}>起</td>
+                       <td className={styles.tdTitle}>起~止</td>
                        <td>
                        <FormItem>
-                       {getFieldDecorator('dateStart', {
-                          rules: [{ required: true, message: '请输入开始请假时间' }],
+                       {getFieldDecorator('dateRange', {
+                          rules: [{ required: true, message: '请输入请假时间' }],
                         })(
-                          <DatePicker placeholder="请输入开始请假时间"  format={dateFormat} />
+                          <RangePicker
+                            ranges={{ Today: [moment(), moment()]}}
+                            onChange={this.onDateChange}
+                          />          
                          )}
                        </FormItem>
                          </td>
-                       <td rowSpan='2' className={styles.tdTitle}>请假天数</td>
-                       <td rowSpan='2'>
+                       <td  className={styles.tdTitle}>请假天数</td>
+                       <td >
                        <FormItem>
                        {getFieldDecorator('dateDays', {
                           rules: [{ required: true, message: '请输入您的请假天数' }],
@@ -265,18 +271,24 @@ class CustomizedForm extends React.Component {
                          </FormItem>
                          </td>
                      </tr>
-                     <tr>
+                     {/* <tr>
                        <td className={styles.tdTitle}>止</td>
                        <td>
                        <FormItem>
                        {getFieldDecorator('dateEnd', {
                           rules: [{ required: true, message: '请输入结束请假时间' }],
                         })(
-                          <DatePicker placeholder="请输入结束请假时间"  format={dateFormat} />
+                          <DatePicker   disabledDate={this.disabledEndDate}
+                                        value={endValue}
+                                        onChange={this.onEndChange}
+                                        open={endOpen}
+                                        onOpenChange={this.handleEndOpenChange} 
+                                        placeholder="请输入结束请假时间"  
+                                        format={dateFormat} />
                          )}
                        </FormItem>
                        </td>
-                     </tr>
+                     </tr> */}
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
                        <td colSpan='3'>

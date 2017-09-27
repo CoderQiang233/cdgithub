@@ -39,10 +39,11 @@ class ApprovalMatters extends React.Component{
   }
   componentDidMount(){
     let data={};
-    data['uName']=this.props.login.account.uName;
-    if(!data['uName']){
-      data['uName']=sessionStorage.getItem('uName')
+    data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+    if(!this.props.login.account.uName){
+      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
     }
+
     this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
     this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
   }
