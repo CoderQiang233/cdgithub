@@ -18,7 +18,7 @@ class Login extends React.Component {
   chooseLogin=(value)=>{
     this.setState({loginForm:value});
 
-    console.log(this.state.props)
+    
   }
 
 
@@ -29,13 +29,13 @@ class Login extends React.Component {
     return ( 
       <div className = {styles.wrap} >
         <Row type="flex" justify="space-around" align="middle" >
-        <Col span={10}>
+        <Col md={20} lg={15} xl={10} >
          <div className={styles.loginBox}>
            <div className={styles.logo}>
              <img src={require('../assets/images/logo.png')}/>
            </div>
            <Row gutter={32}>
-             <Col span={11}>
+             <Col  span={11}>
                <div className={styles.loginForm}>
                  <h1 className={styles.title}>统一身份验证</h1>
                  <Row>

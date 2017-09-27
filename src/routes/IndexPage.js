@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import {Layout,Row,Col,Tabs,Icon } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
-import styles from './IndexPage.css';
+import styles from './IndexPage.less';
 import Mytab from '../components/Mytab';
 import Home from './Home';
 
@@ -19,12 +19,27 @@ class IndexPage extends React.Component{
       super(props);
     }
 
+
+    componentWillMount(){
+      this.props.dispatch({
+        type: 'login/enterUser',
+        payload: {}
+    });
+    }
+
+    logout=()=>{
+      this.props.dispatch({
+        type: 'login/logout',
+        payload: {}
+    });
+    }
+
   render(){
 
 
     return (
       <Layout id={styles.warper} >
-        <Layout>
+        <div>
           <div className={styles.topbar}>
             <Row type='flex' justify='center'>
               <Col  style={{width:'1170px'}}>
@@ -53,7 +68,7 @@ class IndexPage extends React.Component{
               </Col>
             </Row>
           </div>
-        </Layout>
+        </div>
         <Content style={{backgroundColor:'#fff'}}>
             <div className={styles.tabs}>
                <div className={styles.tabwarp}>
@@ -63,16 +78,28 @@ class IndexPage extends React.Component{
                   <Panel key="3" tab="个人中心" path="/persion" />
                 </Mytab>
                 <div className={styles.loginBox}>
-                  <Link to='/login'  className={styles.loginBtn}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />用户登录</Link>
+                  {
+                    this.props.login.login.isLogin==true&&
+                    <div className={styles.logout}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />
+                    欢迎 {this.props.login.login.account.uName}  <a onClick={this.logout}>[退出]</a>
+                    </div>
+                  }
+                  {
+                    this.props.login.login.isLogin==false&&
+                    <Link to='/login'  className={styles.loginBtn}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />用户登录</Link>
+                  }
+                  
                 </div>
                </div>
             </div>
-            <div>
+            <div className={styles.pageMain}>
                 {this.props.children}
 
             </div>
         </Content>
-        <Footer>Footer</Footer>
+        <Footer className={styles.footer}>
+
+        </Footer>
       </Layout>
     );
 
@@ -83,4 +110,8 @@ class IndexPage extends React.Component{
 IndexPage.propTypes = {
 };
 
-export default connect()(IndexPage);
+function mapStateToProps(login) {
+  return {login};
+}
+
+export default connect(mapStateToProps)(IndexPage);

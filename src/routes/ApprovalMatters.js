@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './ApprovalMatters.less';
 import { Table, Tabs } from 'antd';
 import { Tag } from 'antd';
-import ApprovalMattersList from '../components/ApprovalMatters/ApprovalMattersList';
+
 
 // const CheckableTag = Tag.CheckableTag;
 // const tagsFromServer = ['待审批事项', '已审批事项'];

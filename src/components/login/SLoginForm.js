@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import styles from './SLoginForm.less';
+import { connect } from 'dva';
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
@@ -23,7 +24,7 @@ class SLoginForm extends React.Component {
 
 
         this.props.dispatch(
-          { type: 'login/login', payload: values }
+          { type: 'login/slogin', payload: values }
         )
       }
     });
@@ -34,7 +35,8 @@ class SLoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <div className={styles.normal}>
+<Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator('uNum', {
             rules: [{ required: true, message: '请输入用户名!' }],
@@ -64,6 +66,8 @@ class SLoginForm extends React.Component {
           <span className={styles.tips}>登录提示：</span>在校学生登录，账号为自己的学生证号，密码与教务管理系统或研究生管理系统的密码相同。
         </div>
       </Form>
+      </div>
+      
     );
   }
 }

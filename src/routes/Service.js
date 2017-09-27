@@ -126,7 +126,7 @@ class Service extends React.Component{
 
       this.state={
         current: 1, //当前页
-        pageSize:6, //每页条数
+        pageSize:12, //每页条数
         total:arr.length, //数据总数
         selectedTags: [],
         listArry:arr, //获取当前操作的总数据
@@ -149,7 +149,7 @@ componentWillMount(){
   //分页
 
   pageChange = (page) => {
-    console.log(page);
+    
     this.setState({
       current: page,
     });
@@ -165,7 +165,7 @@ componentWillMount(){
 loadData=(current,pageSize,datalist)=>{
     let offset = (current - 1) * pageSize;  
     let list=(offset + pageSize >= datalist.length) ? datalist.slice(offset, datalist.length) : datalist.slice(offset, offset + pageSize);
-    // console.log(list)
+    
     return list;
  }
 
@@ -183,14 +183,14 @@ loadData=(current,pageSize,datalist)=>{
 
     if(!nextSelectedTags.length) {
         list=arr; 
-        console.log(list);
+        
     } else { 
         for(let i=0;i<arr.length;i++) { 
             if(this.in_array(arr[i].name,nextSelectedTags)) { 
                 list.push(arr[i]);
             }
         }
-        console.log(list);
+        
     }
     this.setState({
         listArry:list

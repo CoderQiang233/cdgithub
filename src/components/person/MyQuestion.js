@@ -25,13 +25,11 @@ class MyQuestion extends React.Component{
       payload: {},
     });
   
-   console.log(this.props)
-   
  }
 
 
   callback=(key)=> {
-    console.log(key);
+    //console.log(key);
   } 
   
   render(){
