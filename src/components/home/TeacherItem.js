@@ -16,7 +16,7 @@ function TeacherItem() {
           </a>
       </div>
       <div span={6}>
-          <a href="javascript" >
+          <a href="#/matter/TCAccountCopy" >
             <img src={require('../../assets/images/jiaoshi/hkdy.png')}/>
             <span>
                <strong>教职工（子女）</strong>
@@ -25,7 +25,7 @@ function TeacherItem() {
           </a>
       </div>
       <div span={6}>
-          <a href="javascript" >
+          <a href="#/matter/TCAccountBorrow" >
             <img src={require('../../assets/images/jiaoshi/hkjy.png')}/>
             <span>
                <strong>教职工（子女）</strong>
@@ -34,7 +34,7 @@ function TeacherItem() {
           </a>
       </div>
       <div span={6}>
-          <a href="javascript" >
+          <a href="#/matter/TCIDCardReplaceRecruitment" >
             <img src={require('../../assets/images/jiaoshi/sfzhfds.png')}/>
             <span>
                <strong>教职工（子女）</strong>

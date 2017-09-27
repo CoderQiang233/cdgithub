@@ -16,7 +16,7 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SGraduationAccount"} >
             <img src={require('../../assets/images/xuesheng/byshkqy.png')}/>
             <span>
                <strong>毕业生</strong>
@@ -25,7 +25,7 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SIDCardReplacement"} >
             <img src={require('../../assets/images/xuesheng/byssfzhf.png')}/>
             <span>
                <strong>毕业生</strong>
@@ -34,7 +34,7 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SDropoutAccount"} >
             <img src={require('../../assets/images/xuesheng/txshkqy.png')}/>
             <span>
                <strong>退学学生</strong>
@@ -43,7 +43,7 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SSettleProcedures"} >
             <img src={require('../../assets/images/xuesheng/xslhsxbl.png')}/>
             <span>
                <strong>新生</strong>
@@ -52,7 +52,7 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SAccountCopy"} >
             <img src={require('../../assets/images/xuesheng/xshkfy.png')}/>
             <span>
                <strong>学生</strong>
