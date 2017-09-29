@@ -8,7 +8,6 @@ import styles from './Persion.less';
 import MyThing from '../components/person/MyThing';
 import MyQuestion from '../components/person/MyQuestion';
 import MyProfile from '../components/person/MyProfile';
-import IsLogin from '../components/IsLogin';
 
 
 class Persion extends React.Component{
