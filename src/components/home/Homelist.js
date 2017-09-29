@@ -3,6 +3,7 @@ import {Row,Col} from 'antd';
 import styles from './Homelist.less';
 import TeacherItem from './TeacherItem';
 import StudentItem from './StudentItem';
+import { Router, Route, Link, hashHistory } from 'react-router';
 
 class Homelist extends React.Component {
 
@@ -32,8 +33,14 @@ activeMenu=(id)=>{
    const topmenu = this.props.list.map((todo)=>
 
      <Col span={6} key={todo.id}>
-           <a href="javascript:;"  onClick={this.activeMenu.bind(this,todo.id)} >
-                 <img  src={todo.imgpath} />
+           <a   onClick={this.activeMenu.bind(this,todo.id)} >
+             {
+              this.state.activemenu==todo.id&&<img  src={todo.imgpathact} />
+             }
+             {
+              this.state.activemenu!=todo.id&&<img  src={todo.imgpath} />
+             }
+                 
                  <span>{todo.name}</span>
            </a>
      </Col>
@@ -56,7 +63,10 @@ activeMenu=(id)=>{
           this.state.activemenu ==2 &&
          <StudentItem />
         }
-
+        {
+          this.state.activemenu ==3 &&
+          hashHistory.push('ApprovalMatters')
+        }
 
        </Row>
 

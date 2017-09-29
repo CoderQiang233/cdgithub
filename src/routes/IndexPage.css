@@ -98,3 +98,10 @@
    line-height: 47px;
    
 }
+.logout{
+  line-height: 47px;
+  font-size: 18px
+}
+.logout a{
+  color: red
+}

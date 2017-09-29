@@ -1,13 +1,30 @@
 import dva from 'dva';
 import './index.css';
-
+// import createLoading from 'dva-loading';
 // 1. Initialize
 const app = dva();
 
 
+//2. Plugins
+// app.use();
 
 
 app.model(require("./models/ModMytab"));
+
+
+
+
+app.model(require("./models/approvalMatters"));
+
+
+
+
+
+
+
+
+
+app.model(require("./models/matterTLeave"));
 
 
 
@@ -22,8 +39,6 @@ app.model(require("./models/persion"));
 
 
 
-// 2. Plugins
-// app.use({});
 
 // 3. Model
 // app.model(require('./models/example'));

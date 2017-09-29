@@ -1,11 +1,16 @@
 import React from 'react';
-import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row } from 'antd';
+import {connect} from 'dva';
+import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal } from 'antd';
+const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './Matters.less';
+import moment from 'moment';
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const RangePicker = DatePicker.RangePicker;
+
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -15,12 +20,74 @@ class TLeave extends React.Component{
             super(props)
     
             this.state={
-              days:1
+              days:1,
+              activeTab:'1'
             }      
                                             
   }
 
-  
+  // componentWillMount(){
+  //   this.props.dispatch(
+  //     { type: 'teacher/login', payload: values }
+  //   )
+  // }
+
+
+// 提交表单
+  onSubmit=(data)=>{
+      data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
+      data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
+      let uploadFile=data.uploadFile
+      let fileStr=[];
+      for(let i=0;i<uploadFile.length;i++){
+        fileStr.push(uploadFile[i].response.data.url)
+      }
+      data.file=fileStr.join(',');
+      delete data.uploadFile;
+      delete data.dateRange;
+      console.log(data)
+      this.props.dispatch(
+        { type: 'matterTLeave/uploadTable', payload: data }
+      )
+  }
+// 判断是否登录
+  isLogin=(key)=>{
+    console.log(key)
+    if(key==2){
+      const isLogin=this.props.login.isLogin;
+      if(!isLogin){       
+        confirm({
+          title: '您还未登录，是否前往登录页？',
+          onOk() {
+            console.log('OK');
+            hashHistory.push('/login')
+          },
+          onCancel() {
+            console.log('Cancel');            
+          },
+        });
+      }else{
+        let uRole=sessionStorage.getItem('uRole');
+        if(uRole==1){
+          Modal.warning({
+            title: '该事项为教师事项',
+          });
+        }else{
+          this.setState({
+            activeTab:'2'
+          })
+        }
+        
+      }
+    }else{
+      this.setState({
+        activeTab:'1'
+      })
+    }
+      
+  }
+
+
 
   render(){
 
@@ -32,7 +99,7 @@ class TLeave extends React.Component{
                 <Breadcrumb>
                     <Breadcrumb.Item href="">
                       <Icon type="home" />
-                      <Link to="/server">首页</Link>
+                      <Link to="/">首页</Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                       教职工办事
@@ -43,7 +110,7 @@ class TLeave extends React.Component{
                 </Breadcrumb>
       </div>
       <div className={styles.matterContent}>
-      <Tabs defaultActiveKey="1" type='card'>
+      <Tabs defaultActiveKey="1" type='card' onTabClick={this.isLogin} activeKey={this.state.activeTab}>
           <TabPane tab={<span><Icon type="compass" />办事指南</span>} key="1">
             <div className={styles.serviceBox}>
               <h1 className={styles.title}>人事处阳光服务卡</h1>
@@ -86,7 +153,7 @@ class TLeave extends React.Component{
             </div>
           </TabPane>
           <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
-            <CustomizedForm history={this.props.history}/>
+            <CustomizedForm account={this.props.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
           </TabPane>
       </Tabs>
       </div>
@@ -101,15 +168,29 @@ class CustomizedForm extends React.Component {
             super(props)
     
             this.state={
-              days:1
+              days:1,
             }      
                                             
   }
-  onChange = (e) => {
+
+  
+  normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+
+  onDayChange = (e) => {
     console.log('radio checked', e.target.value);
     this.setState({
       days: e.target.value,
     });
+  }
+  onDateChange=(dates, dateStrings)=> {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
   }
 
   handleSubmit = (e) => {
@@ -117,7 +198,26 @@ class CustomizedForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        console.log(values.leaveReason)
+        values.department=this.props.account.uDepartment;
+        values.uNum=this.props.account.uNum;
+        values.uName=this.props.account.uName;
+        values.dateStart=values.dateRange[0];
+        values.dateEnd=values.dateRange[1];
+        let matterName='请假';
+        if(this.state.days==1){
+          matterName+='（7天以下）'
+        }
+        else if(this.state.days==2){
+          matterName+='（8-15天）'
+        }
+        else if(this.state.days==3){
+          matterName+='（15-30天）'
+        }
+        else if(this.state.days==4){
+          matterName+='（1个月以上）'
+        }
+        values.matterName=matterName;
+        this.props.onSubmit(values);
       }
     });
   }
@@ -127,6 +227,29 @@ class CustomizedForm extends React.Component {
   }
 
   render(){
+
+
+    const props = {
+      
+      name: 'file',
+      action: 'http://192.168.2.131/Public/cdzw/?service=Upload.upload',
+      // headers: {
+      //   authorization: 'authorization-text',
+      // },
+      
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      },
+    };
+
+    const { startValue, endValue, endOpen } = this.state;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -148,18 +271,18 @@ class CustomizedForm extends React.Component {
       tableCol.push(<tr key='1'><td className={styles.tdTitle}>人事处意见</td><td colSpan="3"></td></tr>);
       tableCol.push(<tr key='2'><td className={styles.tdTitle}>分管校领导意见</td><td colSpan="3"></td></tr>);
     }
-
+    const account=this.props.account;
     return(
-
+   
 
 <div className={styles.tableBox}>
               <h1 className={styles.title}>
                 教职工请假条
               </h1>
-              <RadioGroup onChange={this.onChange} value={this.state.days}>
+              <RadioGroup onChange={this.onDayChange} value={this.state.days}>
                 <Radio value={1}>7天以下</Radio>
                 <Radio value={2}>8-15天</Radio>
-                <Radio value={3}>6-30天</Radio>
+                <Radio value={3}>15-30天</Radio>
                 <Radio value={4}>1个月以上</Radio>
               </RadioGroup>
               <Form  onSubmit={this.handleSubmit}>
@@ -167,15 +290,18 @@ class CustomizedForm extends React.Component {
                    <tbody>
                      <tr>
                        <td className={styles.tdTitle}>部门</td>
-                       <td>保卫部</td>
+                       <td>
+                         {this.props.account.dName}
+                         </td>
                        <td className={styles.tdTitle}>姓名</td>
-                       <td>王强</td>
+                       <td>{this.props.account.uName}
+                       </td>
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假原因</td>
                        <td colSpan='3'>
                        <FormItem>
-                       {getFieldDecorator('leaveReason', {
+                       {getFieldDecorator('reason', {
                           rules: [{ required: true, message: '请输入请假原因' }],
                         })(
                           <TextArea placeholder="请输入请假原因" rows={3} />
@@ -185,18 +311,21 @@ class CustomizedForm extends React.Component {
                         </td>
                      </tr>
                      <tr>
-                       <td className={styles.tdTitle}>起</td>
+                       <td className={styles.tdTitle}>起~止</td>
                        <td>
                        <FormItem>
-                       {getFieldDecorator('dateStart', {
-                          rules: [{ required: true, message: '请输入开始请假时间' }],
+                       {getFieldDecorator('dateRange', {
+                          rules: [{ required: true, message: '请输入请假时间' }],
                         })(
-                          <DatePicker placeholder="请输入开始请假时间"  format={dateFormat} />
+                          <RangePicker
+                            ranges={{ Today: [moment(), moment()]}}
+                            onChange={this.onDateChange}
+                          />          
                          )}
                        </FormItem>
                          </td>
-                       <td rowSpan='2' className={styles.tdTitle}>请假天数</td>
-                       <td rowSpan='2'>
+                       <td  className={styles.tdTitle}>请假天数</td>
+                       <td >
                        <FormItem>
                        {getFieldDecorator('dateDays', {
                           rules: [{ required: true, message: '请输入您的请假天数' }],
@@ -206,32 +335,38 @@ class CustomizedForm extends React.Component {
                          </FormItem>
                          </td>
                      </tr>
-                     <tr>
+                     {/* <tr>
                        <td className={styles.tdTitle}>止</td>
                        <td>
                        <FormItem>
                        {getFieldDecorator('dateEnd', {
                           rules: [{ required: true, message: '请输入结束请假时间' }],
                         })(
-                          <DatePicker placeholder="请输入结束请假时间"  format={dateFormat} />
+                          <DatePicker   disabledDate={this.disabledEndDate}
+                                        value={endValue}
+                                        onChange={this.onEndChange}
+                                        open={endOpen}
+                                        onOpenChange={this.handleEndOpenChange} 
+                                        placeholder="请输入结束请假时间"  
+                                        format={dateFormat} />
                          )}
                        </FormItem>
                        </td>
-                     </tr>
+                     </tr> */}
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
                        <td colSpan='3'>
                        <FormItem>
-                          {/* {getFieldDecorator('uploadFile', {
+                          {getFieldDecorator('uploadFile', {
                             valuePropName: 'fileList',
                             getValueFromEvent: this.normFile,
                           })(
-                            <Upload name="logo" action="/upload.do" listType="picture">
+                            <Upload {...props} listType="picture">
                               <Button>
                                 <Icon type="upload" /> 点击上传文件
                               </Button>
                             </Upload>
-                          )} */}
+                          )}
                         </FormItem>
                        </td>
                      </tr>
@@ -262,4 +397,10 @@ class CustomizedForm extends React.Component {
 
 CustomizedForm = Form.create({})(CustomizedForm);
 
-export default TLeave;
+function mapStateToProps({matterTLeave,login}) {
+  return {matterTLeave,login};
+
+  
+}
+;
+export default connect(mapStateToProps)(TLeave);

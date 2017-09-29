@@ -1,5 +1,5 @@
-const APIV1 = '/api'
-const APIV2 = '/api/v2'
+const APIV1 = 'http://192.168.2.131'
+const APIV2 = 'http://192.168.2.118'
 
 module.exports = {
   name: 'AntD Admin',

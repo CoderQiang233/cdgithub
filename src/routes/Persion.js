@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Router, Route, Link, hashHistory } from 'react-router';
-import { Breadcrumb, Icon,Row,Col,Avatar  } from 'antd';
+import { Breadcrumb, Icon,Row,Col,Avatar,Modal, Button  } from 'antd';
+const confirm = Modal.confirm;
 import styles from './Persion.less';
 
 import MyThing from '../components/person/MyThing';
 import MyQuestion from '../components/person/MyQuestion';
 import MyProfile from '../components/person/MyProfile';
+
 
 
 class Persion extends React.Component{
@@ -27,8 +29,24 @@ class Persion extends React.Component{
           })
        }
 
-      
-
+       componentWillMount(){
+        const isLogin=this.props.login.isLogin;
+        if(!isLogin){
+          
+          confirm({
+            title: '您还未登录，是否前往登录页？',
+            onOk() {
+              console.log('OK');
+              hashHistory.push('/login')
+            },
+            onCancel() {
+              console.log('Cancel');
+              hashHistory.goBack();
+            },
+          });
+        }
+      }
+       
 
         render(){
 
@@ -73,7 +91,7 @@ class Persion extends React.Component{
                     <div className={styles.headImg}>
                       <img src={require("../assets/images/person/tx.jpg")}/>
                     </div>  
-                    <div className={styles.userName}>UserName</div>
+                    <div className={styles.userName}>{this.props.login.account.uName}</div>
                   </div>
                   <LeftMenuList LeftMenuClick={this.LeftMenuClick} leftMenuAcitve={this.state.leftMenuAcitve} menuList={menuList}></LeftMenuList>
                 </div>
@@ -112,7 +130,7 @@ class LeftMenuList extends React.Component{
  
   render(){
     
-    // console.log(this.props);
+    
     
     let newArry=[];
     this.props.menuList.map((item)=>
@@ -180,8 +198,8 @@ class RightContent extends React.Component{
 
 
 
-function mapStateToProps({persion}) {
-  return {persion};
+function mapStateToProps({persion,login}) {
+  return {persion,login};
 }
 
 export default connect(mapStateToProps)(Persion);

@@ -57,27 +57,27 @@ activeMenu=(id)=>{
 // const _this=this;
 //   const topmenu=this.props.list.map(function(value,index){
 //     if(!_this.props.selectedTags.length){
-//       return  <Col span={6} key={value.id}>
-//       <a href="javascript:;"  onClick={_this.activeMenu.bind(this,value.id)} >
-//         <img  src={value.imgpath} />
-//         <span><strong>{value.name}</strong></span>
-//         <span></span>
-//         <small>{value.bottom}</small>
-//         </a>
-//         </Col>
-//     }else{
-//       const inarry=in_array(value.name,_this.props.selectedTags);
+    //   return  <Col span={6} key={value.id}>
+    //   <a href="javascript:;"  onClick={_this.activeMenu.bind(this,value.id)} >
+    //     <img  src={value.imgpath} />
+    //     <span><strong>{value.name}</strong></span>
+    //     <span></span>
+    //     <small>{value.bottom}</small>
+    //     </a>
+    //     </Col>
+    // }else{
+    //   const inarry=in_array(value.name,_this.props.selectedTags);
 
-//       if(inarry){
-//         return  <Col span={6} key={value.id}>
-//         <a href="javascript:;"  onClick={_this.activeMenu.bind(this,value.id)} >
-//           <img  src={value.imgpath} />
-//           <span><strong>{value.name}</strong></span>
-//           <span></span>
-//           <small>{value.bottom}</small>
-//           </a>
-//           </Col>
-//       }
+      // if(inarry){
+      //   return  <Col span={6} key={value.id}>
+      //   <a href="javascript:;"  onClick={_this.activeMenu.bind(this,value.id)} >
+      //     <img  src={value.imgpath} />
+      //     <span><strong>{value.name}</strong></span>
+      //     <span></span>
+      //     <small>{value.bottom}</small>
+      //     </a>
+      //     </Col>
+      // }
 //     }
 //   })
 
