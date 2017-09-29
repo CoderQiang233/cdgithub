@@ -10,8 +10,6 @@ import Service from "./routes/Service.js";
 
 import Persion from "./routes/Persion.js";
 
-import App from "./routes/App.js";
-
 import ApprovalMatters from "./routes/ApprovalMatters.js";
 
 import Matter from "./routes/Matter.js";
