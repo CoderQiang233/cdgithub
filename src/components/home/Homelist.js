@@ -33,8 +33,14 @@ activeMenu=(id)=>{
    const topmenu = this.props.list.map((todo)=>
 
      <Col span={6} key={todo.id}>
-           <a href="javascript:;"  onClick={this.activeMenu.bind(this,todo.id)} >
-                 <img  src={todo.imgpath} />
+           <a   onClick={this.activeMenu.bind(this,todo.id)} >
+             {
+              this.state.activemenu==todo.id&&<img  src={todo.imgpathact} />
+             }
+             {
+              this.state.activemenu!=todo.id&&<img  src={todo.imgpath} />
+             }
+                 
                  <span>{todo.name}</span>
            </a>
      </Col>

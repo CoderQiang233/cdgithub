@@ -1,25 +1,41 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Form, Input, Button, Radio,Select,DatePicker   } from 'antd';
 const FormItem = Form.Item;
 import styles from './MyProfile.less';
 
 
+ 
 
-const MyProfile=(props)=>{
-  return(
-    <div className={styles.profileContent}>
+class MyProfile extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={}  
+  }
+
+  componentWillMount(){
+    
+  }
+
+
+  render(){
+
+
+    return(
+      <div className={styles.profileContent}>
       <div className={styles.titleBar}>
         <h2 className={styles.title}>我的资料</h2>
       </div>
       <div className={styles.profileMain}>
-         <ProfileForm></ProfileForm>
+         <WrappedProfileForm ></WrappedProfileForm>
       </div>
     </div>
-  )
+    )
+  }
 }
 
-
 const ProfileForm=(props)=>{
+
   const formItemLayout = {
     labelCol: {
       span:8
@@ -62,6 +78,12 @@ const ProfileForm=(props)=>{
    )
 
 }
+const WrappedProfileForm = Form.create()(ProfileForm);
+
+function mapStateToProps({login}) {
+  return {login};
+}
 
 
-export default MyProfile;
+
+export default connect(mapStateToProps)(MyProfile);

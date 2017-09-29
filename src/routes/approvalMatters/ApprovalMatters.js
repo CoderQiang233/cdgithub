@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ApprovalMatters.less';
-import { Table, Tabs,Icon } from 'antd';
+import { Table, Tabs,Icon,Modal, Button } from 'antd';
+const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import { Tag } from 'antd';
 const TabPane = Tabs.TabPane;
@@ -33,7 +34,18 @@ class ApprovalMatters extends React.Component{
    
     const isLogin=this.props.login.isLogin;
     if(!isLogin){
-      hashHistory.push('/login')
+      
+      confirm({
+        title: '您还未登录，是否前往登录页？',
+        onOk() {
+          console.log('OK');
+          hashHistory.push('/login')
+        },
+        onCancel() {
+          console.log('Cancel');
+          hashHistory.goBack();
+        },
+      });
     }
 
   }

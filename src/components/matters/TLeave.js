@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
-import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row } from 'antd';
+import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal } from 'antd';
+const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './Matters.less';
 import moment from 'moment';
@@ -19,7 +20,8 @@ class TLeave extends React.Component{
             super(props)
     
             this.state={
-              days:1
+              days:1,
+              activeTab:'1'
             }      
                                             
   }
@@ -35,6 +37,14 @@ class TLeave extends React.Component{
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
       data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
+      let uploadFile=data.uploadFile
+      let fileStr=[];
+      for(let i=0;i<uploadFile.length;i++){
+        fileStr.push(uploadFile[i].response.data.url)
+      }
+      data.file=fileStr.join(',');
+      delete data.uploadFile;
+      delete data.dateRange;
       console.log(data)
       this.props.dispatch(
         { type: 'matterTLeave/uploadTable', payload: data }
@@ -42,10 +52,37 @@ class TLeave extends React.Component{
   }
 // 判断是否登录
   isLogin=(key)=>{
+    console.log(key)
     if(key==2){
-      if(!this.props.matterTLeave.login.isLogin){
-        hashHistory.push('/login')
-     }
+      const isLogin=this.props.login.isLogin;
+      if(!isLogin){       
+        confirm({
+          title: '您还未登录，是否前往登录页？',
+          onOk() {
+            console.log('OK');
+            hashHistory.push('/login')
+          },
+          onCancel() {
+            console.log('Cancel');            
+          },
+        });
+      }else{
+        let uRole=sessionStorage.getItem('uRole');
+        if(uRole==1){
+          Modal.warning({
+            title: '该事项为教师事项',
+          });
+        }else{
+          this.setState({
+            activeTab:'2'
+          })
+        }
+        
+      }
+    }else{
+      this.setState({
+        activeTab:'1'
+      })
     }
       
   }
@@ -73,7 +110,7 @@ class TLeave extends React.Component{
                 </Breadcrumb>
       </div>
       <div className={styles.matterContent}>
-      <Tabs defaultActiveKey="1" type='card' onTabClick={this.isLogin}>
+      <Tabs defaultActiveKey="1" type='card' onTabClick={this.isLogin} activeKey={this.state.activeTab}>
           <TabPane tab={<span><Icon type="compass" />办事指南</span>} key="1">
             <div className={styles.serviceBox}>
               <h1 className={styles.title}>人事处阳光服务卡</h1>
@@ -116,7 +153,7 @@ class TLeave extends React.Component{
             </div>
           </TabPane>
           <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
-            <CustomizedForm account={this.props.matterTLeave.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
+            <CustomizedForm account={this.props.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
           </TabPane>
       </Tabs>
       </div>
@@ -137,7 +174,13 @@ class CustomizedForm extends React.Component {
   }
 
   
-
+  normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
 
   onDayChange = (e) => {
     console.log('radio checked', e.target.value);
@@ -184,6 +227,27 @@ class CustomizedForm extends React.Component {
   }
 
   render(){
+
+
+    const props = {
+      
+      name: 'file',
+      action: 'http://192.168.2.131/Public/cdzw/?service=Upload.upload',
+      // headers: {
+      //   authorization: 'authorization-text',
+      // },
+      
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      },
+    };
 
     const { startValue, endValue, endOpen } = this.state;
 
@@ -293,16 +357,16 @@ class CustomizedForm extends React.Component {
                        <td className={styles.tdTitle}>请假证明</td>
                        <td colSpan='3'>
                        <FormItem>
-                          {/* {getFieldDecorator('uploadFile', {
+                          {getFieldDecorator('uploadFile', {
                             valuePropName: 'fileList',
                             getValueFromEvent: this.normFile,
                           })(
-                            <Upload name="logo" action="/upload.do" listType="picture">
+                            <Upload {...props} listType="picture">
                               <Button>
                                 <Icon type="upload" /> 点击上传文件
                               </Button>
                             </Upload>
-                          )} */}
+                          )}
                         </FormItem>
                        </td>
                      </tr>
@@ -333,8 +397,8 @@ class CustomizedForm extends React.Component {
 
 CustomizedForm = Form.create({})(CustomizedForm);
 
-function mapStateToProps(matterTLeave) {
-  return {matterTLeave};
+function mapStateToProps({matterTLeave,login}) {
+  return {matterTLeave,login};
 
   
 }

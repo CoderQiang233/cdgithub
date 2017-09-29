@@ -16,6 +16,8 @@ class TLeave extends React.Component{
     this.state={
       visible: false,
       confirmLoading: false,
+      previewImage:'',
+      previewVisible:false,
     }
   }
 
@@ -35,7 +37,7 @@ class TLeave extends React.Component{
     
   }
 
-
+// 打开审批意见Modal
   showModal=()=>{
     this.setState({
       visible: true,
@@ -67,6 +69,20 @@ class TLeave extends React.Component{
     console.log('Clicked cancel button');
     this.setState({
       visible: false,
+    });
+  }
+
+// 打开图片Modal
+  showImg=(url)=>{
+    console.log(url)
+    this.setState({
+      previewImage: url,
+      previewVisible: true,
+    });
+  }
+  handleImgCancel = () => {
+    this.setState({
+      previewVisible: false,
     });
   }
 
@@ -125,6 +141,29 @@ class TLeave extends React.Component{
               </tr>)
         }
     }
+    let files=[];
+    if(tableData.file){
+      console.log(tableData.file)
+      let filesArr=tableData.file.split(",");
+      
+      
+          for(let i=0;i<filesArr.length;i++){
+            files.push(
+                <div key={i} className='ant-upload-list-item ant-upload-list-item-done'  onClick={this.showImg.bind(this,filesArr[i])}>
+                  <div className='ant-upload-list-item-info'>
+                  <span>
+                    <a className='ant-upload-list-item-thumbnail' >
+                      <img src={filesArr[i]}/>
+                    </a>
+                  </span>
+                  </div>
+                  
+                </div>
+            )
+          }
+    }
+   
+
 
     const { visible, confirmLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
@@ -158,7 +197,11 @@ class TLeave extends React.Component{
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
-                       <td colSpan='3'></td>
+                       <td colSpan='3'>
+                         <div className='ant-upload-list ant-upload-list-picture-card'>
+                         {files}
+                         </div>
+                       </td>
                      </tr>
                      {opinionTr}
                    </tbody>
@@ -202,6 +245,10 @@ class TLeave extends React.Component{
                          )}
                     </FormItem>
                    </Form> 
+                  </Modal>
+
+                  <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleImgCancel}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                   </Modal>        
     </div>
     )

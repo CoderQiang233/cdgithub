@@ -11,7 +11,8 @@ export default {
     },
     MyAllUnDoneTingProps:{
       dataSource:[]
-    }
+    },
+    flowChartPath:''
   },
   reducers: {
     queryUserAllDoneThingSuccess(state,action){
@@ -39,9 +40,16 @@ export default {
       
       
     },
+    getFlowChartPathSuccess(state,action){
+      let flowChartPath=action.payload.path;
+      return{...state,flowChartPath}
+    },
     showLoading(state, action){
       return { ...state, loading: true };
     },
+    closeLoading(state,action){
+      return{...state,loading:false}
+    }
     
     
   },
@@ -62,10 +70,12 @@ export default {
              }
            });
          }else{
-          message.error('获取失败...:(', 4);
+          //message.error('获取失败...:(', 4);
+          yield put({ type: 'closeLoading' });
          }
       }else{
-        message.error(data.msg, 4);
+        //message.error(data.msg, 4);
+        yield put({ type: 'closeLoading' });
       }
       
     },
@@ -84,13 +94,25 @@ export default {
             }
            });
          }else{
-          message.error('获取失败...:(', 4);
+         // message.error('获取失败...:(', 4);
+          yield put({ type: 'closeLoading' });
          }
       }else{
-        message.error(data.msg, 4);
+       // message.error(data.msg, 4);
+        yield put({ type: 'closeLoading' });
       }
     },
-
+    *getFlowChartPath({payload},{select, call, put }){
+      const  data  = yield call(personService.getFlowChartPath,payload);
+      if(data.data){
+        yield put({
+          type: 'getFlowChartPathSuccess',
+          payload: {
+            path: data.data.path,
+          }
+         });
+      }
+    },
     *queryUserAllQuertion({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
       const { data } = yield call(personService.queryUserAllQuertion);

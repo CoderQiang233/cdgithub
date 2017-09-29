@@ -29,22 +29,26 @@ class Home extends React.Component{
       const arr=[
           {
               id:1,
-              imgpath:require('../assets/images/jssxx.png'),
+              imgpath:require('../assets/images/jssx.png'),
+              imgpathact:require('../assets/images/jssxx.png'),
               name:'教师事项'
         },
         {
             id:2,
             imgpath:require('../assets/images/xssx.png'),
+            imgpathact:require('../assets/images/xssxx.png'),
             name:'学生事项'
         },
         {
             id:3,
             imgpath:require('../assets/images/sxsp.png'),
+            imgpathact:require('../assets/images/sxspx.png'),
             name:'事项审批'
         },
         {
             id:4,
             imgpath:require('../assets/images/zxdy.png'),
+            imgpathact:require('../assets/images/zxdyx.png'),
             name:'在线答疑'
         }
 

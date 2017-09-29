@@ -104,6 +104,9 @@ export default {
     }, {put}) {
       yield put({type: 'userFail'});
       sessionStorage.removeItem(storageTokenKey);
+      sessionStorage.removeItem('uName');
+      sessionStorage.removeItem('uNum');
+      sessionStorage.removeItem('uRole');
       yield put(routerRedux.push('/'));
   },
     * enterUser ({

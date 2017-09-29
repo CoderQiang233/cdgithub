@@ -44,10 +44,10 @@ class MyThing extends React.Component{
   }
 
   componentDidMount() {
-    const isLogin=this.props.login.isLogin;
-    if(!isLogin){
-      hashHistory.push('/login')
-    }else{
+    // const isLogin=this.props.login.isLogin;
+    // if(!isLogin){
+    //   hashHistory.push('/login')
+    // }else{
       let data={};
       data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
       if(!this.props.login.account.uName){
@@ -61,7 +61,7 @@ class MyThing extends React.Component{
         type: 'persion/queryUserAllDoneThing',
         payload: data,
       });
-    }
+    // }
     
     
   
