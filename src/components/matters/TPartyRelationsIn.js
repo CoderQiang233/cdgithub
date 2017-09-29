@@ -5,7 +5,7 @@ import styles from './Matters.less';
 const TabPane = Tabs.TabPane;
 
 
-class SQuitSchool extends React.Component{
+class TPartyRelationsIn extends React.Component{
   constructor(props){
     
             super(props)
@@ -30,10 +30,10 @@ class SQuitSchool extends React.Component{
                       <Link to="/server">首页</Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                      学生办事
+                      教职工办事
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                    退学学生户口迁移
+                    教职工党员组织关系转入手续办理
                     </Breadcrumb.Item>
                 </Breadcrumb>
       </div>
@@ -41,20 +41,20 @@ class SQuitSchool extends React.Component{
       <Tabs defaultActiveKey="1" type='card'>
           <TabPane tab={<span><Icon type="compass" />办事指南</span>} key="1">
             <div className={styles.serviceBox}>
-              <h1 className={styles.title}>保卫处阳光服务卡</h1>
+              <h1 className={styles.title}>组织部阳光服务卡</h1>
               <table className={styles.serviceTable}>
                 <tbody>
                   <tr>
                     <td className={styles.tdTitle}>办理事项</td>
-                    <td>退学学生户口迁移</td>
+                    <td>教职工党员组织关系转入手续办理</td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>服务对象</td>
-                    <td>在我校落户的学生</td>
+                    <td>全校在册教职工党员</td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>办理部门</td>
-                    <td>保卫处</td>
+                    <td>组织部</td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>办理窗口</td>
@@ -66,15 +66,15 @@ class SQuitSchool extends React.Component{
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>办理依据</td>
-                    <td>《山西省常住户口登记管理规定》</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>办理材料</td>
-                    <td>退学文件复印件、身份证原件、委托书</td>
+                    <td>党员档案、身份证、委托书</td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>办理流程</td>
-                    <td>学生携带退学文件复印件到保卫处户籍窗口办理→保卫处户籍窗口按规定时间到坞城派出所办理户口迁移手续→退学学生凭身份证原件在阳光服务大厅保卫处窗口领取户口迁移证（委托代领需要委托书、双方身份证复印件）</td>
+                    <td>教职工党员持县级以上具有直接转接权限的党委组织部门开具的组织关系介绍信和党员档案到阳光服务大厅党委组织部窗口办理→组织部审核无误后开具盖有党委组织部公章的《中国共产党党员组织关系介绍信》→本人持校党委组织部介绍信和档案到所在基层党委报到。</td>
                   </tr>
                   <tr>
                     <td className={styles.tdTitle}>咨询电话</td>
@@ -92,4 +92,4 @@ class SQuitSchool extends React.Component{
 }
 
 
-export default SQuitSchool;
+export default TPartyRelationsIn;

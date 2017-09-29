@@ -1,11 +1,20 @@
 import React from 'react';
+import {connect} from 'dva';
 import styles from './SLoginForm.less';
-import { connect } from 'dva';
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
 class SLoginForm extends React.Component {
+
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {

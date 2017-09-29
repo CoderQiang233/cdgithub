@@ -115,7 +115,7 @@ export default {
     },
     *queryUserAllQuertion({payload},{select, call, put }){     
       // yield put({ type: 'showLoading' });
-      const { data } = yield call(personService.queryUserAllQuertion);
+      const  data  = yield call(personService.queryUserAllQuertion);
       
       if (data) {
    

@@ -6,7 +6,7 @@ const app = dva();
 
 
 //2. Plugins
-//  app.use(createLoading());
+// app.use();
 
 
 app.model(require("./models/ModMytab"));
