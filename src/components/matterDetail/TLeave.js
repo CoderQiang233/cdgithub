@@ -94,7 +94,6 @@ class TLeave extends React.Component{
    }
 
 for(let i=0;i<cont;i++){
-    console.log(opinion[i])
     if(i==0){
         opinionTr.push(<tr key={i}>
             <td className={styles.tdTitle}>单位意见</td>
@@ -106,6 +105,13 @@ for(let i=0;i<cont;i++){
                  </RadioGroup>
                 <p>{opinion[i]['opinionText']}</p>
                 </div>
+                {
+                  opinion[i]['signature']&&
+                  <div className={styles.signature}>
+                    <img src={opinion[i]['signature']} />
+                  </div>
+                }
+                
             </td>
           </tr>)
     }

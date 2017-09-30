@@ -25,7 +25,9 @@ export default function ajaxApi(url, option = {}) {
     //   params.mode='no-cors';
       params.body = formDataCode(data);
       
-
+      if(token){
+        params.headers['Authorization']=token;
+      }
       params.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
      
       

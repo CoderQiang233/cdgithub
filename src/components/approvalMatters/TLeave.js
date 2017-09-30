@@ -18,6 +18,8 @@ class TLeave extends React.Component{
       confirmLoading: false,
       previewImage:'',
       previewVisible:false,
+      signatureModal:false,
+      signatureLoading:false
     }
   }
 
@@ -47,23 +49,26 @@ class TLeave extends React.Component{
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({
+          confirmLoading: true,
+        });
+        setTimeout(() => {
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+          });
+        }, 2000);
         console.log('Received values of form: ', values);
         values['matterId']=this.props.matterId;
         values['uNum']=this.props.login.account.uNum;
         values['taskId']=this.props.taskId;
+        values['level']=this.props.level;
+        console.log(values)
         this.props.dispatch({ type: 'matterTLeave/approvalMatter', payload: values })
       }
     });
 
-    this.setState({
-      confirmLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
+    
   }
   handleCancel = () => {
     console.log('Clicked cancel button');
@@ -84,6 +89,34 @@ class TLeave extends React.Component{
     this.setState({
       previewVisible: false,
     });
+  }
+
+  // 签名
+  showSignature=()=>{
+    this.setState({
+      signatureModal: true,
+    });
+  }
+  handleSignatureOk=()=>{
+    let signaturePwd=this.props.form.getFieldsValue(['signaturePwd']);
+    if(signaturePwd.signaturePwd==undefined||signaturePwd.signaturePwd==null||signaturePwd.signaturePwd==''){
+      this.props.form.setFields({
+        signaturePwd: {
+          errors: [new Error('请输入签名密码')],
+        },
+      });
+    }else{
+      signaturePwd.uNum=this.props.login.account.uNum;
+      this.props.dispatch({ type: 'approvalMatters/getSignature', payload: signaturePwd });
+      this.setState({ signatureLoading: true });
+      setTimeout(() => {
+        this.setState({ signatureLoading: false, signatureModal: false });
+      }, 2000);
+    }
+   
+  }
+  handleSignatureCancel=()=>{
+    this.setState({ signatureModal: false });
   }
 
   render(){
@@ -143,7 +176,7 @@ class TLeave extends React.Component{
     }
     let files=[];
     if(tableData.file){
-      console.log(tableData.file)
+      // console.log(tableData.file)
       let filesArr=tableData.file.split(",");
       
       
@@ -221,7 +254,7 @@ class TLeave extends React.Component{
                   </Row>
 
 
-
+                  {/* 审批弹出框 */}
                   <Modal title="审批"
                     visible={visible}
                     onOk={this.handleOk}
@@ -230,7 +263,9 @@ class TLeave extends React.Component{
                   >
                   <Form onSubmit={this.handleSubmit}>
                   <FormItem>
-                      {getFieldDecorator('opinion')(
+                      {getFieldDecorator('opinion',{
+                          rules: [{ required: true, message: '请选择意见' }],
+                        })(
                         <RadioGroup>
                           <Radio value="同意" checked={true} >同意</Radio>
                           <Radio value="不同意">不同意</Radio>
@@ -244,19 +279,58 @@ class TLeave extends React.Component{
                           <TextArea placeholder="请输入审批意见" rows={3} />
                          )}
                     </FormItem>
+                    <FormItem>
+                      {getFieldDecorator('signature', {
+                        rules: [{ required: true, message: '请签名' }],
+                        initialValue:this.props.approvalMatters.signatureUrl
+                      })(
+                        <div>
+                          {
+                            !this.props.approvalMatters.signatureUrl&&
+                            <Button type="primary" onClick={this.showSignature.bind(this)}>签名</Button>
+                          }
+                          {
+                            this.props.approvalMatters.signatureUrl&&
+                            <img src={this.props.approvalMatters.signatureUrl} />
+                          }
+                          <Input style={{ display: 'none'}} defaultValue={this.props.approvalMatters.signatureUrl}></Input>
+                        </div>
+                        
+                      )}
+                    </FormItem>
                    </Form> 
                   </Modal>
-
+                  {/* 证明文件弹出框 */}
                   <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleImgCancel}>
                     <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                  </Modal>
+
+
+                  {/* 签名密码弹出框 */}
+                  <Modal
+                    visible={this.state.signatureModal}
+                    title="请输入签名密码"
+                    onOk={this.handleSignatureOk}
+                    onCancel={this.handleSignatureCancel}
+                    footer={[
+                      <Button key="submit" type="primary" size="large" loading={this.state.signatureLoading} onClick={this.handleSignatureOk.bind(this)}>
+                        确定
+                      </Button>,
+                    ]}
+                  >
+                  <FormItem required={true}>
+                     {getFieldDecorator('signaturePwd', {})(
+                      <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入签名密码" />
+                      )}
+                  </FormItem>
                   </Modal>        
     </div>
     )
   }
 }
 
-function mapStateToProps({matterTLeave,login}) {
-  return {matterTLeave,login};
+function mapStateToProps({matterTLeave,login,approvalMatters}) {
+  return {matterTLeave,login,approvalMatters};
 }
 const TLeaveForm = Form.create()(TLeave);
 export default connect(mapStateToProps)(TLeaveForm);
