@@ -10,7 +10,6 @@ import MyQuestion from '../components/person/MyQuestion';
 import MyProfile from '../components/person/MyProfile';
 
 
-
 class Persion extends React.Component{
         constructor(props){
           

@@ -78,7 +78,15 @@ function TeacherItem() {
             <small>工作证办理</small>
           </a>
       </div>
-
+      <div span={6}>
+          <a href="#/matter/TFurtherApproval" >
+            <img src={require('../../assets/images/jiaoshi/gzzbl.png')}/>
+            <span>
+               <strong>教职工</strong>
+            </span>
+            <small>进修审批表</small>
+          </a>
+      </div>
 
     </div>
   );
