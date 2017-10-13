@@ -4,7 +4,6 @@ import {stringify} from 'qs';
 import config  from '../../utils/config';
 
 const { api } = config
-const { userLogin } = api
 
 
 
@@ -14,7 +13,7 @@ export async function uploadTLeave (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeave';
     console.log(data)
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
   }
 
 // 获取事项
@@ -22,7 +21,7 @@ export async function uploadTLeave (data) {
 export async function getMatter (data) {
     
     data.service='Matter_TeacherLeave.selectTLeave';
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
 }
 
 
@@ -32,7 +31,7 @@ export async function getMatter (data) {
 export async function approvalMatter (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeaveOpinion';
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
 }
 
 

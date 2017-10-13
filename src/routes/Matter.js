@@ -117,6 +117,13 @@ import TCampusNetFaultRepair from '../components/matters/TCampusNetFaultRepair'
 import THouseProve from '../components/matters/THouseProve'
 // 教职工科研项目资金购置固定资产入库手续办理
 import TResearchProjects from '../components/matters/TResearchProjects'
+
+
+// 学生户口借用
+import SAccountBorrow from '../components/matters/SAccountBorrow'
+
+
+
 class Matter extends React.Component{
   constructor(props){
     
@@ -369,6 +376,10 @@ class Matter extends React.Component{
         {
           matter=='TResearchProjects'&&
           <TResearchProjects history={this.props.history}/>
+        }
+        {
+          matter=='SAccountBorrow'&&
+          <SAccountBorrow  history={this.props.history}></SAccountBorrow>
         }
       </div>
 

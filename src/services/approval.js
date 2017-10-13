@@ -4,7 +4,6 @@ import {stringify} from 'qs';
 import config  from '../utils/config';
 const { APIV2 } = config
 const { api } = config
-const { userLogin } = api
 
 
 
@@ -13,14 +12,14 @@ const { userLogin } = api
 export async function getUnMatters (data) {
     
   data.service='Matter_GetThings.GetApprovingMatter';
-  return ajaxApi(userLogin,{method:"post",data})
+  return ajaxApi(api,{method:"post",data})
 }
 
 //获取已办事项
   export async function getDoneMatters (data) {
     
     data.service='Matter_GetThings.GetApprovedMatter';
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
   }
 
   // 获取用户签名
@@ -28,5 +27,5 @@ export async function getUnMatters (data) {
   export async function getSignature (data) {
     
     data.service='User_UserInfo.GetSignature';
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
   }

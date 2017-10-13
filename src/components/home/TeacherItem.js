@@ -7,13 +7,13 @@ function TeacherItem() {
   return (
     <div className={styles.normal}>
       <div>
-          <a href={"#/matter/TLeave"} >
+          <Link to="matter/TLeave" >
             <img src={require('../../assets/images/jiaoshi/qjsxbl1.png')}/>
             <span>
                <strong>教职工</strong>
             </span>
             <small>请假手续</small>
-          </a>
+          </Link>
       </div>
       <div span={6}>
           <a href="#/matter/TCAccountCopy" >

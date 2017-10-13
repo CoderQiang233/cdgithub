@@ -3,6 +3,7 @@ import styles from './TLeave.less';
 import { connect } from 'dva';
 import { Breadcrumb, Icon ,Radio,Form, Input, Button, message,Col,Row,Modal } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
+import Signature from './Signature.js';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioButton = Radio.Button;
@@ -18,8 +19,6 @@ class TLeave extends React.Component{
       confirmLoading: false,
       previewImage:'',
       previewVisible:false,
-      signatureModal:false,
-      signatureLoading:false
     }
   }
 
@@ -35,9 +34,7 @@ class TLeave extends React.Component{
     this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data })
   }
 
-  componentDidMount(){
-    
-  }
+  
 
 // 打开审批意见Modal
   showModal=()=>{
@@ -91,33 +88,7 @@ class TLeave extends React.Component{
     });
   }
 
-  // 签名
-  showSignature=()=>{
-    this.setState({
-      signatureModal: true,
-    });
-  }
-  handleSignatureOk=()=>{
-    let signaturePwd=this.props.form.getFieldsValue(['signaturePwd']);
-    if(signaturePwd.signaturePwd==undefined||signaturePwd.signaturePwd==null||signaturePwd.signaturePwd==''){
-      this.props.form.setFields({
-        signaturePwd: {
-          errors: [new Error('请输入签名密码')],
-        },
-      });
-    }else{
-      signaturePwd.uNum=this.props.login.account.uNum;
-      this.props.dispatch({ type: 'approvalMatters/getSignature', payload: signaturePwd });
-      this.setState({ signatureLoading: true });
-      setTimeout(() => {
-        this.setState({ signatureLoading: false, signatureModal: false });
-      }, 2000);
-    }
-   
-  }
-  handleSignatureCancel=()=>{
-    this.setState({ signatureModal: false });
-  }
+
 
   render(){
     const {matterTLeave}=this.props;
@@ -130,7 +101,6 @@ class TLeave extends React.Component{
     
     
     for(let i=0;i<cont;i++){
-        console.log(opinion[i])
         if(i==0){
             opinionTr.push(<tr key={i}>
                 <td className={styles.tdTitle}>单位意见</td>
@@ -279,25 +249,7 @@ class TLeave extends React.Component{
                           <TextArea placeholder="请输入审批意见" rows={3} />
                          )}
                     </FormItem>
-                    <FormItem>
-                      {getFieldDecorator('signature', {
-                        rules: [{ required: true, message: '请签名' }],
-                        initialValue:this.props.approvalMatters.signatureUrl
-                      })(
-                        <div>
-                          {
-                            !this.props.approvalMatters.signatureUrl&&
-                            <Button type="primary" onClick={this.showSignature.bind(this)}>签名</Button>
-                          }
-                          {
-                            this.props.approvalMatters.signatureUrl&&
-                            <img src={this.props.approvalMatters.signatureUrl} />
-                          }
-                          <Input style={{ display: 'none'}} defaultValue={this.props.approvalMatters.signatureUrl}></Input>
-                        </div>
-                        
-                      )}
-                    </FormItem>
+                    <Signature form={this.props.form}></Signature>
                    </Form> 
                   </Modal>
                   {/* 证明文件弹出框 */}
@@ -306,24 +258,7 @@ class TLeave extends React.Component{
                   </Modal>
 
 
-                  {/* 签名密码弹出框 */}
-                  <Modal
-                    visible={this.state.signatureModal}
-                    title="请输入签名密码"
-                    onOk={this.handleSignatureOk}
-                    onCancel={this.handleSignatureCancel}
-                    footer={[
-                      <Button key="submit" type="primary" size="large" loading={this.state.signatureLoading} onClick={this.handleSignatureOk.bind(this)}>
-                        确定
-                      </Button>,
-                    ]}
-                  >
-                  <FormItem required={true}>
-                     {getFieldDecorator('signaturePwd', {})(
-                      <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入签名密码" />
-                      )}
-                  </FormItem>
-                  </Modal>        
+                 
     </div>
     )
   }

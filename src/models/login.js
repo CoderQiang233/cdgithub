@@ -75,28 +75,33 @@ export default {
     }, { put, call, select }) {
       const data = yield call(loginService.tlogin, payload);
       const { locationQuery } = yield select();
-      
-      if(data.ret==200){
-        if(data.data.code==1){
-            // save the token to the local storage.
-            let token=data.data.token;
-            sessionStorage.setItem(storageTokenKey, token);
-            sessionStorage.setItem('uName', data.data.account.uName);
-            sessionStorage.setItem('uNum', data.data.account.uNum);
-            sessionStorage.setItem('uRole', data.data.account.uRole);
-            yield put({
-              type: 'loginSuccess',
-              payload: {data: data.data}
-          });
-          yield put(routerRedux.goBack());
-        }
-        else{
-          message.error('用户名或密码错误.. :(', 4);
-        }
-      }
-      else{
+      if(!data){
         message.error('发生了一些未知错误.. :(', 4);
       }
+      else{
+        if(data.ret==200){
+          if(data.data.code==1){
+              // save the token to the local storage.
+              let token=data.data.token;
+              sessionStorage.setItem(storageTokenKey, token);
+              sessionStorage.setItem('uName', data.data.account.uName);
+              sessionStorage.setItem('uNum', data.data.account.uNum);
+              sessionStorage.setItem('uRole', data.data.account.uRole);
+              yield put({
+                type: 'loginSuccess',
+                payload: {data: data.data}
+            });
+            yield put(routerRedux.goBack());
+          }
+          else{
+            message.error('用户名或密码错误.. :(', 4);
+          }
+        }
+        else{
+          message.error('发生了一些未知错误.. :(', 4);
+        }
+      }
+      
       // return data
     },
     * logout ({
