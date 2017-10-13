@@ -14,13 +14,19 @@ export async function getUnMatters (data) {
     
   data.service='Matter_GetThings.GetApprovingMatter';
   return ajaxApi(userLogin,{method:"post",data})
-   // return ajaxApi(APIV2+'/task/getMyTasking',{method:"post",data})
 }
 
-
+//获取已办事项
   export async function getDoneMatters (data) {
     
     data.service='Matter_GetThings.GetApprovedMatter';
     return ajaxApi(userLogin,{method:"post",data})
-    //return ajaxApi(APIV2+'/task/getMyTasked',{method:"post",data})
+  }
+
+  // 获取用户签名
+
+  export async function getSignature (data) {
+    
+    data.service='User_UserInfo.GetSignature';
+    return ajaxApi(userLogin,{method:"post",data})
   }

@@ -22,7 +22,6 @@ export async function uploadTLeave (data) {
 export async function getMatter (data) {
     
     data.service='Matter_TeacherLeave.selectTLeave';
-    console.log(data);
     return ajaxApi(userLogin,{method:"post",data})
 }
 

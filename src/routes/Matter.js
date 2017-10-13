@@ -374,7 +374,7 @@ class Matter extends React.Component{
         }
         {
           matter=='TFurtherApproval'&&
-          <TFurtherApproval history={this.props.history}/>
+          <TFurtherApproval  matterKey={matter} history={this.props.history}/>
         }
       </div>
 

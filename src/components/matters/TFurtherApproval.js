@@ -10,9 +10,7 @@ const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
-
 const dateFormat = 'YYYY-MM-DD';
-
 class TFurtherApproval extends React.Component {
   constructor(props) {
 
@@ -29,19 +27,17 @@ class TFurtherApproval extends React.Component {
 
   // 提交表单
   onSubmit = (data) => {
-    data.dateStart = moment(data.dateStart).format("YYYY-MM-DD");
-    data.dateEnd = moment(data.dateEnd).format("YYYY-MM-DD");
-    let uploadFile = data.uploadFile
-    let fileStr = [];
-    for (let i = 0; i < uploadFile.length; i++) {
-      fileStr.push(uploadFile[i].response.data.url)
-    }
-    data.file = fileStr.join(',');
-    delete data.uploadFile;
+    data.birth_date = moment(data.birth_date).format("YYYY-MM-DD");
+    data.work_date = moment(data.work_date).format("YYYY-MM-DD");
+    data.school_date = moment(data.school_date).format("YYYY-MM-DD");
+    data.further_startdate = moment(data.further_startdate).format("YYYY-MM-DD");
+    data.further_enddate = moment(data.further_enddate).format("YYYY-MM-DD");
+    data.matterKey=this.props.matterKey;
     delete data.dateRange;
+    console.log(1111111111111);
     console.log(data)
     this.props.dispatch(
-      { type: 'matterTLeave/uploadTable', payload: data }
+      { type: 'matterTFurther/uploadTable', payload: data }
     )
   }
   // 判断是否登录
@@ -169,17 +165,10 @@ class CustomizedForm extends React.Component {
     }
 
   }
-
-
-
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
+  onDateChange=(dates, dateStrings)=> {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
   }
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -187,9 +176,10 @@ class CustomizedForm extends React.Component {
         console.log('Received values of form: ', values);
         values.uNum = this.props.account.uNum;
         values.uName = this.props.account.uName;
-        values.dateStart = values.dateRange[0];
-        values.dateEnd = values.dateRange[1];
-        let matterName = '请假';
+        values.uSex = this.props.account.uSex;
+        values.further_startdate=values.further_date[0];
+        values.further_enddate=values.further_date[1];
+        let matterName = '进修';
         values.matterName = matterName;
         this.props.onSubmit(values);
       }
@@ -211,7 +201,6 @@ class CustomizedForm extends React.Component {
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
     }
-
     function onOk(value) {
       console.log('onOk: ', value);
     }
@@ -237,7 +226,9 @@ class CustomizedForm extends React.Component {
               <tr>
                 <td className={styles.tdTitle}>姓名</td>
                 <td >
+          
                   {this.props.account.uName}
+                  
                 </td>
                 <td className={styles.tdTitle}>性别</td>
                 <td >
@@ -245,6 +236,18 @@ class CustomizedForm extends React.Component {
                 </td>
                 <td className={styles.tdTitle}>出生年月</td>
                 <td >
+                <FormItem>
+                    {getFieldDecorator('birth_date', {
+                      rules: [{ required: true, message: '请输入您的出生年月' }],
+                    })(
+                      <DatePicker
+                    format="YYYY-MM-DD "
+                    placeholder="请选择时间"
+                    onChange={onChange}
+                    onOk={onOk}
+                  />
+                      )}
+                  </FormItem>
                 </td>
               </tr>
 
@@ -256,7 +259,6 @@ class CustomizedForm extends React.Component {
                       rules: [{ required: true, message: '请输入您参加工作的时间' }],
                     })(
                       <DatePicker
-                    showTime
                     format="YYYY-MM-DD "
                     placeholder="请选择时间"
                     onChange={onChange}
@@ -273,7 +275,6 @@ class CustomizedForm extends React.Component {
                       rules: [{ required: true, message: '请输入您的来校时间' }],
                     })(
                       <DatePicker
-                    showTime
                     format="YYYY-MM-DD "
                     placeholder="请选择时间"
                     onChange={onChange}
@@ -379,8 +380,7 @@ class CustomizedForm extends React.Component {
                 <td colSpan='3'>
                   <FormItem>
                     {getFieldDecorator('tel', {
-                      rules: [{ required: true, message: '请输入您的联系电话', }
-                      ,{pattern:'^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$',message:'请输入正确的手机号'}
+                      rules: [{ required: true, message: '请输入正确的联系电话', }
 ],
                     })(
                       <Input placeholder="请输入您的联系电话" />
@@ -431,12 +431,9 @@ class CustomizedForm extends React.Component {
                       rules: [{ required: true, message: '请输入您的进修时间' }],
                     })(
                       <RangePicker
-                    showTime={{ format: 'HH:mm' }}
-                    format="YYYY-MM-DD "
-                    placeholder={['开始时间', '结束时间']}
-                    onChange={onChange}
-                    onOk={onOk}
-                  />
+                            ranges={{ Today: [moment(), moment()]}}
+                            onChange={this.onDateChange}
+                          />  
                       )}
                   </FormItem>
              
@@ -499,8 +496,8 @@ class CustomizedForm extends React.Component {
 
 CustomizedForm = Form.create({})(CustomizedForm);
 
-function mapStateToProps({ matterTLeave, login }) {
-  return { matterTLeave, login };
+function mapStateToProps({ matterTFurther, login }) {
+  return { matterTFurther, login };
 
 
 }
