@@ -176,7 +176,7 @@ class CustomizedForm extends React.Component {
             super(props)
     
             this.state={
-              days:1,
+           days:1,   
             }      
                                             
   }

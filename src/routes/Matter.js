@@ -124,6 +124,8 @@ import SAccountBorrow from '../components/matters/SAccountBorrow'
 
 
 
+//教职工进修（高访学者）审批手续办理  
+import TFurtherApproval from '../components/matters/TFurtherApproval'
 class Matter extends React.Component{
   constructor(props){
     
@@ -380,6 +382,10 @@ class Matter extends React.Component{
         {
           matter=='SAccountBorrow'&&
           <SAccountBorrow  history={this.props.history}></SAccountBorrow>
+        }
+        {
+          matter=='TFurtherApproval'&&
+          <TFurtherApproval  matterKey={matter} history={this.props.history}/>
         }
       </div>
 
