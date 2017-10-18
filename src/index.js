@@ -36,6 +36,8 @@ app.model(require("./models/login"));
 
 app.model(require("./models/persion"));
 
+app.model(require("./models/infoList"));
+
 
 
 
