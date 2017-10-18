@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal } from 'antd';
+import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal,Popconfirm } from 'antd';
 const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './Matters.less';
@@ -14,7 +14,6 @@ const RangePicker = DatePicker.RangePicker;
 import config  from '../../utils/config';
 
 const { api } = config
-const { userLogin } = api
 
 
 const dateFormat = 'YYYY-MM-DD';
@@ -42,6 +41,7 @@ class TLeave extends React.Component{
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
       data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
+      console.log(data)
       if(data.uploadFile){
         let uploadFile=data.uploadFile
         let fileStr=[];
@@ -240,7 +240,7 @@ class CustomizedForm extends React.Component {
     const props = {
       
       name: 'file',
-      action: userLogin+'?service=Upload.upload',
+      action: api+'?service=Upload.upload',
       // headers: {
       //   authorization: 'authorization-text',
       // },
