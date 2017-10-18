@@ -87,7 +87,7 @@ class TFurtherApproval extends React.Component {
       <div className={styles.normal}>
         <div className={styles.breadcrumbBox}>
           <Breadcrumb>
-            <Breadcrumb.Item href="">
+            <Breadcrumb.Item >
               <Icon type="home" />
               <Link to="/">首页</Link>
             </Breadcrumb.Item>
@@ -365,7 +365,7 @@ class CustomizedForm extends React.Component {
                     {getFieldDecorator('further_education', {
                       rules: [{ required: true, message: '请输入请假时间' }],
                     })(
-                      <RadioGroup value={1}>
+                      <RadioGroup >
                         <Radio style={radioStyle} value={1}>出国研修  </Radio>
                         <Radio style={radioStyle} value={2}>国内访问学者</Radio>
                         <Radio style={radioStyle} value={3}>高级研修班 </Radio>

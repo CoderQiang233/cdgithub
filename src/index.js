@@ -28,6 +28,9 @@ app.model(require("./models/matterTLeave"));
 
 app.model(require("./models/matterTFurther"));
 
+app.model(require("./models/matterSPolitical"));
+
+app.model(require("./models/matterTPolitical"));
 
 app.model(require("./models/login"));
 

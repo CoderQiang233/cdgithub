@@ -43,7 +43,7 @@ function TeacherItem() {
           </a>
       </div>
       <div span={6}>
-          <a href="javascript" >
+          <a href="#/matter/TPoliticalCensorship" >
             <img src={require('../../assets/images/jiaoshi/zhenshen.png')}/>
             <span>
                <strong>教职工</strong>

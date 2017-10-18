@@ -9,10 +9,10 @@ const { api } = config
 
 
 
-//教职工进修事项 提交表单
-export async function uploadTFutther(data) {
+//教职工政治审查事项 提交表单
+export async function uploadTPolitical(data) {
     
-    data.service='Matter_TeacherFurther.UploadTFurther';
+    data.service='Matter_TPoliticalCensorship.UploadTPoliticalCensorship';
     console.log(data)
     return ajaxApi(api,{method:"post",data})
   }

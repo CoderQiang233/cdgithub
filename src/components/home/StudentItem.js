@@ -70,7 +70,7 @@ function StudentItem() {
           </Link>
       </div>
       <div>
-          <a href={"javascript"} >
+          <a href={"#/matter/SPoliticalCensorship"} >
             <img src={require('../../assets/images/xuesheng/xszzsczm.png')}/>
             <span>
                <strong>学生</strong>
