@@ -4,7 +4,6 @@ import {stringify} from 'qs';
 import config  from '../utils/config';
 
 const { api } = config
-const { userLogin } = api
 
 
 
@@ -13,5 +12,5 @@ const { userLogin } = api
 export async function uploadTLeave (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeave';
-    return ajaxApi(userLogin,{method:"post",data})
+    return ajaxApi(api,{method:"post",data})
   }

@@ -1,6 +1,6 @@
 import dva from 'dva';
 import './index.css';
-
+// import createLoading from 'dva-loading';
 // 1. Initialize
 const app = dva();
 
@@ -31,7 +31,7 @@ app.model(require("./models/approvalMatters"));
 
 app.model(require("./models/matterTLeave"));
 
-
+app.model(require("./models/matterTFurther"));
 
 
 app.model(require("./models/login"));

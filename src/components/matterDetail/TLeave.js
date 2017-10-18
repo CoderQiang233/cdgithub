@@ -16,7 +16,8 @@ class TLeave extends React.Component{
     this.state={
       visible: false,
       confirmLoading: false,
-      matterId:0
+      matterId:0,
+      
     }
   }
 
@@ -60,6 +61,8 @@ class TLeave extends React.Component{
     }
   }
 
+  
+
   render(){
     const {matterTLeave}=this.props;
     
@@ -68,10 +71,29 @@ class TLeave extends React.Component{
    let opinionTr=[];
 
    let cont=opinion.length;
-
+   let files=[];
+   if(tableData.file){
+     console.log(tableData.file)
+     let filesArr=tableData.file.split(",");
+     
+     
+         for(let i=0;i<filesArr.length;i++){
+           files.push(
+               <div key={i} className='ant-upload-list-item ant-upload-list-item-done'  >
+                 <div className='ant-upload-list-item-info'>
+                 <span>
+                   <a className='ant-upload-list-item-thumbnail' >
+                     <img src={filesArr[i]}/>
+                   </a>
+                 </span>
+                 </div>
+                 
+               </div>
+           )
+         }
+   }
 
 for(let i=0;i<cont;i++){
-    console.log(opinion[i])
     if(i==0){
         opinionTr.push(<tr key={i}>
             <td className={styles.tdTitle}>单位意见</td>
@@ -83,6 +105,13 @@ for(let i=0;i<cont;i++){
                  </RadioGroup>
                 <p>{opinion[i]['opinionText']}</p>
                 </div>
+                {
+                  opinion[i]['signature']&&
+                  <div className={styles.signature}>
+                    <img src={opinion[i]['signature']} />
+                  </div>
+                }
+                
             </td>
           </tr>)
     }
@@ -155,7 +184,12 @@ for(let i=0;i<cont;i++){
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
-                       <td colSpan='3'></td>
+                       <td colSpan='3'>
+                       <div className='ant-upload-list ant-upload-list-picture-card'>
+                         {files}
+                         </div>
+                        
+                       </td>
                      </tr>
                      {opinionTr}
                    </tbody>

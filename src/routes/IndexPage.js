@@ -25,8 +25,9 @@ class IndexPage extends React.Component{
         type: 'login/enterUser',
         payload: {}
     });
+    
     }
-
+  
     logout=()=>{
       this.props.dispatch({
         type: 'login/logout',
@@ -79,13 +80,13 @@ class IndexPage extends React.Component{
                 </Mytab>
                 <div className={styles.loginBox}>
                   {
-                    this.props.login.login.isLogin==true&&
+                    this.props.login.isLogin==true&&
                     <div className={styles.logout}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />
-                    欢迎 {this.props.login.login.account.uName}  <a onClick={this.logout}>[退出]</a>
+                    欢迎 {this.props.login.account.uName}  <a onClick={this.logout}>[退出]</a>
                     </div>
                   }
                   {
-                    this.props.login.login.isLogin==false&&
+                    this.props.login.isLogin==false&&
                     <Link to='/login'  className={styles.loginBtn}><Icon style={{ fontSize: 20, color: '#0B70AA',marginRight:'5px' }} type="user" />用户登录</Link>
                   }
                   
@@ -110,7 +111,7 @@ class IndexPage extends React.Component{
 IndexPage.propTypes = {
 };
 
-function mapStateToProps(login) {
+function mapStateToProps({login}) {
   return {login};
 }
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ApprovalMatters.less';
-import { Table, Tabs,Icon } from 'antd';
+import { Table, Tabs,Icon,Modal, Button } from 'antd';
+const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import { Tag } from 'antd';
 const TabPane = Tabs.TabPane;
@@ -33,7 +34,18 @@ class ApprovalMatters extends React.Component{
    
     const isLogin=this.props.login.isLogin;
     if(!isLogin){
-      hashHistory.push('/login')
+      
+      confirm({
+        title: '您还未登录，是否前往登录页？',
+        onOk() {
+          console.log('OK');
+          hashHistory.push('/login')
+        },
+        onCancel() {
+          console.log('Cancel');
+          hashHistory.goBack();
+        },
+      });
     }
 
   }
@@ -96,12 +108,13 @@ class UnTable extends React.Component{
     }
   }
 
-  jumpNextLink=(mName,mId,taskId)=>{
+  jumpNextLink=(mName,mId,taskId,level)=>{
      let data={};
      data={
        matter:mName,
        id:mId,
-       taskId:taskId
+       taskId:taskId,
+       level:level
      }
      hashHistory.push({ pathname: '/approvalMatters/approval', state: data })
   }
@@ -133,7 +146,7 @@ class UnTable extends React.Component{
       key: 'action',
       dataIndex:'',
       render: (text, record) => (
-          <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'])} >审批</a>          
+          <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'],record['level'])} >审批</a>          
       ),
     }];
     

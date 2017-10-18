@@ -3,6 +3,7 @@ import styles from './TLeave.less';
 import { connect } from 'dva';
 import { Breadcrumb, Icon ,Radio,Form, Input, Button, message,Col,Row,Modal } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
+import Signature from './Signature.js';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioButton = Radio.Button;
@@ -16,6 +17,8 @@ class TLeave extends React.Component{
     this.state={
       visible: false,
       confirmLoading: false,
+      previewImage:'',
+      previewVisible:false,
     }
   }
 
@@ -31,11 +34,9 @@ class TLeave extends React.Component{
     this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data })
   }
 
-  componentDidMount(){
-    
-  }
+  
 
-
+// 打开审批意见Modal
   showModal=()=>{
     this.setState({
       visible: true,
@@ -45,23 +46,26 @@ class TLeave extends React.Component{
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({
+          confirmLoading: true,
+        });
+        setTimeout(() => {
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+          });
+        }, 2000);
         console.log('Received values of form: ', values);
         values['matterId']=this.props.matterId;
         values['uNum']=this.props.login.account.uNum;
         values['taskId']=this.props.taskId;
+        values['level']=this.props.level;
+        console.log(values)
         this.props.dispatch({ type: 'matterTLeave/approvalMatter', payload: values })
       }
     });
 
-    this.setState({
-      confirmLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
+    
   }
   handleCancel = () => {
     console.log('Clicked cancel button');
@@ -69,6 +73,22 @@ class TLeave extends React.Component{
       visible: false,
     });
   }
+
+// 打开图片Modal
+  showImg=(url)=>{
+    console.log(url)
+    this.setState({
+      previewImage: url,
+      previewVisible: true,
+    });
+  }
+  handleImgCancel = () => {
+    this.setState({
+      previewVisible: false,
+    });
+  }
+
+
 
   render(){
     const {matterTLeave}=this.props;
@@ -81,7 +101,6 @@ class TLeave extends React.Component{
     
     
     for(let i=0;i<cont;i++){
-        console.log(opinion[i])
         if(i==0){
             opinionTr.push(<tr key={i}>
                 <td className={styles.tdTitle}>单位意见</td>
@@ -125,6 +144,29 @@ class TLeave extends React.Component{
               </tr>)
         }
     }
+    let files=[];
+    if(tableData.file){
+      // console.log(tableData.file)
+      let filesArr=tableData.file.split(",");
+      
+      
+          for(let i=0;i<filesArr.length;i++){
+            files.push(
+                <div key={i} className='ant-upload-list-item ant-upload-list-item-done'  onClick={this.showImg.bind(this,filesArr[i])}>
+                  <div className='ant-upload-list-item-info'>
+                  <span>
+                    <a className='ant-upload-list-item-thumbnail' >
+                      <img src={filesArr[i]}/>
+                    </a>
+                  </span>
+                  </div>
+                  
+                </div>
+            )
+          }
+    }
+   
+
 
     const { visible, confirmLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
@@ -158,7 +200,11 @@ class TLeave extends React.Component{
                      </tr>
                      <tr>
                        <td className={styles.tdTitle}>请假证明</td>
-                       <td colSpan='3'></td>
+                       <td colSpan='3'>
+                         <div className='ant-upload-list ant-upload-list-picture-card'>
+                         {files}
+                         </div>
+                       </td>
                      </tr>
                      {opinionTr}
                    </tbody>
@@ -178,7 +224,7 @@ class TLeave extends React.Component{
                   </Row>
 
 
-
+                  {/* 审批弹出框 */}
                   <Modal title="审批"
                     visible={visible}
                     onOk={this.handleOk}
@@ -187,7 +233,9 @@ class TLeave extends React.Component{
                   >
                   <Form onSubmit={this.handleSubmit}>
                   <FormItem>
-                      {getFieldDecorator('opinion')(
+                      {getFieldDecorator('opinion',{
+                          rules: [{ required: true, message: '请选择意见' }],
+                        })(
                         <RadioGroup>
                           <Radio value="同意" checked={true} >同意</Radio>
                           <Radio value="不同意">不同意</Radio>
@@ -201,15 +249,23 @@ class TLeave extends React.Component{
                           <TextArea placeholder="请输入审批意见" rows={3} />
                          )}
                     </FormItem>
+                    <Signature form={this.props.form}></Signature>
                    </Form> 
-                  </Modal>        
+                  </Modal>
+                  {/* 证明文件弹出框 */}
+                  <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleImgCancel}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                  </Modal>
+
+
+                 
     </div>
     )
   }
 }
 
-function mapStateToProps({matterTLeave,login}) {
-  return {matterTLeave,login};
+function mapStateToProps({matterTLeave,login,approvalMatters}) {
+  return {matterTLeave,login,approvalMatters};
 }
 const TLeaveForm = Form.create()(TLeave);
 export default connect(mapStateToProps)(TLeaveForm);

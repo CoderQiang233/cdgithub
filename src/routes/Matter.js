@@ -117,6 +117,15 @@ import TCampusNetFaultRepair from '../components/matters/TCampusNetFaultRepair'
 import THouseProve from '../components/matters/THouseProve'
 // 教职工科研项目资金购置固定资产入库手续办理
 import TResearchProjects from '../components/matters/TResearchProjects'
+
+
+// 学生户口借用
+import SAccountBorrow from '../components/matters/SAccountBorrow'
+
+
+
+//教职工进修（高访学者）审批手续办理  
+import TFurtherApproval from '../components/matters/TFurtherApproval'
 class Matter extends React.Component{
   constructor(props){
     
@@ -146,342 +155,237 @@ class Matter extends React.Component{
           matter=='TLeave'&&
           <TLeave history={this.props.history}/>
         }
-        
-      </div>
-      <div>
         {
           matter=='SLostCard'&&
           <SLostCard history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TProofEmployment'&&
           <TProofEmployment history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TWorkPermit'&&
           <TWorkPermit history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TRegisterProcedures'&&
           <TRegisterProcedures history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TRetirementProcedures'&&
           <TRetirementProcedures history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TProofIncome'&&
           <TProofIncome history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TTrainingReimbursement'&&
           <TTrainingReimbursement history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TMarriage'&&
           <TMarriage history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TSettleInformation'&&
           <TSettleInformation history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SAccountCopy'&&
           <SAccountCopy history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SSettleProcedures'&&
           <SSettleProcedures history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SGraduationAccount'&&
           <SGraduationAccount history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SIDCardReplacement'&&
           <SIDCardReplacement history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCarInformationChange'&&
           <SCarInformationChange history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCarAccessProcedure'&&
           <SCarAccessProcedure history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SDropoutAccount'&&
           <SDropoutAccount history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCarInformationChange'&&
           <TCarInformationChange history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCarAccessProcedure'&&
           <TCarAccessProcedure history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TpoznCarAccessProcedure'&&
           <TpoznCarAccessProcedure history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCAccountBorrow'&&
           <TCAccountBorrow history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCAccountCopy'&&
           <TCAccountCopy history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCIDCardReplaceRecruitment'&&
           <TCIDCardReplaceRecruitment history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TPayHydropower'&&
           <TPayHydropower history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SBusinessPolicyAdvisory'&&
           <SBusinessPolicyAdvisory history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SEmploymentAgreement'&&
           <SEmploymentAgreement history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SAdjustChange'&&
           <SAdjustChange history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SBreachAgreement'&&
           <SBreachAgreement history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SEmploymentReportCard'&&
           <SEmploymentReportCard history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SEmploymentPolicyAdvice'&&
           <SEmploymentPolicyAdvice history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SAccommodationStudentsProve'&&
           <SAccommodationStudentsProve history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SDropoutDorm'&&
           <SDropoutDorm history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SWorkStudy'&&
           <SWorkStudy history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SLoanSubsidy'&&
           <SLoanSubsidy history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SManagementWork'&&
           <SManagementWork history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SSoldierSubsidy'&&
           <SSoldierSubsidy history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SMentalHealthWork'&&
           <SMentalHealthWork history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SProofReading'&&
           <SProofReading history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='AllMaterials'&&
           <AllMaterials history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TMedicalInsurance'&&
           <TMedicalInsurance history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TOrganizationLetter'&&
           <TOrganizationLetter history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SPostgraduateProofReading'&&
           <SPostgraduateProofReading history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TAcademicResults'&&
           <TAcademicResults history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TResearchProjectProcess'&&
           <TResearchProjectProcess history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SPartyRelationsIn'&&
           <SPartyRelationsIn history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TPartyRelationsIn'&&
           <TPartyRelationsIn history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SUserResetPassword'&&
           <SUserResetPassword history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCampusNetAccount'&&
           <SCampusNetAccount history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCampusNetUserLogout'&&
           <SCampusNetUserLogout history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCampusNetUsersRefund'&&
           <SCampusNetUsersRefund history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='SCampusNetFaultRepair'&&
           <SCampusNetFaultRepair history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TUserResetPassword'&&
           <TUserResetPassword history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCampusNetAccount'&&
           <TCampusNetAccount history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCampusNetUserLogout'&&
           <TCampusNetUserLogout history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TCampusNetFaultRepair'&&
           <TCampusNetFaultRepair history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='THouseProve'&&
           <THouseProve history={this.props.history}/>
         }
-      </div>
-      <div>
         {
           matter=='TResearchProjects'&&
           <TResearchProjects history={this.props.history}/>
+        }
+        {
+          matter=='SAccountBorrow'&&
+          <SAccountBorrow  history={this.props.history}></SAccountBorrow>
+        }
+        {
+          matter=='TFurtherApproval'&&
+          <TFurtherApproval  matterKey={matter} history={this.props.history}/>
         }
       </div>
 
