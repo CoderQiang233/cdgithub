@@ -8,116 +8,116 @@ import { Pagination } from 'antd';
 import Servicelist from '../components/Service/Servicelist';
   //标签
 const CheckableTag = Tag.CheckableTag;
-const tagsFromServer = ['人事部', '保卫处', '大学生就业管理处', '行政处'];
-
-const arr=[
-    {
-        id:1,
-        imgpath:require('../assets/images/service1.png'),
-        name:'人事部',
-        bottom:'显示底部内容1'
-  },
-  {
-      id:2,
-      imgpath:require('../assets/images/service2.png'),
-      name:'保卫处',
-      bottom:'显示底部内容显示底部内容显示底部内容显示底部内容2'
-  },
-  {
-      id:3,
-      imgpath:require('../assets/images/service3.png'),
-      name:'就业管理处',
-      bottom:'显示底部内容3'
-  },
-  {
-      id:4,
-      imgpath:require('../assets/images/service4.png'),
-      name:'行政处',
-      bottom:'显示底部内容4'
-  },
-  {
-      id:5,
-      imgpath:require('../assets/images/service5.png'),
-      name:'行政处',
-      bottom:'显示底部内容5'
-  },
-  {
-      id:6,
-      imgpath:require('../assets/images/service1.png'),
-      name:'行政处',
-      bottom:'显示底部内容6'
-  }
-  ,  {
-      id:7,
-      imgpath:require('../assets/images/service2.png'),
-      name:'行政处',
-      bottom:'显示底部内容7'
-  },
-  {
-      id:8,
-      imgpath:require('../assets/images/service3.png'),
-      name:'行政处',
-      bottom:'显示底部内容8'
-  },
-  {
-      id:9,
-      imgpath:require('../assets/images/service4.png'),
-      name:'行政处',
-      bottom:'显示底部内容9'
-  },
-  {
-      id:10,
-      imgpath:require('../assets/images/service5.png'),
-      name:'行政处',
-      bottom:'显示底部内容10'
-  },
-  {
-      id:11,
-      imgpath:require('../assets/images/service1.png'),
-      name:'行政处',
-      bottom:'显示底部内容11'
-  },
-  {
-      id:12,
-      imgpath:require('../assets/images/service2.png'),
-      name:'行政处',
-      bottom:'显示底部内容12'
-  },
-  {
-      id:13,
-      imgpath:require('../assets/images/service2.png'),
-      name:'人事部',
-      bottom:'显示底部内容13'
-  }
-  ,
-  {
-      id:14,
-      imgpath:require('../assets/images/service2.png'),
-      name:'保卫处',
-      bottom:'显示底部内容14'
-  }
-  ,
-  {
-      id:15,
-      imgpath:require('../assets/images/service2.png'),
-      name:'行政处',
-      bottom:'显示底部内容15'
-  }
-  ,
-  {
-      id:16,
-      imgpath:require('../assets/images/service2.png'),
-      name:'人事部',
-      bottom:'显示底部内容16'
-  }
-  ,
-  {
-      id:17,
-      imgpath:require('../assets/images/service2.png'),
-      name:'保卫处',
-      bottom:'显示底部内容17'
-  }
-]
+let tagsFromServer = [];
+let arr=[]
+// const arr=[
+//     {
+//         id:1,
+//         imgpath:require('../assets/images/service1.png'),
+//         name:'人事部',
+//         bottom:'显示底部内容1'
+//   },
+//   {
+//       id:2,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'保卫处',
+//       bottom:'显示底部内容显示底部内容显示底部内容显示底部内容2'
+//   },
+//   {
+//       id:3,
+//       imgpath:require('../assets/images/service3.png'),
+//       name:'就业管理处',
+//       bottom:'显示底部内容3'
+//   },
+//   {
+//       id:4,
+//       imgpath:require('../assets/images/service4.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容4'
+//   },
+//   {
+//       id:5,
+//       imgpath:require('../assets/images/service5.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容5'
+//   },
+//   {
+//       id:6,
+//       imgpath:require('../assets/images/service1.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容6'
+//   }
+//   ,  {
+//       id:7,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容7'
+//   },
+//   {
+//       id:8,
+//       imgpath:require('../assets/images/service3.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容8'
+//   },
+//   {
+//       id:9,
+//       imgpath:require('../assets/images/service4.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容9'
+//   },
+//   {
+//       id:10,
+//       imgpath:require('../assets/images/service5.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容10'
+//   },
+//   {
+//       id:11,
+//       imgpath:require('../assets/images/service1.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容11'
+//   },
+//   {
+//       id:12,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容12'
+//   },
+//   {
+//       id:13,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'人事部',
+//       bottom:'显示底部内容13'
+//   }
+//   ,
+//   {
+//       id:14,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'保卫处',
+//       bottom:'显示底部内容14'
+//   }
+//   ,
+//   {
+//       id:15,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'行政处',
+//       bottom:'显示底部内容15'
+//   }
+//   ,
+//   {
+//       id:16,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'人事部',
+//       bottom:'显示底部内容16'
+//   }
+//   ,
+//   {
+//       id:17,
+//       imgpath:require('../assets/images/service2.png'),
+//       name:'保卫处',
+//       bottom:'显示底部内容17'
+//   }
+// ]
 class Service extends React.Component{
 
   constructor(props){
@@ -139,13 +139,44 @@ class Service extends React.Component{
 
 // 数据初始化
 componentWillMount(){
-   let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
-   this.setState({
-    pagelist:list
-   })
+    this.props.dispatch({ type: 'serviceCenter/getAllMatters' });
+//    let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
+//    this.setState({
+//     pagelist:list
+//    })
 }
 
-
+componentWillReceiveProps(nextProps){
+    if(nextProps.serviceCenter.getMattersSuccess){
+       let list=nextProps.serviceCenter.AllMatters;
+       let arry=[];
+       console.log(list)
+       for(let i=0;i<list.length;i++){
+        arry.push({
+               id:list[i]['id'],
+               imgpath:require('../assets/images/service1.png'),
+               name:list[i]['dName'],
+               bottom:list[i]['matterName']
+           })
+       }
+       arr=arry;
+       console.log('00000000000')
+       console.log(arr)
+        this.setState({listArry:arry},function(){
+            let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
+            this.initPage(arr);
+            this.setState({pagelist:list})
+        })
+    }
+    if(nextProps.serviceCenter.getDepartmentsSuccess){
+        let department=nextProps.serviceCenter.Department;
+        let departmentArray=[];
+        for(let i=0;i<department.length;i++){
+            departmentArray.push(department[i]['dName'])
+        }
+        tagsFromServer=departmentArray;
+    }
+}
   //分页
 
   pageChange = (page) => {
@@ -235,7 +266,14 @@ initPage=(datalist)=>{
         pagelist:list
     })
 }
-  
+
+search=(value)=>{
+console.log(value);
+const data={matterName:value};
+this.props.dispatch({ type: 'serviceCenter/getSearchMatters', payload: data })
+}
+
+ 
   render(){
       //搜索
     const Search = Input.Search;
@@ -253,8 +291,8 @@ initPage=(datalist)=>{
             <Search
           placeholder="请输入搜索内容"
           style={{ width:600,paddingTop:10,paddingBottom:10}}
-          onSearch={value => console.log(value)}
-         />
+          onSearch={value => this.search(value)}
+             />
             </div>
            
         <div  className={styles.content}>
@@ -292,8 +330,8 @@ initPage=(datalist)=>{
 
 
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({serviceCenter}) {
+  return {serviceCenter};
 }
 
 export default connect(mapStateToProps)(Service);
