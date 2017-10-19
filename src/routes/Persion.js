@@ -72,7 +72,7 @@ class Persion extends React.Component{
             <div className={styles.container}>
               <div className={styles.breadcrumbBox}>
                 <Breadcrumb>
-                    <Breadcrumb.Item href="">
+                    <Breadcrumb.Item>
                       <Icon type="home" />
                       <Link to="/">首页</Link>
                     </Breadcrumb.Item>
