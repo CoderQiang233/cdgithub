@@ -10,7 +10,8 @@ export default {
   namespace: 'approvalMatters',
   state: {
     unList:[],
-    DoneList:[]
+    DoneList:[],
+    signatureUrl:null,
   },
   reducers: {
     getUnSuccess: function (state, {payload}) {
@@ -25,6 +26,13 @@ export default {
         return {
           ...state,
             DoneList
+        };
+    },
+    getSignatureSuccess:function (state, {payload}) {
+      let signatureUrl=payload.data;
+        return {
+          ...state,
+          signatureUrl
         };
     },
   },
@@ -56,8 +64,23 @@ export default {
        }else{
         message.error('获取失败...:(', 4);
        }
-
- },
+    },
+    *getSignature({payload},{call,put,select}){
+       const data = yield call(approvalService.getSignature,payload);
+       console.log(data);
+       if(data.ret==200){
+        if (data.data.code==1) {
+          yield put({
+            type: 'getSignatureSuccess',
+            payload: {data: data.data.url}
+        });
+        }else{
+          message.error(data.data.msg, 4);
+        }
+       }else{
+        message.error('获取失败...:(', 4);
+       }
+    }
     
   },
   subscriptions: {},

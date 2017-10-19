@@ -108,12 +108,13 @@ class UnTable extends React.Component{
     }
   }
 
-  jumpNextLink=(mName,mId,taskId)=>{
+  jumpNextLink=(mName,mId,taskId,level)=>{
      let data={};
      data={
        matter:mName,
        id:mId,
-       taskId:taskId
+       taskId:taskId,
+       level:level
      }
      hashHistory.push({ pathname: '/approvalMatters/approval', state: data })
   }
@@ -145,7 +146,7 @@ class UnTable extends React.Component{
       key: 'action',
       dataIndex:'',
       render: (text, record) => (
-          <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'])} >审批</a>          
+          <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'],record['level'])} >审批</a>          
       ),
     }];
     

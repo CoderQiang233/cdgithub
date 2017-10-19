@@ -61,13 +61,13 @@ function StudentItem() {
           </a>
       </div>
       <div>
-          <a href={"javascript"} >
+          <Link to="matter/SAccountBorrow" >
             <img src={require('../../assets/images/xuesheng/zxxshkjy.png')}/>
             <span>
                <strong>在校学生</strong>
             </span>
             <small>户口借用</small>
-          </a>
+          </Link>
       </div>
       <div>
           <a href={"javascript"} >

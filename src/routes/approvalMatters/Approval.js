@@ -25,11 +25,11 @@ class Approval extends React.Component{
     const matter=linkData.matter;
     const id=linkData.id;
     const taskId=linkData.taskId;
-    const status=0;
+    const level=linkData.level;
     let tableComponent;
 
     if(matter=='TLeave'){
-      tableComponent=<TLeave  matter={matter} matterId={id} status={status} taskId={taskId}  />
+      tableComponent=<TLeave  matter={matter} matterId={id}  taskId={taskId} level={level}  />
     }
 
     return(

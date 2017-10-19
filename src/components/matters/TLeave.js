@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal } from 'antd';
+import { Breadcrumb, Icon ,Tabs,Radio,Form, Input, Button,DatePicker,Upload, message,Col,Row,Modal,Popconfirm } from 'antd';
 const confirm = Modal.confirm;
 import { Router, Route, Link, hashHistory } from 'react-router';
 import styles from './Matters.less';
@@ -10,6 +10,10 @@ const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RangePicker = DatePicker.RangePicker;
+
+import config  from '../../utils/config';
+
+const { api } = config
 
 
 const dateFormat = 'YYYY-MM-DD';
@@ -37,14 +41,18 @@ class TLeave extends React.Component{
   onSubmit=(data)=>{
       data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
       data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
-      let uploadFile=data.uploadFile
-      let fileStr=[];
-      for(let i=0;i<uploadFile.length;i++){
-        fileStr.push(uploadFile[i].response.data.url)
+      console.log(data)
+      if(data.uploadFile){
+        let uploadFile=data.uploadFile
+        let fileStr=[];
+        for(let i=0;i<uploadFile.length;i++){
+          fileStr.push(uploadFile[i].response.data.url)
+        }
+        data.file=fileStr.join(',');
+        delete data.uploadFile;
+        delete data.dateRange;
       }
-      data.file=fileStr.join(',');
-      delete data.uploadFile;
-      delete data.dateRange;
+      
       console.log(data)
       this.props.dispatch(
         { type: 'matterTLeave/uploadTable', payload: data }
@@ -97,7 +105,7 @@ class TLeave extends React.Component{
     <div className={styles.normal}>
       <div className={styles.breadcrumbBox}>
                 <Breadcrumb>
-                    <Breadcrumb.Item href="">
+                    <Breadcrumb.Item>
                       <Icon type="home" />
                       <Link to="/">首页</Link>
                     </Breadcrumb.Item>
@@ -168,7 +176,7 @@ class CustomizedForm extends React.Component {
             super(props)
     
             this.state={
-              days:1,
+           days:1,   
             }      
                                             
   }
@@ -232,7 +240,7 @@ class CustomizedForm extends React.Component {
     const props = {
       
       name: 'file',
-      action: 'http://192.168.2.131/Public/cdzw/?service=Upload.upload',
+      action: api+'?service=Upload.upload',
       // headers: {
       //   authorization: 'authorization-text',
       // },
@@ -330,7 +338,7 @@ class CustomizedForm extends React.Component {
                        {getFieldDecorator('dateDays', {
                           rules: [{ required: true, message: '请输入您的请假天数' }],
                         })(
-                          <Input placeholder="请输入您请假天数" />
+                          <Input placeholder="请输入您的请假天数" />
                          )}
                          </FormItem>
                          </td>

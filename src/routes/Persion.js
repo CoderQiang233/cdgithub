@@ -86,7 +86,7 @@ class Persion extends React.Component{
                 <div className={styles.leftMenuBox}>
                   <div className={styles.center}>
                     <h1 className={styles.title}><span className={styles.blod}>个人</span>中心</h1>
-                    <h1 className={styles.etitle}><span className={styles.blod}>PERSION</span>CENTER</h1>
+                    <h1 className={styles.etitle}><span className={styles.blod}>PERSON</span>CENTER</h1>
                     <div className={styles.headImg}>
                       <img src={require("../assets/images/person/tx.jpg")}/>
                     </div>  
