@@ -26,10 +26,10 @@ export default {
   },
   effects: {
     *uploadTable ({payload}, {put, call,select}) {
-       const {data} = yield call(tLeaveService.uploadTLeave,payload);
+       const data = yield call(tLeaveService.uploadTLeave,payload);
 
-       if (data) {
-        if(data.code==1){
+       if (data.ret==200) {
+        if(data.data.code==1){
           message.success('提交成功.. :)',2,onclose=()=>{
             
             hashHistory.goBack();
@@ -46,19 +46,27 @@ export default {
 
     *getMatter ({payload},{put,call,select}){
       
-      const {data} = yield call(tLeaveService.getMatter,payload);
-      if(data){
-        yield put({
-          type: 'getMatterSuccess',
-          payload: {data: data}
-      });
+      const data = yield call(tLeaveService.getMatter,payload);
+      if(data.ret==200){
+        if(data.data.code==1){
+          yield put({
+            type: 'getMatterSuccess',
+            payload: {data: data.data}
+        });
+        }
+        else{
+          message.error('获取失败.. :(', 4);
+        }
+        
+      }else{
+        message.error('获取失败.. :(', 4);
       }
     },
     *approvalMatter({payload},{put,call,select}){
-      const {data} = yield call(tLeaveService.approvalMatter,payload);
+      const data = yield call(tLeaveService.approvalMatter,payload);
 
-      if(data){
-        if(data.code==1){
+      if(data.ret==200){
+        if(data.data.code==1){
           message.success('提交成功.. :)', 2,onclose=()=>{
 
            hashHistory.push('/');
@@ -67,7 +75,7 @@ export default {
           message.error('提交失败.. :(', 4);
         }
       }else{
-        message.error('发生了一些未知错误.. :(', 4);
+        message.error(data.msg+' :(', 4);
       }
       
     }

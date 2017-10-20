@@ -11,6 +11,9 @@ import Service from "./routes/Service.js";
 import Persion from "./routes/Persion.js";
 
 
+import InfoText from "./routes/InfoText.js";
+
+
 import ApprovalMatters from "./routes/approvalMatters/ApprovalMatters.js";
 import Approval from "./routes/approvalMatters/Approval.js";
 import ApprovalDone from "./routes/approvalMatters/ApprovalDone.js";
@@ -35,6 +38,7 @@ function RouterConfig({ history,app }) {
   return (
     <Router history={history}>
       <Route component={IndexPage} >
+        
         <Redirect from="/" to="/home"/>
         <Route path="/home" component={Home} />
         <Route path="/service" component={Service} />
@@ -44,9 +48,12 @@ function RouterConfig({ history,app }) {
           <Route path="/approvalMatters/approvalDone"  component={ApprovalDone}></Route>
         </Route>
         <Route path="/matter/:matter" component={Matter} />
+        <Route path="/infotext" component={InfoText} />
       </Route>
       <Route path="/login" component={Login} />
-      
+    
+     
+
     </Router>
   );
 }

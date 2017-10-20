@@ -128,7 +128,7 @@ class CustomizedForm extends React.Component {
     this.props.history.goBack();
   }
 
-  onChange1(checkedValues) {
+  onCheck(checkedValues) {
     console.log('checked = ', checkedValues);
   }
 
@@ -218,7 +218,7 @@ class CustomizedForm extends React.Component {
                          </FormItem></td>
                        <td className={styles.tdTitle}>补办类型</td>
                        <td>
-                       <CheckboxGroup options={plainOptions}  onChange={this.onChange1} />
+                       <CheckboxGroup options={plainOptions}  onChange={this.onCheck} />
                        </td>
                      </tr>
                      <tr>
