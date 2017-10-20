@@ -126,6 +126,11 @@ import SAccountBorrow from '../components/matters/SAccountBorrow'
 
 //教职工进修（高访学者）审批手续办理  
 import TFurtherApproval from '../components/matters/TFurtherApproval'
+//博士研究生缓考手续办理  
+import SDoctoralDelayed from '../components/matters/SDoctoralDelayed'
+//硕士研究生缓考手续办理  
+import SMasterDelayed from '../components/matters/SMasterDelayed'
+
 class Matter extends React.Component{
   constructor(props){
     
@@ -386,6 +391,14 @@ class Matter extends React.Component{
         {
           matter=='TFurtherApproval'&&
           <TFurtherApproval  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SDoctoralDelayed'&&
+          <SDoctoralDelayed  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SMasterDelayed'&&
+          <SMasterDelayed  matterKey={matter} history={this.props.history}/>
         }
       </div>
 

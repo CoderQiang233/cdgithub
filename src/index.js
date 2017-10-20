@@ -32,8 +32,8 @@ app.model(require("./models/approvalMatters"));
 app.model(require("./models/matterTLeave"));
 
 app.model(require("./models/matterTFurther"));
-
-
+app.model(require("./models/matterSDoctoralDelayed"));
+app.model(require("./models/matterSMasterDelayed"));
 app.model(require("./models/login"));
 
 

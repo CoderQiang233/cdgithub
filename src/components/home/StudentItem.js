@@ -78,6 +78,24 @@ function StudentItem() {
             <small>政治审查证明</small>
           </a>
       </div>
+      <div>
+          <a href={"#/matter/SDoctoralDelayed"} >
+            <img src={require('../../assets/images/xuesheng/yjszdsbb.png')}/>
+            <span>
+               <strong>博士研究生</strong>
+            </span>
+            <small>课程缓考</small>
+          </a>
+      </div>
+      <div>
+          <a href={"#/matter/SMasterDelayed"} >
+            <img src={require('../../assets/images/xuesheng/yjszdsbb.png')}/>
+            <span>
+               <strong>硕士研究生</strong>
+            </span>
+            <small>课程缓考</small>
+          </a>
+      </div>
     </div>
   );
 }
