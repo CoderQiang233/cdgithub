@@ -38,6 +38,8 @@ app.model(require("./models/matterSDoctoralRestudy"));
 app.model(require("./models/matterSMasterRestudy"));
 
 
+app.model(require("./models/matterSDoctoralDelayed"));
+app.model(require("./models/matterSMasterDelayed"));
 app.model(require("./models/login"));
 
 

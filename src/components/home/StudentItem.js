@@ -94,9 +94,27 @@ function StudentItem() {
                <strong>学生</strong>
             </span>
             <small>硕士研究生课程重修、重考手续办理</small>
+            </a>
+            </div>
+            <div>
+          <a href={"#/matter/SDoctoralDelayed"} >
+            <img src={require('../../assets/images/xuesheng/yjszdsbb.png')}/>
+            <span>
+               <strong>博士研究生</strong>
+            </span>
+            <small>课程缓考</small>
           </a>
       </div>
-    </div>
+      <div>
+          <a href={"#/matter/SMasterDelayed"} >
+            <img src={require('../../assets/images/xuesheng/yjszdsbb.png')}/>
+            <span>
+               <strong>硕士研究生</strong>
+            </span>
+            <small>课程缓考</small>
+          </a>
+      </div>
+      </div>
   );
 }
 
