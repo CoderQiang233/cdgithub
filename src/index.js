@@ -33,6 +33,10 @@ app.model(require("./models/matterTLeave"));
 
 app.model(require("./models/matterTFurther"));
 
+app.model(require("./models/matterSDoctoralRestudy"));
+
+app.model(require("./models/matterSMasterRestudy"));
+
 
 app.model(require("./models/login"));
 

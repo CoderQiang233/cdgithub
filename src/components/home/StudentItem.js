@@ -78,6 +78,24 @@ function StudentItem() {
             <small>政治审查证明</small>
           </a>
       </div>
+      <div>
+          <a href={"#/matter/SDoctoralRestudy"} >
+            <img src={require('../../assets/images/xuesheng/xszzsczm.png')}/>
+            <span>
+               <strong>学生</strong>
+            </span>
+            <small>博士研究生课程重修、重考手续办理</small>
+          </a>
+      </div>
+      <div>
+          <a href={"#/matter/SMasterRestudy"} >
+            <img src={require('../../assets/images/xuesheng/xszzsczm.png')}/>
+            <span>
+               <strong>学生</strong>
+            </span>
+            <small>硕士研究生课程重修、重考手续办理</small>
+          </a>
+      </div>
     </div>
   );
 }
