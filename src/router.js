@@ -41,7 +41,9 @@ function RouterConfig({ history,app }) {
         
         <Redirect from="/" to="/home"/>
         <Route path="/home" component={Home} />
-        <Route path="/service" component={Service} />
+        <Route path="/service" component={Service} >
+        <Route path="/service/:matterType" component={Service}></Route>
+        </Route>
         <Route path="/persion" component={Persion} />
         <Route path="/approvalMatters" component={ApprovalMatters} >
           <Route path="/approvalMatters/approval"  component={Approval}></Route>
