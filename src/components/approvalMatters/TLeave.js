@@ -30,6 +30,7 @@ class TLeave extends React.Component{
   componentWillMount(){
     let data={};
     const id=this.props.matterId;
+    console.log("4564"+id);
     data['id']=id;
     this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data })
   }

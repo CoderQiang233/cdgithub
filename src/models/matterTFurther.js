@@ -45,9 +45,46 @@ export default {
          
       }
     },
-
+    *getMatter ({payload},{put,call,select}){
+      console.log(33333);
+      console.log(payload);
+      const data = yield call(tFurtherService.getMatter,payload);
+      if(data.ret==200){
+        if(data.data.code==1){
+          yield put({
+            type: 'getMatterSuccess',
+            payload: {data: data.data}
+        });
+        }
+        else{
+          message.error('获取失败.. :(', 4);
+        }
+        
+      }else{
+        message.error('获取失败.. :(', 4);
+      }
+    },
     *approvalMatter({payload},{put,call,select}){
-      const {data} = yield call(tLeaveService.approvalMatter,payload);
+      console.log(6688);
+      console.log(payload);
+      const {data} = yield call(tFurtherService.approvalMatterone,payload);
+
+      if(data){
+        if(data.code==1){
+          message.success('提交成功.. :)', 2,onclose=()=>{
+
+           hashHistory.push('/');
+         });
+        }else{
+          message.error('提交失败.. :(', 4);
+        }
+      }else{
+        message.error('发生了一些未知错误.. :(', 4);
+      }
+      
+    },
+    *approvalMatterFurther({payload},{put,call,select}){
+      const {data} = yield call(tFurtherService.approvalMattertwo,payload);
 
       if(data){
         if(data.code==1){
