@@ -1,13 +1,13 @@
 
 import {message} from 'antd';
-import * as tLeaveService from '../services/matters/tLeave';
+import * as SPoliticalService from '../services/matters/sPolitical';
 import {storageTokenKey} from '../utils/constant';
 import {routerRedux} from 'dva/router';
 import {  hashHistory } from 'react-router';
 
 
 export default {
-  namespace: 'matterTLeave',
+  namespace: 'matterSPolitical',
   state: {
     tableData:{},
     opinion:{}
@@ -26,10 +26,12 @@ export default {
   },
   effects: {
     *uploadTable ({payload}, {put, call,select}) {
-       const data = yield call(tLeaveService.uploadTLeave,payload);
-
-       if (data.ret==200) {
-        if(data.data.code==1){
+      console.log(222222222222);
+      console.log(payload);
+       const {data} = yield call(SPoliticalService.uploadSPolitical,payload);
+               console.log(data);
+       if (data) {
+        if(data.code==1){
           message.success('提交成功.. :)',2,onclose=()=>{
             
             hashHistory.goBack();
@@ -44,29 +46,11 @@ export default {
       }
     },
 
-    *getMatter ({payload},{put,call,select}){
-    
-      const data = yield call(tLeaveService.getMatter,payload);
-      if(data.ret==200){
-        if(data.data.code==1){
-          yield put({
-            type: 'getMatterSuccess',
-            payload: {data: data.data}
-        });
-        }
-        else{
-          message.error('获取失败.. :(', 4);
-        }
-        
-      }else{
-        message.error('获取失败.. :(', 4);
-      }
-    },
     *approvalMatter({payload},{put,call,select}){
-      const data = yield call(tLeaveService.approvalMatter,payload);
+      const {data} = yield call(tLeaveService.approvalMatter,payload);
 
-      if(data.ret==200){
-        if(data.data.code==1){
+      if(data){
+        if(data.code==1){
           message.success('提交成功.. :)', 2,onclose=()=>{
 
            hashHistory.push('/');
@@ -75,7 +59,7 @@ export default {
           message.error('提交失败.. :(', 4);
         }
       }else{
-        message.error(data.msg+' :(', 4);
+        message.error('发生了一些未知错误.. :(', 4);
       }
       
     }

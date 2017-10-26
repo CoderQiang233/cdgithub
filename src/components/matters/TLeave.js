@@ -219,6 +219,7 @@ class CustomizedForm extends React.Component {
         }
         delete values.uploadFile;
         delete values.dateRange;
+        values.matterKey=this.props.matterKey
         console.log(values)
         this.props.dispatch(
           { type: 'matterTLeave/uploadTable', payload: values }

@@ -9,23 +9,38 @@ import {  hashHistory } from 'react-router';
 export default {
   namespace: 'approvalMatters',
   state: {
-    unList:[],
-    DoneList:[],
+    unList:{},
+    DoneList:{},
     signatureUrl:null,
+    loading:false
   },
   reducers: {
     getUnSuccess: function (state, {payload}) {
-      let unList=payload.data;
+      let data=payload.data;
+      let unList={
+        list:data.list,
+        total:data.total,
+        current:data.current,
+        pageSize:data.pageSize
+      };
         return {
           ...state,
-            unList
+            unList,
+            loading:false
         };
     },
     getDoneSuccess: function (state, {payload}) {
-      let DoneList=payload.data;
+      let data=payload.data;
+      let DoneList={
+        list:data.list,
+        total:data.total,
+        current:data.current,
+        pageSize:data.pageSize
+      };
         return {
           ...state,
-            DoneList
+          DoneList,
+          loading:false
         };
     },
     getSignatureSuccess:function (state, {payload}) {
@@ -35,34 +50,49 @@ export default {
           signatureUrl
         };
     },
+    showLoading(state, action){
+      return { ...state, loading: true };
+    },
+    closeLoading(state,action){
+      return{...state,loading:false}
+    }
   },
   effects: {
     *getUnMatters({payload},{call,put,select}){
+      yield put({ type: 'showLoading' });
          const data = yield call(approvalService.getUnMatters,payload);
+         
          if(data.ret==200){
           if (data.data.code==1) {
                 yield put({
                   type: 'getUnSuccess',
-                  payload: {data: data.data.list}
+                  payload: {data: data.data}
               });
+            }else{
+              yield put({ type: 'closeLoading' });
             }
          }else{
           message.error('获取失败...:(', 4);
+          yield put({ type: 'closeLoading' });
          }
          
 
     },
     *getDoneMatters({payload},{call,put,select}){
+      yield put({ type: 'showLoading' });
       const data = yield call(approvalService.getDoneMatters,payload);
       if(data.ret==200){
         if (data.data.code==1) {
           yield put({
             type: 'getDoneSuccess',
-            payload: {data: data.data.list}
+            payload: {data: data.data}
         });
+          }else{
+            yield put({ type: 'closeLoading' });
           }
        }else{
         message.error('获取失败...:(', 4);
+        yield put({ type: 'closeLoading' });
        }
     },
     *getSignature({payload},{call,put,select}){

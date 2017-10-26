@@ -13,7 +13,7 @@ export default function ajaxApi(url, option = {}) {
     method = option.method || 'get',
     data = option.data || {};
     let token = sessionStorage.getItem(storageTokenKey);
-    data['token']=token;
+    //data['token']=token;
     
   switch (method) {
     case 'get':
@@ -22,11 +22,11 @@ export default function ajaxApi(url, option = {}) {
     case 'post':
       params.headers = {};
       params.method='POST';
-    //   params.mode='no-cors';
+    //params.mode='no-cors';
       params.body = formDataCode(data);
       
       if(token){
-        params.headers['Authorization']=token;
+        params.headers['authorization']=token;
       }
       params.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
      

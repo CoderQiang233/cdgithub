@@ -21,7 +21,7 @@ export async function tlogin (data) {
 export async function getUserInfo () {
   
   let data={
-    service:'User_UserInfo.GetUserInfo'
+    service:'User_UserInfo.GetUserInfo',
   };
   return ajaxApi(api,{method:"post",data})
 }

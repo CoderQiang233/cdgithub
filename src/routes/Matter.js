@@ -122,7 +122,10 @@ import TResearchProjects from '../components/matters/TResearchProjects'
 // 学生户口借用
 import SAccountBorrow from '../components/matters/SAccountBorrow'
 
-
+// 学生政治审查证明
+import SPoliticalCensorship from '../components/matters/SPoliticalCensorship'
+// 教职工政治审查证明
+import TPoliticalCensorship from '../components/matters/TPoliticalCensorship'
 
 //教职工进修（高访学者）审批手续办理  
 import TFurtherApproval from '../components/matters/TFurtherApproval'
@@ -395,6 +398,14 @@ class Matter extends React.Component{
         {
           matter=='TFurtherApproval'&&
           <TFurtherApproval  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SPoliticalCensorship'&&
+          <SPoliticalCensorship  history={this.props.history}/>
+        }
+        {
+          matter=='TPoliticalCensorship'&&
+          <TPoliticalCensorship  history={this.props.history}/>
         }
         {
           matter=='SDoctoralRestudy'&&

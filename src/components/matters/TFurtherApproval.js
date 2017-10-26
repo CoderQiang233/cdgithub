@@ -177,6 +177,7 @@ class CustomizedForm extends React.Component {
         values.uNum = this.props.account.uNum;
         values.uName = this.props.account.uName;
         values.uSex = this.props.account.uSex;
+        values.department=this.props.account.uDepartment;
         values.further_startdate=values.further_date[0];
         values.further_enddate=values.further_date[1];
         let matterName = '进修';
@@ -364,13 +365,19 @@ class CustomizedForm extends React.Component {
                   <FormItem>
                     {getFieldDecorator('further_education', {
                       rules: [{ required: true, message: '请输入请假时间' }],
+                      rules: [{ required: true, message: '请输入拟进修形式' }],
                     })(
-                      <RadioGroup value={1}>
+                      <RadioGroup >
                         <Radio style={radioStyle} value={1}>出国研修  </Radio>
                         <Radio style={radioStyle} value={2}>国内访问学者</Radio>
                         <Radio style={radioStyle} value={3}>高级研修班 </Radio>
                         <Radio style={radioStyle} value={4}>国内进修</Radio>
                         <Radio style={radioStyle} value={5}>培训</Radio>
+                        <Radio style={radioStyle} value={"出国研修"}>出国研修  </Radio>
+                        <Radio style={radioStyle} value={"国内访问学者"}>国内访问学者</Radio>
+                        <Radio style={radioStyle} value={"高级研修班"}>高级研修班 </Radio>
+                        <Radio style={radioStyle} value={"国内进修"}>国内进修</Radio>
+                        <Radio style={radioStyle} value={"培训"}>培训</Radio>
                       </RadioGroup>
                       )}
                   </FormItem>

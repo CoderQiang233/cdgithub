@@ -8,9 +8,9 @@ const { api } = config
 
 
 
-//教职工请假事项 
-export async function uploadTLeave (data) {
-    
-    data.service='Matter_TeacherLeave.UploadTLeave';
+//获取教师树信息
+export async function getTeacherTree () {
+    let data={};
+    data.service='User_UserInfo.GetTeacherTree';
     return ajaxApi(api,{method:"post",data})
   }

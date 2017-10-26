@@ -12,7 +12,8 @@ export default {
     getDepartmentsSuccess:false,
     SearchMatter:[],
     getSearchMattersSuccess:false,
-    
+    homeTMatters:[],
+    homeSMatters:[]
   },
   reducers: {
     getAllMatterSuccess(state,action){
@@ -31,11 +32,20 @@ export default {
       // console.log('000000');
       // console.log(AllMatters)
       return {...state,AllMatters}
-    }
+    },
+    getHomeTMattersSuccess(state,action){
+      let homeTMatters=action.payload.tMatters;
+      return {...state,homeTMatters}
+    },
+    getHomeSMattersSuccess(state,action){
+      let homeSMatters=action.payload.sMatters;
+      console.log('123:'+homeSMatters)
+      return {...state,homeSMatters}
+    },
   },
   effects: {
     *getAllMatters({payload}, { put, call, select }) {
-      const data = yield call(serviceCenterService.getAllMatters);
+      const data = yield call(serviceCenterService.getAllMatters,payload);
       console.log(data)
       if(data.ret==200){
         if(data.data.code==1){
@@ -60,5 +70,25 @@ export default {
           }
         }
      },
+     *getHomeTMatters({payload},{ put, call, select }) {
+      const data = yield call(serviceCenterService.getHomeTMatters);
+      if(data.ret==200){
+       if(data.data.code==1){
+           yield put({
+             type: 'getHomeTMattersSuccess',
+             payload: {tMatters: data.data.tMatters}});
+         }
+       }
+    },
+    *getHomeSMatters({payload},{ put, call, select }) {
+      const data = yield call(serviceCenterService.getHomeSMatters);
+      if(data.ret==200){
+       if(data.data.code==1){
+           yield put({
+             type: 'getHomeSMattersSuccess',
+             payload: {sMatters: data.data.sMatters}});
+         }
+       }
+    },
   }
 }

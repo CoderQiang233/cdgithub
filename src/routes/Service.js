@@ -32,7 +32,11 @@ class Service extends React.Component{
 
 // 数据初始化
 componentWillMount(){
-    this.props.dispatch({ type: 'serviceCenter/getAllMatters' });
+    let data={};
+    if(this.props.params.matterType){
+        data={matterType:this.props.params.matterType}
+    }
+    this.props.dispatch({ type: 'serviceCenter/getAllMatters' ,payload:data});
 //    let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
 //    this.setState({
 //     pagelist:list
@@ -46,7 +50,7 @@ componentWillReceiveProps(nextProps){
        for(let i=0;i<list.length;i++){
         arry.push({
                id:list[i]['id'],
-               imgpath:require('../assets/images/service1.png'),
+               imgpath:list[i]['img1'],
                name:list[i]['dName'],
                bottom:list[i]['matterName'],
                matterKey:list[i]['matterKey']
