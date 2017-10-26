@@ -173,6 +173,7 @@ class CustomizedForm extends React.Component {
         values.uNum = this.props.account.uNum;
         values.uName = this.props.account.uName;
         values.uSex = this.props.account.uSex;
+        values.department=this.props.account.uDepartment;
         let matterName = '教职工政治审查';
         values.matterName = matterName;
         this.props.onSubmit(values);

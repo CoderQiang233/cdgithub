@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TLeave.less';
+import styles from './matter.less';
 import { connect } from 'dva';
 import { Breadcrumb, Icon ,Radio,Form, Input, Button, message,Col,Row,Modal } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
@@ -30,6 +30,7 @@ class TLeave extends React.Component{
   componentWillMount(){
     let data={};
     const id=this.props.matterId;
+    console.log("4564"+id);
     data['id']=id;
     this.props.dispatch({ type: 'matterTLeave/getMatter', payload: data })
   }
