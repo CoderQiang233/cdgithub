@@ -2,6 +2,7 @@ import {message} from 'antd';
 import * as loginService from '../services/login';
 import {storageTokenKey} from '../utils/constant';
 import {routerRedux} from 'dva/router';
+import {  hashHistory } from 'react-router';
 export default {
   namespace: 'login',
   state: {
@@ -117,9 +118,7 @@ export default {
     * enterUser ({
       payload,
     }, {put, take}) {
-      yield [put({type: 'checkToken'}), put({type: 'queryUser'})];
-      yield [take('app/hasToken'), take('app/queryUserSuccess')];
-      onComplete();
+      yield [put({type: 'checkToken'})];
     },
     * checkToken ({
       payload,
@@ -130,7 +129,7 @@ export default {
       const token = sessionStorage.getItem(storageTokenKey);
      
       if (token) {
-          yield put({type: 'hasToken'});
+          yield [put({type: 'hasToken'}), put({type: 'queryUser'})];
       } else {
           yield put({type: 'userFail'});
       }
@@ -138,13 +137,17 @@ export default {
      * queryUser ({
      payload
     }, {put, call,select}) {
-      const {data} = yield call(loginService.getUserInfo);
-      if (data) {
-        
+      const data = yield call(loginService.getUserInfo);
+      if (data.ret==200) {     
           yield put({
               type: 'queryUserSuccess',
-              payload: {account: data.data}
+              payload: {account: data.data.data}
           });
+      }
+      else if(data.ret==401){
+        message.error(data.msg+'.. :(', 3,onclose=()=>{        
+          hashHistory.push('login');
+        });
       }
       },
   },
