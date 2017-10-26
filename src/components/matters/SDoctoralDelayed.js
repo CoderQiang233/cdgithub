@@ -52,7 +52,7 @@ onSubmit = (data) => {
       });
     } else {
       let uRole = sessionStorage.getItem('uRole');
-      if (uRole == 1) {
+      if (uRole != 1) {
         Modal.warning({
           title: '该事项为学生事项',
         });
@@ -175,8 +175,8 @@ class CustomizedForm extends React.Component {
           values.uNum = this.props.account.uNum;
           values.uName = this.props.account.uName;
 
-          let matterName = '缓考';
-          values.matterName = matterName;
+   
+        
           this.props.onSubmit(values);
         }
       });

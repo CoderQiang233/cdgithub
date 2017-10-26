@@ -52,7 +52,7 @@ onSubmit = (data) => {
       });
     } else {
       let uRole = sessionStorage.getItem('uRole');
-      if (uRole == 1) {
+      if (uRole != 1) {
         Modal.warning({
           title: '该事项为学生事项',
         });

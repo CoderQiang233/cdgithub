@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './Approval.less';
 import TLeave from '../../components/approvalMatters/TLeave.js';
-
+import SDoctoralDelayed from '../../components/approvalMatters/SDoctoralDelayed.js';
 
 class Approval extends React.Component{
   constructor(props){
@@ -30,6 +30,9 @@ class Approval extends React.Component{
 
     if(matter=='TLeave'){
       tableComponent=<TLeave  matter={matter} matterId={id}  taskId={taskId} level={level}  />
+    }
+    if(matter=='SDoctoralDelayed'){
+      tableComponent=<SDoctoralDelayed  matter={matter} matterId={id}  taskId={taskId} level={level}   />
     }
 
     return(

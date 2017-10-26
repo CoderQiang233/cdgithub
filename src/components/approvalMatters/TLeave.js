@@ -98,7 +98,7 @@ class TLeave extends React.Component{
        let opinionTr=[];
     
        let cont=opinion.length;
-    
+     
     
     for(let i=0;i<cont;i++){
         if(i==0){
