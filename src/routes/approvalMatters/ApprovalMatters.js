@@ -19,15 +19,6 @@ class ApprovalMatters extends React.Component{
      }  
   }
   callback=(key)=> {
-    // if(key==1){
-    //   let data={};
-    //   data['uName']=this.props.login.account.uName;
-    //   this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
-    // }else{
-    //   let data={};
-    //   data['uName']=this.props.login.account.uName;
-    //   this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
-    // }
   }
 
   componentWillMount(){
@@ -48,8 +39,6 @@ class ApprovalMatters extends React.Component{
       });
     }
 
-  }
-  componentDidMount(){
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
     if(!this.props.login.account.uName){
@@ -58,17 +47,38 @@ class ApprovalMatters extends React.Component{
 
     this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
     this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
+
+  }
+ 
+  getUnMatters=(pageNum)=>{
+    let data={};
+    data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+    if(!this.props.login.account.uName){
+      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
+    }
+    data['current']=pageNum;
+    this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
+  }
+
+  getDoneMatters=(pageNum)=>{
+    let data={};
+    data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+    if(!this.props.login.account.uName){
+      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
+    }
+    data['current']=pageNum;
+    this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
   }
   
   render(){
 
-    let unComponent=<UnTable list={this.props.approvalMatters.unList} />;
+    let unComponent=<UnTable list={this.props.approvalMatters.unList} loading={this.props.approvalMatters.loading} getUnMatters={this.getUnMatters} />;
     if(this.props.children){
       if(this.props.children.type.WrappedComponent.name=="Approval"){
          unComponent=this.props.children;
       }
     }
-    let doneComponent=<DoneTable list={this.props.approvalMatters.DoneList} arr={111}></DoneTable>;
+    let doneComponent=<DoneTable list={this.props.approvalMatters.DoneList} loading={this.props.approvalMatters.loading}  getDoneMatters={this.getDoneMatters} ></DoneTable>;
     if(this.props.children){
       if(this.props.children.type.WrappedComponent.name=="ApprovalDone"){
         doneComponent=this.props.children;
@@ -122,13 +132,10 @@ class UnTable extends React.Component{
  
 
   render(){
+
+    const dataList=this.props.list;
     
     const columns = [
-    //   {
-    //   title: '序号',
-    //   dataIndex: 'index',
-    //   key: 'index',
-    // }, 
     {
       title: '事项名称',
       dataIndex: 'matterName',
@@ -149,12 +156,21 @@ class UnTable extends React.Component{
           <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'],record['level'])} >审批</a>          
       ),
     }];
-    
-    const arr=this.props.list;
+
+    const pagination = {
+      total:parseInt(dataList.total),
+      current:parseInt(dataList.current),
+      pageSize:parseInt(dataList.pageSize),
+      onChange: (pageNumber)=>{
+        console.log(pageNumber);
+        this.props.getUnMatters(pageNumber)
+      },
+    };
+console.log(pagination)
 
     return(
       <div>
-        <Table columns={columns} dataSource={arr} />
+        <Table loading={this.props.loading} rowKey={record => record.taskId} columns={columns} dataSource={dataList.list} pagination={pagination} />
       </div>
     )
   }
@@ -181,7 +197,7 @@ class DoneTable extends React.Component{
 
 
   render(){
-
+    const dataList=this.props.list;
     const columns = [
     //   {
     //   title: '序号',
@@ -208,11 +224,18 @@ class DoneTable extends React.Component{
         <a onClick={this.jumpNextLink.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1],record['taskId'])}>查看</a>
       ),
     }];
-    const arr = this.props.list;
-    
+    const pagination = {
+      total:parseInt(dataList.total),
+      current:parseInt(dataList.current),
+      pageSize:parseInt(dataList.pageSize),
+      onChange: (pageNumber)=>{
+        console.log(pageNumber);
+        this.props.getDoneMatters(pageNumber)
+      },
+    };
     return(
       <div>
-        <Table columns={columns} dataSource={arr} />
+        <Table  loading={this.props.loading} rowKey={record => record.taskId} columns={columns} dataSource={dataList.list} pagination={pagination} />
       </div>
     )
   }

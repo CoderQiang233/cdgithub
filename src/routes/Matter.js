@@ -129,6 +129,15 @@ import TPoliticalCensorship from '../components/matters/TPoliticalCensorship'
 
 //教职工进修（高访学者）审批手续办理  
 import TFurtherApproval from '../components/matters/TFurtherApproval'
+//博士研究生课程重修、重考手续办理
+import SDoctoralRestudy from '../components/matters/SDoctoralRestudy'
+//博士研究生课程重修、重考手续办理
+import SMasterRestudy from '../components/matters/SMasterRestudy'
+//博士研究生缓考手续办理  
+import SDoctoralDelayed from '../components/matters/SDoctoralDelayed'
+//硕士研究生缓考手续办理  
+import SMasterDelayed from '../components/matters/SMasterDelayed'
+
 class Matter extends React.Component{
   constructor(props){
     
@@ -397,6 +406,20 @@ class Matter extends React.Component{
         {
           matter=='TPoliticalCensorship'&&
           <TPoliticalCensorship  history={this.props.history}/>
+          matter=='SDoctoralRestudy'&&
+          <SDoctoralRestudy  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SMasterRestudy'&&
+          <SMasterRestudy  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SDoctoralDelayed'&&
+          <SDoctoralDelayed  matterKey={matter} history={this.props.history}/>
+        }
+        {
+          matter=='SMasterDelayed'&&
+          <SMasterDelayed  matterKey={matter} history={this.props.history}/>
         }
       </div>
 

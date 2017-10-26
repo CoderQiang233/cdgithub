@@ -37,27 +37,7 @@ class TLeave extends React.Component{
   // }
 
 
-// 提交表单
-  onSubmit=(data)=>{
-      data.dateStart=moment(data.dateStart).format("YYYY-MM-DD");
-      data.dateEnd=moment(data.dateEnd).format("YYYY-MM-DD");
-      console.log(data)
-      if(data.uploadFile){
-        let uploadFile=data.uploadFile
-        let fileStr=[];
-        for(let i=0;i<uploadFile.length;i++){
-          fileStr.push(uploadFile[i].response.data.url)
-        }
-        data.file=fileStr.join(',');
-        delete data.uploadFile;
-        delete data.dateRange;
-      }
-      
-      console.log(data)
-      this.props.dispatch(
-        { type: 'matterTLeave/uploadTable', payload: data }
-      )
-  }
+
 // 判断是否登录
   isLogin=(key)=>{
     console.log(key)
@@ -161,7 +141,7 @@ class TLeave extends React.Component{
             </div>
           </TabPane>
           <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
-            <CustomizedForm account={this.props.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
+            <CustomizedForm account={this.props.login.account}  dispatch={this.props.dispatch} history={this.props.history} matterKey={this.props.matterKey}/>
           </TabPane>
       </Tabs>
       </div>
@@ -225,7 +205,24 @@ class CustomizedForm extends React.Component {
           matterName+='（1个月以上）'
         }
         values.matterName=matterName;
-        this.props.onSubmit(values);
+
+        values.dateStart=moment(values.dateStart).format("YYYY-MM-DD");
+        values.dateEnd=moment(values.dateEnd).format("YYYY-MM-DD");
+        if(values.uploadFile){
+          let uploadFile=values.uploadFile
+          let fileStr=[];
+          for(let i=0;i<uploadFile.length;i++){
+            fileStr.push(uploadFile[i].response.data.url)
+          }
+          values.file=fileStr.join(',');
+        }
+        delete values.uploadFile;
+        delete values.dateRange;
+        values.matterKey=this.props.matterKey
+        console.log(values)
+        this.props.dispatch(
+          { type: 'matterTLeave/uploadTable', payload: values }
+        )
       }
     });
   }
@@ -410,5 +407,5 @@ function mapStateToProps({matterTLeave,login}) {
 
   
 }
-;
+
 export default connect(mapStateToProps)(TLeave);

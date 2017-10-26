@@ -16,14 +16,22 @@ export default {
   },
   reducers: {
     queryUserAllDoneThingSuccess(state,action){
+      let data=action.payload.data
       const MyAllDoneTingProps={
-          dataSource:action.payload.list
+          dataSource:data.list,
+          current:data.current,
+          pageSize:data.pageSize,
+          total:data.total
       };
       return {...state,MyAllDoneTingProps,loading: false,};
     },
     queryUserAllUnDoneThingSuccess(state,action){
+      let data=action.payload.data
       const MyAllUnDoneTingProps={
-        dataSource:action.payload.list
+        dataSource:data.list,
+        current:data.current,
+        pageSize:data.pageSize,
+        total:data.total
     };
     return {...state,MyAllUnDoneTingProps,loading: false,};
      
@@ -64,7 +72,7 @@ export default {
            yield put({
              type: 'queryUserAllDoneThingSuccess',
              payload: {
-               list: data.data.list,
+               data: data.data,
                // total: data.page.total,
                // current: data.page.current
              }
@@ -88,7 +96,7 @@ export default {
           yield put({
             type: 'queryUserAllUnDoneThingSuccess',
             payload: {
-              list: data.data.list,
+              data: data.data,
               // total: data.page.total,
               // current: data.page.current
             }

@@ -16,6 +16,9 @@ class Homelist extends React.Component {
 
 activeMenu=(id)=>{
 
+  if(id==3){
+    hashHistory.push('ApprovalMatters')
+  }
     this.setState({
 
         activemenu:id,
@@ -62,10 +65,6 @@ activeMenu=(id)=>{
         {
           this.state.activemenu ==2 &&
          <StudentItem />
-        }
-        {
-          this.state.activemenu ==3 &&
-          hashHistory.push('ApprovalMatters')
         }
 
        </Row>

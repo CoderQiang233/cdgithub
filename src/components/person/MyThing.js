@@ -44,10 +44,6 @@ class MyThing extends React.Component{
   }
 
   componentDidMount() {
-    // const isLogin=this.props.login.isLogin;
-    // if(!isLogin){
-    //   hashHistory.push('/login')
-    // }else{
       let data={};
       data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
       if(!this.props.login.account.uName){
@@ -61,17 +57,37 @@ class MyThing extends React.Component{
         type: 'persion/queryUserAllDoneThing',
         payload: data,
       });
-    // }
-    
-    
-  
  }
 
-//  componentWillReceiveProps(nextProps) {
-//    if(this.props.persion.login.account.uName){
-//     console.log(1)
-//    }
-//  }
+  getUnDoneThing=(page)=>{
+    let data={};
+    data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+    if(!this.props.login.account.uName){
+      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
+    }
+    if(page){
+      data['current']=page
+    }
+    this.props.dispatch({
+      type: 'persion/queryUserAllUnDoneThing',
+      payload: data,
+    });
+  }
+
+  getDoneThing=(page)=>{
+    let data={};
+    data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
+    if(!this.props.login.account.uName){
+      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
+    }
+    if(page){
+      data['current']=page
+    }
+    this.props.dispatch({
+      type: 'persion/queryUserAllDoneThing',
+      payload: data,
+    });
+  }
   
     
    render(){
@@ -80,12 +96,12 @@ class MyThing extends React.Component{
        <Tabs defaultActiveKey="1" onChange={this.callback}  className={styles.tabContent}>
        <TabPane  tab="办理中事项" key="1">
          <div className={styles.tabContent}>
-         <AllUnThing {...this.props.persion.MyAllUnDoneTingProps} loading={this.props.persion.loading} flowChartPath={this.props.persion.flowChartPath} dispatch={this.props.dispatch} ></AllUnThing>
+         <AllUnThing {...this.props.persion.MyAllUnDoneTingProps} getUnDoneThing={this.getUnDoneThing} loading={this.props.persion.loading} flowChartPath={this.props.persion.flowChartPath} dispatch={this.props.dispatch} ></AllUnThing>
          </div>
        </TabPane>
        <TabPane tab="办理完毕事项" key="2">
          <div className={styles.tabContent}>
-         <AllDoneThing {...this.props.persion.MyAllDoneTingProps} loading={this.props.persion.loading}></AllDoneThing>
+         <AllDoneThing {...this.props.persion.MyAllDoneTingProps} getDoneThing={this.getDoneThing} loading={this.props.persion.loading}></AllDoneThing>
          </div>
         </TabPane>
        {/* <TabPane tab="办理中事项" key="3">
@@ -161,11 +177,20 @@ class AllUnThing extends React.Component{
     }];
 
     const {loading,
-      dataSource}=this.props
+      dataSource}=this.props;
 
+      const pagination = {
+        total:parseInt(this.props.total),
+        current:parseInt(this.props.current),
+        pageSize:parseInt(this.props.pageSize),
+        onChange: (pageNumber)=>{
+          console.log(pageNumber);
+          this.props.getUnDoneThing(pageNumber)
+        },
+      };
     return(
       <div>
-      <Table columns={columns}  dataSource={dataSource}  loading={loading}
+      <Table rowKey={record => record.id} columns={columns}  dataSource={dataSource}  loading={loading} pagination={pagination}
            
               bordered />
               <Modal
@@ -252,10 +277,24 @@ class AllDoneThing extends React.Component{
       )
     }];
 
-
+    // const pagination={
+    //   total:parseInt(this.props.total),
+    //   current:parseInt(this.props.current),
+    //   pageSize:parseInt(this.props.pageSize),
+    //   onChange: ()=>{},
+    // }
+    const pagination = {
+      total:parseInt(this.props.total),
+      current:parseInt(this.props.current),
+      pageSize:parseInt(this.props.pageSize),
+      onChange: (pageNumber)=>{
+        console.log(pageNumber);
+        this.props.getDoneThing(pageNumber)
+      },
+    };
     return(
 <div>
-<Table columns={columns}  dataSource={dataSource}  loading={loading}
+<Table rowKey={record => record.id} columns={columns}  dataSource={dataSource} pagination={pagination}  loading={loading}
      
         bordered />
                <Modal

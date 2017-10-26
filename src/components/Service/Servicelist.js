@@ -1,6 +1,7 @@
 import React from 'react';
 import {Row,Col} from 'antd';
 import styles from './Servicelist.less';
+import {  Link } from 'react-router';
 
 
 class Servicelist extends React.Component {
@@ -32,16 +33,20 @@ activeMenu=(id)=>{
    const topmenu = this.props.list.map((todo)=>
 
      <Col span={6} key={todo.id}>
-           <a href="javascript:;"  onClick={this.activeMenu.bind(this,todo.id)} >
-                 <img  src={todo.imgpath} />
-                 <span>
+           <Link to={'matter/'+todo.matterKey} className={styles.matterItem}  onClick={this.activeMenu.bind(this,todo.id)} >
+             <div className={styles.top} style={{backgroundImage:"url("+todo.imgpath+')'}} >
+              <div className={styles.department}>
                  <strong>{todo.name}</strong>
-                 </span>
-                 <span>
-                  
-                   </span>
-                   <small>{todo.bottom}</small>
-           </a>
+              </div>
+             </div>
+             <div className={styles.bottom}>
+             <small >{todo.bottom}</small>   
+
+             </div>
+             
+                 
+                
+           </Link>
      </Col>
    );
 //   function in_array(search,array){
@@ -85,19 +90,10 @@ activeMenu=(id)=>{
 
      return (
 
-       <Row type="flex"  className="wrap">
+       <Row type="flex"  className="wrap" gutter={40}>
 
 
          {topmenu}
-
-         {/* {
-           this.state.activemenu ==1 &&
-          <TeacherItem />
-        }
-        {
-          this.state.activemenu ==2 &&
-         <StudentItem />
-        } */}
 
 
        </Row>

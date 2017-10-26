@@ -3,6 +3,7 @@ import styles from './matter.less';
 import { connect } from 'dva';
 import { Breadcrumb, Icon ,Radio,Form, Input, Button, message,Col,Row,Modal } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
+import Print  from '../../assets/js/Print.js';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioButton = Radio.Button;
@@ -61,6 +62,9 @@ class TLeave extends React.Component{
     }
   }
 
+  printTable=()=>{
+    Print.Print('#printMain')
+  }
   
 
   render(){
@@ -99,10 +103,8 @@ for(let i=0;i<cont;i++){
             <td className={styles.tdTitle}>单位意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
-                 <Radio value={'同意'}>同意</Radio>
-                 <Radio value={'不同意'}>不同意</Radio>
-                 </RadioGroup>
+                {opinion[i]['opinion']}
+                
                 <p>{opinion[i]['opinionText']}</p>
                 </div>
                 {
@@ -120,10 +122,7 @@ for(let i=0;i<cont;i++){
             <td className={styles.tdTitle}>人事处意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
-                 <Radio value={'同意'}>同意</Radio>
-                 <Radio value={'不同意'}>不同意</Radio>
-                 </RadioGroup>
+                {opinion[i]['opinion']}
                 <p>{opinion[i]['opinionText']}</p>
                 </div>
             </td>
@@ -134,10 +133,7 @@ for(let i=0;i<cont;i++){
             <td className={styles.tdTitle}>分管校领导意见</td>
             <td colSpan='3'>
                 <div className={styles.opinion}>
-                <RadioGroup disabled={true} defaultValue={opinion[i]['opinion']}>
-                 <Radio value={'同意'}>同意</Radio>
-                 <Radio value={'不同意'}>不同意</Radio>
-                 </RadioGroup>
+                {opinion[i]['opinion']}
                 <p>{opinion[i]['opinionText']}</p>
                 </div>
             </td>
@@ -157,8 +153,9 @@ for(let i=0;i<cont;i++){
     // const{tableData,opinion}=this.props.matterTLeave.matterTLeave
     return(
     <div className={styles.normal}>
-      <h1 className={styles.title}>
-                教职工请假条2
+    <div id='printMain'>
+    <h1 className={styles.title}>
+                教职工请假条
       </h1>
       <table className={styles.table}>
       <tbody>
@@ -194,11 +191,13 @@ for(let i=0;i<cont;i++){
                      {opinionTr}
                    </tbody>
               </table> 
+    </div>
+     
               {
                   this.props.from==1&&
                   <Row>              
                     <Col span={6} offset={8}>
-                    <Button type="primary">打印</Button>
+                    <Button onClick={this.printTable.bind(this)} type="primary">打印</Button>
                     </Col>
                     <Col span={3}>
                     <Button type="primary" onClick={this.cancel}>取消</Button>
@@ -209,7 +208,7 @@ for(let i=0;i<cont;i++){
                 this.props.from==2&&
                 <Row type="flex" justify="center">              
                     <Col span={2} >
-                    <Button type="primary">打印</Button>
+                    <Button onClick={this.printTable.bind(this)}  type="primary">打印</Button>
                     </Col>
                 </Row>
               }

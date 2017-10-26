@@ -10,114 +10,7 @@ import Servicelist from '../components/Service/Servicelist';
 const CheckableTag = Tag.CheckableTag;
 let tagsFromServer = [];
 let arr=[]
-// const arr=[
-//     {
-//         id:1,
-//         imgpath:require('../assets/images/service1.png'),
-//         name:'人事部',
-//         bottom:'显示底部内容1'
-//   },
-//   {
-//       id:2,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'保卫处',
-//       bottom:'显示底部内容显示底部内容显示底部内容显示底部内容2'
-//   },
-//   {
-//       id:3,
-//       imgpath:require('../assets/images/service3.png'),
-//       name:'就业管理处',
-//       bottom:'显示底部内容3'
-//   },
-//   {
-//       id:4,
-//       imgpath:require('../assets/images/service4.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容4'
-//   },
-//   {
-//       id:5,
-//       imgpath:require('../assets/images/service5.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容5'
-//   },
-//   {
-//       id:6,
-//       imgpath:require('../assets/images/service1.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容6'
-//   }
-//   ,  {
-//       id:7,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容7'
-//   },
-//   {
-//       id:8,
-//       imgpath:require('../assets/images/service3.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容8'
-//   },
-//   {
-//       id:9,
-//       imgpath:require('../assets/images/service4.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容9'
-//   },
-//   {
-//       id:10,
-//       imgpath:require('../assets/images/service5.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容10'
-//   },
-//   {
-//       id:11,
-//       imgpath:require('../assets/images/service1.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容11'
-//   },
-//   {
-//       id:12,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容12'
-//   },
-//   {
-//       id:13,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'人事部',
-//       bottom:'显示底部内容13'
-//   }
-//   ,
-//   {
-//       id:14,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'保卫处',
-//       bottom:'显示底部内容14'
-//   }
-//   ,
-//   {
-//       id:15,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'行政处',
-//       bottom:'显示底部内容15'
-//   }
-//   ,
-//   {
-//       id:16,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'人事部',
-//       bottom:'显示底部内容16'
-//   }
-//   ,
-//   {
-//       id:17,
-//       imgpath:require('../assets/images/service2.png'),
-//       name:'保卫处',
-//       bottom:'显示底部内容17'
-//   }
-// ]
+
 class Service extends React.Component{
 
   constructor(props){
@@ -139,7 +32,11 @@ class Service extends React.Component{
 
 // 数据初始化
 componentWillMount(){
-    this.props.dispatch({ type: 'serviceCenter/getAllMatters' });
+    let data={};
+    if(this.props.params.matterType){
+        data={matterType:this.props.params.matterType}
+    }
+    this.props.dispatch({ type: 'serviceCenter/getAllMatters' ,payload:data});
 //    let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
 //    this.setState({
 //     pagelist:list
@@ -150,18 +47,16 @@ componentWillReceiveProps(nextProps){
     if(nextProps.serviceCenter.getMattersSuccess){
        let list=nextProps.serviceCenter.AllMatters;
        let arry=[];
-       console.log(list)
        for(let i=0;i<list.length;i++){
         arry.push({
                id:list[i]['id'],
-               imgpath:require('../assets/images/service1.png'),
+               imgpath:list[i]['img1'],
                name:list[i]['dName'],
-               bottom:list[i]['matterName']
+               bottom:list[i]['matterName'],
+               matterKey:list[i]['matterKey']
            })
        }
        arr=arry;
-       console.log('00000000000')
-       console.log(arr)
         this.setState({listArry:arry},function(){
             let list= this.loadData(this.state.current,this.state.pageSize,this.state.listArry);
             this.initPage(arr);
@@ -256,10 +151,7 @@ loadData=(current,pageSize,datalist)=>{
   }
 //初始化分页
 initPage=(datalist)=>{
-//    console.log(111)
-// console.log(this.state.listArry)
     let list= this.loadData(1,this.state.pageSize,datalist);
-// console.log(list);
     this.setState({
         current:1,
         total:datalist.length?datalist.length:1,
@@ -268,7 +160,6 @@ initPage=(datalist)=>{
 }
 
 search=(value)=>{
-console.log(value);
 const data={matterName:value};
 this.props.dispatch({ type: 'serviceCenter/getSearchMatters', payload: data })
 }
@@ -289,24 +180,24 @@ this.props.dispatch({ type: 'serviceCenter/getSearchMatters', payload: data })
             </div>
             <div className={styles.searchBox}>
             <Search
-          placeholder="请输入搜索内容"
-          style={{ width:600,paddingTop:10,paddingBottom:10}}
-          onSearch={value => this.search(value)}
+                placeholder="请输入搜索内容"
+                style={{ width:600,paddingTop:10,paddingBottom:10}}
+                onSearch={value => this.search(value)}
              />
             </div>
            
         <div  className={styles.content}>
             <div className={styles.tag}>
-        <strong style={{ marginRight: 8 }}>服务部门:</strong>
-        {tagsFromServer.map(tag => (
-          <CheckableTag
-            key={tag}
-            checked={selectedTags.indexOf(tag) > -1}
-            onChange={checked => this.handleChange(tag, checked)}
-            color='red'
-          >
-            {tag}
-          </CheckableTag>
+             <strong className={styles.labal} style={{ marginRight: 8 }}>服务部门:</strong>
+                {tagsFromServer.map(tag => (
+                <CheckableTag
+                    key={tag}
+                    checked={selectedTags.indexOf(tag) > -1}
+                    onChange={checked => this.handleChange(tag, checked)}
+                    color='red'
+                >
+                    {tag}
+                </CheckableTag>
         ))}
       </div>
 
