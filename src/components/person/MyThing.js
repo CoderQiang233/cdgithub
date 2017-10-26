@@ -8,6 +8,8 @@ import config  from '../../utils/config';
 
 import TLeave from '../matterDetail/TLeave.js';
 
+import SDoctoralRestudy from '../matterDetail/SDoctoralRestudy.js';
+
 const { APIV2 } = config
 
 
@@ -181,6 +183,10 @@ class AllUnThing extends React.Component{
                   this.state.matter=='TLeave'&&
                   <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
                 }
+                {
+                  this.state.matter=='SDoctoralRestudy'&&
+                  <SDoctoralRestudy matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralRestudy>
+                }
                 </TabPane>
                 <TabPane tab="流程图" key="2">
                   {/* <img src={this.state.imgPath} /> */}
@@ -268,6 +274,10 @@ class AllDoneThing extends React.Component{
                 {
                   this.state.matter=='TLeave'&&
                   <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
+                }
+                {
+                  this.state.matter=='SDoctoralRestudy'&&
+                  <SDoctoralRestudy matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralRestudy>
                 }
               </Modal>
 </div>

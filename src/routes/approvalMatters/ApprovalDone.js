@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './ApprovalDone.less';
 import TLeave from '../../components/matterDetail/TLeave.js';
-
+import SDoctoralRestudy from '../../components/matterDetail/SDoctoralRestudy.js';
 
 class ApprovalDone extends React.Component{
     constructor(props){
@@ -23,6 +23,9 @@ class ApprovalDone extends React.Component{
   
       if(matter=='TLeave'){
         tableComponent=<TLeave  matter={matter} matterId={id} status={status} taskId={taskId} from={1}  />
+      }
+      if(matter=='SDoctoralRestudy'){
+        tableComponent=<SDoctoralRestudy  matter={matter} matterId={id} status={status} taskId={taskId} from={1}  />
       }
   
       return(
