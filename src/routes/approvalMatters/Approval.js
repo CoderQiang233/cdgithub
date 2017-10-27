@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './Approval.less';
 import TLeave from '../../components/approvalMatters/TLeave.js';
+import SDoctoralRestudy from '../../components/approvalMatters/SDoctoralRestudy.js';
+
 import SDoctoralDelayed from '../../components/approvalMatters/SDoctoralDelayed.js';
 import TFurtherApproval from '../../components/approvalMatters/TFurtherApproval.js';
 
 class Approval extends React.Component{
   constructor(props){
-    
             super(props)
     
             this.state={
@@ -33,6 +34,8 @@ class Approval extends React.Component{
     if(matter=='TLeave'){
       tableComponent=<TLeave  matter={matter} matterId={id}  taskId={taskId} level={level}  />
     }
+    if(matter=='SDoctoralRestudy'){
+      tableComponent=<SDoctoralRestudy  matter={matter} matterId={id}  taskId={taskId} level={level}  />
     if(matter=='SDoctoralDelayed'){
       tableComponent=<SDoctoralDelayed  matter={matter} matterId={id}  taskId={taskId} level={level}   />
     }
@@ -49,7 +52,7 @@ class Approval extends React.Component{
 
   }
 }
-
+}
 function mapStateToProps() {
   return {};
 }

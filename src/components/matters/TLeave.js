@@ -134,7 +134,7 @@ class TLeave extends React.Component{
             </div>
           </TabPane>
           <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
-            <CustomizedForm account={this.props.login.account}  dispatch={this.props.dispatch} history={this.props.history} matterKey={this.props.matterKey}/>
+            <CustomizedForm account={this.props.login.account}  dispatch={this.props.dispatch} history={this.props.history}/>
           </TabPane>
       </Tabs>
       </div>
@@ -201,6 +201,7 @@ class CustomizedForm extends React.Component {
 
         values.dateStart=moment(values.dateStart).format("YYYY-MM-DD");
         values.dateEnd=moment(values.dateEnd).format("YYYY-MM-DD");
+        console.log(values)
         if(values.uploadFile){
           let uploadFile=values.uploadFile
           let fileStr=[];
@@ -400,5 +401,5 @@ function mapStateToProps({matterTLeave,login}) {
 
   
 }
-
+;
 export default connect(mapStateToProps)(TLeave);

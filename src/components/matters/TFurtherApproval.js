@@ -87,7 +87,7 @@ class TFurtherApproval extends React.Component {
       <div className={styles.normal}>
         <div className={styles.breadcrumbBox}>
           <Breadcrumb>
-            <Breadcrumb.Item >
+            <Breadcrumb.Item href="">
               <Icon type="home" />
               <Link to="/">首页</Link>
             </Breadcrumb.Item>
@@ -419,7 +419,7 @@ class CustomizedForm extends React.Component {
                       )}
                   </FormItem>
                 </td>
-                <td className={styles.tdTitle}>拟进修专业(内容)</td>
+                <td className={styles.tdTitle}>拟进修专业(内容</td>
                 <td colSpan='3'>
                   <FormItem>
                     {getFieldDecorator('further_content', {

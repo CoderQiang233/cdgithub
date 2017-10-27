@@ -25,7 +25,7 @@ class TProofEmployment extends React.Component{
     <div className={styles.normal}>
       <div className={styles.breadcrumbBox}>
                 <Breadcrumb>
-                    <Breadcrumb.Item>
+                    <Breadcrumb.Item href="">
                       <Icon type="home" />
                       <Link to="/server">首页</Link>
                     </Breadcrumb.Item>

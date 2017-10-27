@@ -181,8 +181,7 @@ class CustomizedForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
 
     let tableCol = [];
-    if (this.state.reason == 5) {
-      tableCol = []
+    if (this.state.reason == '其它') {
       tableCol =
         <FormItem>
           {getFieldDecorator('other_reasons', {
@@ -285,7 +284,7 @@ class CustomizedForm extends React.Component {
                 <td colSpan='2'>
                   <FormItem>
                     {getFieldDecorator('test_results', {
-                      rules: [{ required: true, message: '请输入您的考试成绩' }],
+                      rules: [{ required: false, message: '请输入您的考试成绩' }],
                     })(
                       <Input placeholder="请输入您的考试成绩" />
                       )}
@@ -301,11 +300,11 @@ class CustomizedForm extends React.Component {
                       initialValue:this.state.reason
                     })(
                       <RadioGroup onChange={this.onChange}>
-                    <Radio value={1}>1、缓考</Radio>
-                    <Radio value={2}>2、不及格</Radio>
-                    <Radio value={3}>3、违纪</Radio>
-                    <Radio value={4}>4、不准考</Radio>
-                    <Radio value={5}>5、其他原因（需具体说明）</Radio>
+                    <Radio value={'缓考'}>1、缓考</Radio>
+                    <Radio value={'不及格'}>2、不及格</Radio>
+                    <Radio value={'违纪'}>3、违纪</Radio>
+                    <Radio value={'不准考'}>4、不准考</Radio>
+                    <Radio value={'其它'}>5、其他原因（需具体说明）</Radio>
                   </RadioGroup>
                       )}
                   

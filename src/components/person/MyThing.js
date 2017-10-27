@@ -7,6 +7,9 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 import config  from '../../utils/config';
 
 import TLeave from '../matterDetail/TLeave.js';
+
+import SDoctoralRestudy from '../matterDetail/SDoctoralRestudy.js';
+
 import SDoctoralDelayed from '../matterDetail/SDoctoralDelayed.js';
 const { APIV2 } = config
 
@@ -171,6 +174,10 @@ class AllUnThing extends React.Component{
                   <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
                 }
                 {
+                  this.state.matter=='SDoctoralRestudy'&&
+                  <SDoctoralRestudy matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralRestudy>
+                }
+                {  
                   this.state.matter=='SDoctoralDelayed'&&
                   <SDoctoralDelayed matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralDelayed>
                 }
@@ -270,6 +277,10 @@ class AllDoneThing extends React.Component{
                   <TLeave matter={this.state.matter} matterId={this.state.matterId} from={2}></TLeave>
                 }
                 {
+                  this.state.matter=='SDoctoralRestudy'&&
+                  <SDoctoralRestudy matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralRestudy>
+                }
+                {  
                   this.state.matter=='SDoctoralDelayed'&&
                   <SDoctoralDelayed matter={this.state.matter} matterId={this.state.matterId} from={2}></SDoctoralDelayed>
                 }

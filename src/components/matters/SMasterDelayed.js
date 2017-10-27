@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './Matters.less';
-import { Breadcrumb, Icon, Tabs, Radio, Form,Cascader, Input, Button, DatePicker, Upload, message, Col, Row, Modal } from 'antd';
+import { Breadcrumb, Icon, Tabs, Radio, Form, Input, Button, DatePicker, Upload, message, Col, Row, Modal } from 'antd';
 import { Router, Route, Link, hashHistory } from 'react-router';
 import moment from 'moment';
 const confirm = Modal.confirm;
@@ -68,11 +68,7 @@ onSubmit = (data) => {
         })
       }
     }
-  } else {
-    this.setState({
-      activeTab: '1'
-    })
-  }
+  } 
 }
 
 
@@ -146,6 +142,7 @@ onSubmit = (data) => {
               </div>
             </TabPane>
             <TabPane tab={<span><Icon type="laptop" />在线办理</span>} key="2">
+               <CustomizedForm account={this.props.login.account} onSubmit={this.onSubmit} history={this.props.history}/>
                <CustomizedForm account={this.props.login.account} onSubmit={this.onSubmit} history={this.props.history} teacherTree={this.props.matter.teacherTree}/>
             </TabPane>
           </Tabs>         
@@ -184,6 +181,7 @@ class CustomizedForm extends React.Component {
 
           let matterName = '缓考';
           values.matterName = matterName;
+          this.props.onSubmit(values);
           values.teacher=values.teacher[2]
           console.log(values)
           //this.props.onSubmit(values);
@@ -321,6 +319,7 @@ class CustomizedForm extends React.Component {
               </tr>
                 </tbody>
                 </table>
+                <p><h3>填表日期：    年    月     日</h3></p>
                 <Row>
             <Col span={6} offset={8}>
                 <FormItem>
@@ -343,6 +342,7 @@ class CustomizedForm extends React.Component {
   }
 
       CustomizedForm = Form.create({})(CustomizedForm);
+
 function mapStateToProps({matterSMasterDelayed,login,matter}) {
       return {matterSMasterDelayed,login,matter};
 
