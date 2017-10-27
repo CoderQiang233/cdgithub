@@ -20,7 +20,6 @@ export default {
         let data=action.payload.data;   
         let AllMatters=data;
         return {...state,AllMatters,getMattersSuccess:true}
-      
     },
     getDepartmentSuccess(state,action){
       let data=action.payload.data;   
@@ -29,8 +28,6 @@ export default {
     },
     getSearchMatterSuccess(state,action){
       let AllMatters=action.payload.matterList;
-      // console.log('000000');
-      // console.log(AllMatters)
       return {...state,AllMatters}
     },
     getHomeTMattersSuccess(state,action){
@@ -39,56 +36,44 @@ export default {
     },
     getHomeSMattersSuccess(state,action){
       let homeSMatters=action.payload.sMatters;
-      console.log('123:'+homeSMatters)
       return {...state,homeSMatters}
     },
   },
   effects: {
     *getAllMatters({payload}, { put, call, select }) {
-      const data = yield call(serviceCenterService.getAllMatters,payload);
-      console.log(data)
-      if(data.ret==200){
-        if(data.data.code==1){
+      const {data} = yield call(serviceCenterService.getAllMatters,payload);
+        if(data&&data.code==1){
             yield put({
               type: 'getAllMatterSuccess',
-              payload: {data: data.data.info}});
+              payload: {data: data.info}});
             yield put({
               type: 'getDepartmentSuccess',
-              payload: {data: data.data.departments}});  
+              payload: {data: data.departments}});  
           }
-        }
-      // return data
      },
      *getSearchMatters({payload},{ put, call, select }) {
-       const data = yield call(serviceCenterService.getSearchMatters,payload);
-       console.log(data)
-       if(data.ret==200){
-        if(data.data.code==1){
+       const {data} = yield call(serviceCenterService.getSearchMatters,payload);
+        if(data&&data.code==1){
             yield put({
               type: 'getSearchMatterSuccess',
-              payload: {matterList: data.data.matterList}});
+              payload: {matterList: data.matterList}});
           }
-        }
      },
      *getHomeTMatters({payload},{ put, call, select }) {
-      const data = yield call(serviceCenterService.getHomeTMatters);
-      if(data.ret==200){
-       if(data.data.code==1){
+      const {data} = yield call(serviceCenterService.getHomeTMatters);
+       if(data&&data.code==1){
            yield put({
              type: 'getHomeTMattersSuccess',
-             payload: {tMatters: data.data.tMatters}});
+             payload: {tMatters: data.tMatters}});
          }
-       }
     },
     *getHomeSMatters({payload},{ put, call, select }) {
-      const data = yield call(serviceCenterService.getHomeSMatters);
-      if(data.ret==200){
-       if(data.data.code==1){
+      const {data} = yield call(serviceCenterService.getHomeSMatters);
+       if(data&&data.code==1){
            yield put({
              type: 'getHomeSMattersSuccess',
-             payload: {sMatters: data.data.sMatters}});
+             payload: {sMatters: data.sMatters}});
          }
-       }
     },
   }
 }

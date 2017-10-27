@@ -30,17 +30,10 @@ class TLeave extends React.Component{
                                             
   }
 
-  // componentWillMount(){
-  //   this.props.dispatch(
-  //     { type: 'teacher/login', payload: values }
-  //   )
-  // }
-
 
 
 // 判断是否登录
   isLogin=(key)=>{
-    console.log(key)
     if(key==2){
       const isLogin=this.props.login.isLogin;
       if(!isLogin){       
@@ -55,7 +48,7 @@ class TLeave extends React.Component{
           },
         });
       }else{
-        let uRole=sessionStorage.getItem('uRole');
+        let uRole=this.props.login.account['uRole'];
         if(uRole==1){
           Modal.warning({
             title: '该事项为教师事项',

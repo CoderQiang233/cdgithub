@@ -2,7 +2,9 @@
 // require('isomorphic-fetch');
 import 'whatwg-fetch' 
 import 'es6-promise'
+import {message} from 'antd';
 import {storageTokenKey} from '../utils/constant';
+import {setSessionStorage,getSessionStorage,redirectLogin} from './helper'
 
 
 
@@ -12,7 +14,7 @@ export default function ajaxApi(url, option = {}) {
     params = {},
     method = option.method || 'get',
     data = option.data || {};
-    let token = sessionStorage.getItem(storageTokenKey);
+    let token = getSessionStorage(storageTokenKey);
     //data['token']=token;
     
   switch (method) {
@@ -51,17 +53,26 @@ function callback(res) {
   return res.json().then(response => {
     if (!response) {
       throw "服务器返回参数错误"
-    } else if (response.errcode == 40001) {
-      throw "token失效，请刷新页面"
-    } else if (response.errcode == -1) {
-      return response
+      message.error('服务器返回参数错误.. :(', 2);
+    } else if (response.ret == 401) {
+
+      message.error(response.msg+'.. :(', 2,onclose=()=>{redirectLogin()}); 
+      return response;
+    } 
+    else if(response.ret = 200){
+      return response;
     }
-    return response;
+
+    const error = new Error(response.msg);
+    error.response = response;
+    throw error;
+    
   })
 }
 //创建容错方法
 function errHandle(res) {
-  if (res.errcode == -1) {
-    alert(res.errmsg)
+
+  if (res.ret == -1) {
+    message.error(res.msg+'.. :(', 2);
   }
 }

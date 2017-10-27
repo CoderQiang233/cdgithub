@@ -12,7 +12,6 @@ const { api } = config
 export async function uploadTLeave (data) {
     
     data.service='Matter_TeacherLeave.UploadTLeave';
-    console.log(data)
     return ajaxApi(api,{method:"post",data})
   }
 
@@ -29,7 +28,6 @@ export async function getMatter (data) {
 // 审批事项
 
 export async function approvalMatter (data) {
-    
     data.service='Matter_TeacherLeave.UploadTLeaveOpinion';
     return ajaxApi(api,{method:"post",data})
 }

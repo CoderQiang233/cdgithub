@@ -60,56 +60,40 @@ export default {
   effects: {
     *getUnMatters({payload},{call,put,select}){
       yield put({ type: 'showLoading' });
-         const data = yield call(approvalService.getUnMatters,payload);
-         
-         if(data.ret==200){
-          if (data.data.code==1) {
+         const {data} = yield call(approvalService.getUnMatters,payload);
+          if (data&&data.code==1) {
                 yield put({
                   type: 'getUnSuccess',
-                  payload: {data: data.data}
+                  payload: {data: data}
               });
             }else{
               yield put({ type: 'closeLoading' });
             }
-         }else{
-          message.error('获取失败...:(', 4);
-          yield put({ type: 'closeLoading' });
-         }
          
 
     },
     *getDoneMatters({payload},{call,put,select}){
       yield put({ type: 'showLoading' });
-      const data = yield call(approvalService.getDoneMatters,payload);
-      if(data.ret==200){
-        if (data.data.code==1) {
+      const {data} = yield call(approvalService.getDoneMatters,payload);
+        if (data&&data.code==1) {
           yield put({
             type: 'getDoneSuccess',
-            payload: {data: data.data}
+            payload: {data: data}
         });
           }else{
             yield put({ type: 'closeLoading' });
           }
-       }else{
-        message.error('获取失败...:(', 4);
-        yield put({ type: 'closeLoading' });
-       }
     },
     *getSignature({payload},{call,put,select}){
-       const data = yield call(approvalService.getSignature,payload);
-       console.log(data);
-       if(data.ret==200){
-        if (data.data.code==1) {
+       const {data} = yield call(approvalService.getSignature,payload);
+        if (data&&data.code==1) {
           yield put({
             type: 'getSignatureSuccess',
-            payload: {data: data.data.url}
+            payload: {data: data.url}
         });
         }else{
-          message.error(data.data.msg, 4);
+            message.error(data.msg, 4);
         }
-       }else{
-        message.error('获取失败...:(', 4);
-       }
     }
     
   },

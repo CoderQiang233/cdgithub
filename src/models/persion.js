@@ -65,78 +65,62 @@ export default {
     *queryUserAllDoneThing({payload},{select, call, put }){     
        yield put({ type: 'showLoading' });
       // console.log(payload)
-      const data  = yield call(personService.queryAllDoneThing,payload);
-      if(data.ret==200){
-        if (data.data.code==1) {
-          
+      const {data}  = yield call(personService.queryAllDoneThing,payload);
+
+        if (data&&data.code==1) {
            yield put({
              type: 'queryUserAllDoneThingSuccess',
              payload: {
-               data: data.data,
-               // total: data.page.total,
-               // current: data.page.current
+               data: data,
              }
            });
          }else{
-          //message.error('获取失败...:(', 4);
           yield put({ type: 'closeLoading' });
          }
-      }else{
-        //message.error(data.msg, 4);
-        yield put({ type: 'closeLoading' });
-      }
       
     },
     *queryUserAllUnDoneThing({payload},{select, call, put }){     
        yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryAllUnDoneThing,payload);
-      if(data.ret==200){
-        if (data.data.code==1) {
-          
+      const  {data}  = yield call(personService.queryAllUnDoneThing,payload);
+
+        if (data&&data.code==1) {
           yield put({
             type: 'queryUserAllUnDoneThingSuccess',
             payload: {
-              data: data.data,
-              // total: data.page.total,
-              // current: data.page.current
+              data: data,
             }
            });
          }else{
-         // message.error('获取失败...:(', 4);
           yield put({ type: 'closeLoading' });
          }
-      }else{
-       // message.error(data.msg, 4);
-        yield put({ type: 'closeLoading' });
-      }
     },
     *getFlowChartPath({payload},{select, call, put }){
-      const  data  = yield call(personService.getFlowChartPath,payload);
-      if(data.data){
+      const  {data}  = yield call(personService.getFlowChartPath,payload);
+      if(data&&data.code){
         yield put({
           type: 'getFlowChartPathSuccess',
           payload: {
-            path: data.data.path,
+            path: data.path,
           }
          });
       }
     },
-    *queryUserAllQuertion({payload},{select, call, put }){     
-      // yield put({ type: 'showLoading' });
-      const  data  = yield call(personService.queryUserAllQuertion);
+    // *queryUserAllQuertion({payload},{select, call, put }){     
+    //   // yield put({ type: 'showLoading' });
+    //   const  data  = yield call(personService.queryUserAllQuertion);
       
-      if (data) {
+    //   if (data) {
    
-        yield put({
-          type: 'queryUserAllQuertionSuccess',
-          payload: {
-            list: data.data,
-            total: data.page.total,
-            current: data.page.current
-          }
-        });
-      }
-    }
+    //     yield put({
+    //       type: 'queryUserAllQuertionSuccess',
+    //       payload: {
+    //         list: data.data,
+    //         total: data.page.total,
+    //         current: data.page.current
+    //       }
+    //     });
+    //   }
+    // }
   },
   subscriptions: {},
 };

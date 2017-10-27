@@ -26,58 +26,37 @@ export default {
   },
   effects: {
     *uploadTable ({payload}, {put, call,select}) {
-       const data = yield call(tLeaveService.uploadTLeave,payload);
-
-       if (data.ret==200) {
-        if(data.data.code==1){
+       const {data} = yield call(tLeaveService.uploadTLeave,payload);
+        if(data&&data.code==1){
           message.success('提交成功.. :)',2,onclose=()=>{
             
             hashHistory.goBack();
           });
-          // yield put(routerRedux.goBack());
-          
         }
         else{
-          message.error('提交失败.. :(', 4);
+          message.error(`${data.msg}...:(`, 4);
         }
-         
-      }
     },
 
     *getMatter ({payload},{put,call,select}){
     
-      const data = yield call(tLeaveService.getMatter,payload);
-      if(data.ret==200){
-        if(data.data.code==1){
+      const {data} = yield call(tLeaveService.getMatter,payload);
+        if(data&&data.code==1){
           yield put({
             type: 'getMatterSuccess',
-            payload: {data: data.data}
+            payload: {data: data}
         });
         }
-        else{
-          message.error('获取失败.. :(', 4);
-        }
-        
-      }else{
-        message.error('获取失败.. :(', 4);
-      }
     },
     *approvalMatter({payload},{put,call,select}){
-      const data = yield call(tLeaveService.approvalMatter,payload);
-
-      if(data.ret==200){
-        if(data.data.code==1){
+      const {data} = yield call(tLeaveService.approvalMatter,payload);
+        if(data&&data.code==1){
           message.success('提交成功.. :)', 2,onclose=()=>{
-
            hashHistory.push('/');
          });
         }else{
-          message.error('提交失败.. :(', 4);
+          message.error(`${data.msg}...:(`, 4);
         }
-      }else{
-        message.error(data.msg+' :(', 4);
-      }
-      
     }
     
   },

@@ -41,9 +41,6 @@ class ApprovalMatters extends React.Component{
 
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-    if(!this.props.login.account.uName){
-      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-    }
 
     this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
     this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
@@ -53,9 +50,6 @@ class ApprovalMatters extends React.Component{
   getUnMatters=(pageNum)=>{
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-    if(!this.props.login.account.uName){
-      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-    }
     data['current']=pageNum;
     this.props.dispatch({ type: 'approvalMatters/getUnMatters', payload: data })
   }
@@ -63,9 +57,6 @@ class ApprovalMatters extends React.Component{
   getDoneMatters=(pageNum)=>{
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-    if(!this.props.login.account.uName){
-      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-    }
     data['current']=pageNum;
     this.props.dispatch({ type: 'approvalMatters/getDoneMatters', payload: data })
   }
@@ -166,7 +157,6 @@ class UnTable extends React.Component{
         this.props.getUnMatters(pageNumber)
       },
     };
-console.log(pagination)
 
     return(
       <div>

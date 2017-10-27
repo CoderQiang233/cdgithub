@@ -165,7 +165,7 @@ class Matter extends React.Component{
       <div>
         {
           matter=='TLeave'&&
-          <TLeave history={this.props.history}/>
+          <TLeave matterKey={matter}  history={this.props.history}/>
         }
         {
           matter=='SLostCard'&&

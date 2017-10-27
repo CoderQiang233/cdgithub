@@ -265,8 +265,8 @@ class TLeave extends React.Component{
   }
 }
 
-function mapStateToProps({matterTLeave,login,approvalMatters}) {
-  return {matterTLeave,login,approvalMatters};
+function mapStateToProps({matterTLeave,login}) {
+  return {matterTLeave,login};
 }
 const TLeaveForm = Form.create()(TLeave);
 export default connect(mapStateToProps)(TLeaveForm);

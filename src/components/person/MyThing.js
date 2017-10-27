@@ -19,36 +19,11 @@ class MyThing extends React.Component{
     this.state={ }
   }
   callback=(key)=>{
-    console.log(key);
-    
-    
-    // if(key==1){
-    //   let data={};
-    //   data['uName']=this.props.persion.login.account.uName
-    //   this.props.dispatch({
-    //     type: 'persion/queryUserAllUnDoneThing',
-    //     payload: data,
-    //   });
-    // }else if(key==2){
-    //   let data={};
-    //   data['uName']=this.props.persion.login.account.uName
-    //   this.props.dispatch({
-    //     type: 'persion/queryUserAllDoneThing',
-    //     payload: data,
-    //   });
-    // }
-  }
-
-  componentWillMount(){
-    
   }
 
   componentDidMount() {
       let data={};
       data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-      if(!this.props.login.account.uName){
-        data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-      }
       this.props.dispatch({
         type: 'persion/queryUserAllUnDoneThing',
         payload: data,
@@ -62,9 +37,6 @@ class MyThing extends React.Component{
   getUnDoneThing=(page)=>{
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-    if(!this.props.login.account.uName){
-      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-    }
     if(page){
       data['current']=page
     }
@@ -77,9 +49,6 @@ class MyThing extends React.Component{
   getDoneThing=(page)=>{
     let data={};
     data['uName']=this.props.login.account.uName+'-'+this.props.login.account.uNum;
-    if(!this.props.login.account.uName){
-      data['uName']=sessionStorage.getItem('uName')+'-'+sessionStorage.getItem('uNum')
-    }
     if(page){
       data['current']=page
     }
@@ -104,11 +73,6 @@ class MyThing extends React.Component{
          <AllDoneThing {...this.props.persion.MyAllDoneTingProps} getDoneThing={this.getDoneThing} loading={this.props.persion.loading}></AllDoneThing>
          </div>
         </TabPane>
-       {/* <TabPane tab="办理中事项" key="3">
-         <div className={styles.tabContent}>
-         <AllThing {...this.props.persion.MyAllUnDoneTingProps}></AllThing>
-         </div>
-       </TabPane> */}
       </Tabs>
       </div>
       
@@ -280,13 +244,6 @@ class AllDoneThing extends React.Component{
         <a onClick={this.showModal.bind(this,record['businessKey'].split(".")[0],record['businessKey'].split(".")[1])}>查看详情</a>
       )
     }];
-
-    // const pagination={
-    //   total:parseInt(this.props.total),
-    //   current:parseInt(this.props.current),
-    //   pageSize:parseInt(this.props.pageSize),
-    //   onChange: ()=>{},
-    // }
     const pagination = {
       total:parseInt(this.props.total),
       current:parseInt(this.props.current),

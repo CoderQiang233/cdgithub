@@ -27,37 +27,27 @@ export default {
     *infoList({
       payload,
      }, { put, call, select }) {
-    //  console.log(123)
-      const data = yield call(infoListService.infoList);
-      console.log(123)
-      
-      if(data.ret==200){
-        if(data.data.code==1){
+      const {data} = yield call(infoListService.infoList);
+        if(data&data.code==1){
             
             yield put({
               type: 'InfoListSuccess',
-              payload: {data: data.data.list}
+              payload: {data: data.list}
           });
         }
-      }
-      // return data
      },
      *infoText({
       payload,
        },{put,call,select}){
-        const data = yield call(infoListService.infoText,payload);
-        console.log('-------------')
-        console.log(data)
-        if(data.ret==200){
-          if(data.data.code==1){
+        const {data} = yield call(infoListService.infoText,payload);
+          if(data&&data.code==1){
               
               yield put({
                 type: 'InfoTextSuccess',
-                payload: {list: data.data.list}
+                payload: {list: data.list}
                
             });
           }
-        }
        }
      
   }

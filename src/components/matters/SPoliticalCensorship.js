@@ -53,7 +53,7 @@ class SPoliticalCensorship extends React.Component {
         },
       });
     } else {
-      let uRole = sessionStorage.getItem('uRole');
+      let uRole=this.props.login.account['uRole'];
       if (uRole == 2) {
         Modal.warning({
           title: '该事项为学生事项',
